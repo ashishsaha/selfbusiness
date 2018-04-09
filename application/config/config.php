@@ -26,20 +26,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 if($_SERVER['HTTP_HOST']=='localhost')
 {
-    $config['base_url'] = 'http://localhost/bsdmms/';
-    define('document_url', $_SERVER['DOCUMENT_ROOT'].'/bsdmms/');
+    $config['base_url'] = 'http://localhost/selfbusiness/';
+    define('document_url', $_SERVER['DOCUMENT_ROOT'].'/selfbusiness/');
     date_default_timezone_set("Asia/Kolkata");
 }
 elseif($_SERVER['HTTP_HOST']=='gstdemo.com')
 {
-    $config['base_url']	= 'http://gstdemo.com/bsdmms/';
-    define('document_url', $_SERVER['DOCUMENT_ROOT'].'/bsdmms/');
+    $config['base_url']	= 'http://gstdemo.com/selfbusiness/';
+    define('document_url', $_SERVER['DOCUMENT_ROOT'].'/selfbusiness/');
     date_default_timezone_set("Asia/Singapore");
 }
-elseif($_SERVER['HTTP_HOST']=='bsdmms.com')
+elseif($_SERVER['HTTP_HOST']=='selfbusiness.com')
 {
-    $config['base_url']	= 'http://infinitium8.com/bsdmms/';
-    define('document_url', $_SERVER['DOCUMENT_ROOT'].'/bsdmms/');
+    $config['base_url']	= 'http://infinitium8.com/selfbusiness/';
+    define('document_url', $_SERVER['DOCUMENT_ROOT'].'/selfbusiness/');
     date_default_timezone_set("Asia/Singapore");
 }
 

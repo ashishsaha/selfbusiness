@@ -68,46 +68,11 @@ class Products extends CI_Controller
             'assets/plugins/datatables/responsive.bootstrap.min.css',
             'assets/plugins/datatables/scroller.bootstrap.min.css'
         );
-
-        // Send $data array() to index page
-        $data['content'] = $this->load->view('products/index', $data, true);
-        // Use Layout
-        $this->load->view('layout/admin_layout', $data);
-    }
-
-    /* ADD product */
-    public function add()
-    {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
-            redirect('users/login');
-        }
-        $this->session->unset_userdata('active_menu');
-        $this->session->set_userdata('active_menu', 'products');
-
-        // Define Data array
-        $data = array(
-            'page_title' => 'bsDMM System - Add Product',
-            'sidebar_menu_title' => 'Setting Management',
-            'sidebar_menu' => 'Add Product'
-        );
-
-        $data['js'] = array(
-            'assets/plugins/parsleyjs/dist/parsley.min.js',
-            'assets/plugins/fileuploads/js/dropify.min.js'
-        );
-        $data['css'] = array(
-            'assets/plugins/fileuploads/css/dropify.min.css',
-            'assets/plugins/custombox/dist/custombox.min.css'
-        );
-
-        $data['form_validation'] = '<script type="text/javascript">
-										$(document).ready(function() {
-											$("#form1").parsley();
-										});
-									</script>';
-
+        
         if (isset($_POST['OkSaveData'])) {
-
+            $product_id = $_POST['data']['id'];
+            unset($_POST['data']['id']);
+            
             $this->form_validation->set_rules('data[name]', 'Product Name', 'trim|required');
 
             if ($this->form_validation->run() == FALSE) {
@@ -115,15 +80,23 @@ class Products extends CI_Controller
                 $data['validation_error'] = $validation_error;
             } else {
                 $_POST['data']['status'] = (!empty($_POST['data']['status'])) ? 1 : 0;
-                $add_rate = $this->product_mod->add_product($_POST['data']);
-                $flash_msgs = array('flash_msgs' => 'Product has been added successfully', 'alerts' => 'success');
+                if($product_id){
+                    $this->product_mod->update_product($_POST['data'], $product_id);
+                    $msgs = 'Product has been updated successfully';
+                    
+                }else{
+                    $add_rate = $this->product_mod->add_product($_POST['data']);
+                    $msgs = 'Product has been added successfully';
+                }
+                
+                $flash_msgs = array('flash_msgs' => $msgs, 'alerts' => 'success');
                 $this->session->set_userdata($flash_msgs);
                 redirect(base_url() . 'products', 'location', '301'); // 301 redirected
             }
         }
 
         // Send $data array() to index page
-        $data['content'] = $this->load->view('products/add', $data, true);
+        $data['content'] = $this->load->view('products/index', $data, true);
         // Use Layout
         $this->load->view('layout/admin_layout', $data);
     }
@@ -166,72 +139,6 @@ class Products extends CI_Controller
         }
     }
 
-    /* Edit Product */
-    public function edit()
-    {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
-            redirect('users/login');
-        }
-        $this->session->unset_userdata('active_menu');
-        $this->session->set_userdata('active_menu', 'products');
-
-        // Define Data array
-        $data = array(
-            'page_title' => 'Update Product',
-            'sidebar_menu_title' => 'Setting Management',
-            'sidebar_menu' => 'Update Product'
-        );
-
-        $data['js'] = array(
-            'assets/plugins/parsleyjs/dist/parsley.min.js',
-            'assets/plugins/fileuploads/js/dropify.min.js'
-        );
-        $data['css'] = array(
-            'assets/plugins/fileuploads/css/dropify.min.css'
-        );
-
-        $data['form_validation'] = '<script type="text/javascript">
-										$(document).ready(function() {
-											$("#form1").parsley();
-										});
-									</script>';
-
-
-        $product_id = $this->uri->segment(3);
-
-        if (!empty($product_id)) {
-            $product_data = $this->product_mod->get_product_by_id($product_id);
-        }
-
-        if (isset($_POST['OkSaveData'])) {
-            $data['product_id'] = $product_id;
-
-            $this->form_validation->set_rules('data[name]', 'Product Name', 'trim|required');
-
-            if ($this->form_validation->run() == FALSE) {
-                $validation_error = validation_errors();
-                $data['validation_error'] = $validation_error;
-            } else {
-
-                $_POST['data']['status'] = (!empty($_POST['data']['status'])) ? 1 : 0;
-                $this->product_mod->update_product($_POST['data'], $product_id);
-
-                $flash_msgs = array('flash_msgs' => 'Product has been updated successfully', 'alerts' => 'success');
-                $this->session->set_userdata($flash_msgs);
-                redirect(base_url() . 'products', 'location', '301'); // 301 redirected
-
-            }
-        }
-
-        $data['product_data'] = $product_data;
-        $data['product_id'] = $product_id;
-
-        // Send $data array() to index page
-        $data['content'] = $this->load->view('products/edit', $data, true);
-        // Use Layout
-        $this->load->view('layout/admin_layout', $data);
-    }
-
     /*
      * Delete Product
      * */
@@ -245,6 +152,30 @@ class Products extends CI_Controller
         $flash_msgs = array('flash_msgs' => 'The selected product has been deleted successfully', 'alerts' => 'success');
         $this->session->set_userdata($flash_msgs);
         redirect(base_url() . 'products', 'location', '301'); // 301 redirected
+    }
+    
+    /*
+     * Select info by ajax
+     * */
+    public function getinfo(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $product_id = $this->input->post('id');
+
+            $product_arr = $this->product_mod->get_product_by_id($product_id);
+            //print_r($transaction_arr); exit();
+
+            header('Cache-Control: no-cache, must-revalidate');
+            header('Expires: ' . date('r', time() + (86400 * 365)));
+            header('Content-type: application/json');
+
+            echo json_encode(array(
+                'id' => $product_arr->id,
+                'name' => $product_arr->name,
+                'status' => $product_arr->status
+            ));
+            exit();
+        }
     }
 
 }

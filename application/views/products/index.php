@@ -23,6 +23,61 @@
                     </li>
                 </ul>
             </h4>
+            
+            <div id="adding_form" class="row">
+                <div class="col-sm-12">
+                    <form action="<?php echo base_url(); ?>products/add" class="form-horizontal row-border" method="post" name="form1" id="form1" enctype="multipart/form-data" novalidate="">
+                        <input type="hidden" name="action" id="action" value="">
+                        <input type="hidden" name="OkSaveData" id="OkSaveData" value="TRUE">
+                        <input type="hidden" name="option_upload" id="option_upload" value="0">
+                        <input type="hidden" name="data[id]" id="id" value="">
+                        <input id="selected_id" value="1" type="hidden" />
+                        <div class="card-box">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Product Name</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control required" placeholder="Product Name" type="text"
+                                       name="data[name]" id="name" parsley-trigger="change"
+                                       value=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label"  title="Is Customer?">Status</label>
+                                        <div class="col-md-9">
+                                            <div class="checkbox checkbox-success checkbox-single">
+                                                <input id="is_customer" title="Is Customer?" name="data[status]" aria-label="Single checkbox Two" type="checkbox">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-6" style="text-align: right">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">&nbsp;</label>
+                                        <div class="col-md-9">
+                                            <button type="button" class="btn" onclick="javascript:add_product_cancel();">Cancel
+                                            </button>
+                                            <button class="btn btn-primary waves-effect waves-light" id="submitButton" type="submit"> Save Info
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <table <?php if (count($product_data) > 0){ ?>id="datatable-buttons"<?php } ?>
                    class="table table-striped table-bordered">
@@ -48,7 +103,7 @@
 													 </div>';
                         }
                         ?>
-                        <tr>
+                        <tr id="product_<?php echo $product->id; ?>">
                             <td><?php echo $product->id; ?> </td>
                             <td><?php echo $product->name; ?> </td>
                             <td><span id="status_<?php echo $product->id; ?>"><?php echo $status; ?></span></td>
@@ -111,19 +166,63 @@
 </div>
 
 <script type="text/javascript">
-    function edit_product(id) {
+    /*function edit_product(id) {
         window.location.href = '<?php echo base_url();?>products/edit/' + id;
+    }*/
+    
+    function edit_product(id) {
+        $("#id").val('');
+        $("#name").val('');
+        $("#is_customer").prop('checked', false);
+        var selected_id = $("#selected_id").val();
+        $("#product_"+selected_id).css("background","none");
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo base_url() ?>products/getinfo',
+            dataType: 'json',
+            data: {'id': id},
+            success: function (data, textStatus, XMLHttpRequest) {
+                $("#adding_form").show(400);
+                
+                $("#id").val(data.id);
+                $("#name").val(data.name);
+                var is_customer = parseInt(data.status);
+                    $("#is_customer").prop('checked', is_customer);
+                
+                
+                $('#form1').attr('action', '<?php echo base_url(); ?>products');
+                //$('#form1').append("<input type='hidden' name='edit' value='"+id+"'/>");
+                $("#submitButton").text("Update Info");
+                $("#product_"+id).addClass("rowBg").css("background","#EAF1FB");
+                $("#selected_id").val(id);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //$('#grid_12').removeBlockMessages().blockMessage('Error while contacting server, please try again', {type: 'error'});
+            }
+        });
+    }
+    
+    function add_product() {
+        $("#adding_form").show(400);
+        $("#id").val('');
+        $("#name").val('');
+        $("#is_customer").prop('checked', false);
+        
+        $('#form1').attr('action', '<?php echo base_url(); ?>products');
+        $("#submitButton").text("Save Info");
     }
 
-    function add_product() {
-        window.location.href = '<?php echo base_url();?>products/add';
+    function add_product_cancel() {
+        $("#adding_form").hide(400);
     }
+    
 
     function delete_product(id) {
         window.location.href = '<?php echo base_url();?>products/delete/' + id;
     }
 
     $(document).ready(function () {
+        $("#adding_form").hide();
         $('[data-tooltip="true"]').tooltip();
 
         $(document).ready(function () {
