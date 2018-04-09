@@ -23,6 +23,79 @@
                     </li>
                 </ul>
             </h4>
+            
+            <div id="adding_form" class="row">
+                <div class="col-sm-12">
+                    <form action="<?php echo base_url(); ?>employees/add" class="form-horizontal row-border" method="post" name="form1" id="form1" enctype="multipart/form-data" novalidate="">
+                        <input type="hidden" name="action" id="action" value="">
+                        <input type="hidden" name="OkSaveData" id="OkSaveData" value="TRUE">
+                        <input type="hidden" name="option_upload" id="option_upload" value="0">
+                        <input id="selected_id" value="1" type="hidden" />
+                        
+                        <div class="card-box">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Full Name</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control required" placeholder="Employee/Labor Name" type="text" name="data[full_name]" id="full_name" parsley-trigger="change" value=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Contact No</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control required" placeholder="Contact Number" type="text" name="data[contact_number]" id="contact_number" parsley-trigger="change"
+                                       value=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group address_div">
+                                        <label class="col-md-3 control-label" title="Employee Address">Address</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control required" placeholder="Employee Address"
+                                                   type="text"
+                                                   name="data[address]" id="address" parsley-trigger="change"
+                                                   value=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" title="Is Employee?">Employee Type</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control required" name="data[employee_type]" id="employee_type">
+                                            <option value="2">Labor</option>
+                                            <option value="3">Employee</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-6" style="text-align: right">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">&nbsp;</label>
+                                        <div class="col-md-9">
+                                            <button type="button" class="btn" onclick="javascript:add_employee_cancel();">Cancel
+                                            </button>
+                                            <button class="btn btn-primary waves-effect waves-light" id="submitButton" type="submit"> Save Info
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <table <?php if (count($employee_data) > 0){ ?>id="datatable-buttons"<?php } ?>
                    class="table table-striped table-bordered">
@@ -61,7 +134,7 @@
                             $employee_type = '<span class="label label-info">Employee</span>';
                         }
                         ?>
-                        <tr>
+                        <tr id="employee_<?php echo $employees->id; ?>">
                             <td><?php echo $employees->full_name; ?> </td>
                             <td><?php echo $employees->contact_number; ?> </td>
                             <td><?php echo $employee_type; ?> </td>
@@ -126,12 +199,56 @@
 </div>
 
 <script type="text/javascript">
+    /*
     function edit_employee(id) {
         window.location.href = '<?php echo base_url();?>employees/edit/' + id;
+    }*/
+    
+    function edit_employee(id) {
+        $("#id").val('');
+        $("#full_name").val('');
+        $("#contact_number").val('');
+        $("#address").val('');
+        var selected_id = $("#selected_id").val();
+        $("#employee_"+selected_id).css("background","none");
+        $('select#employee_type option').removeAttr("selected");
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo base_url() ?>employees/getinfo',
+            dataType: 'json',
+            data: {'id': id},
+            success: function (data, textStatus, XMLHttpRequest) {
+                $("#adding_form").show(400);
+                var employee_type_val = data.employee_type;
+                $("#employee_type option[value='" + employee_type_val + "']").attr('selected', true);
+                $("#id").val(data.id);
+                $("#full_name").val(data.full_name);
+                $("#contact_number").val(data.contact_number);
+                $("#address").val(data.address);
+                $('#form1').attr('action', '<?php echo base_url(); ?>employees');
+                //$('#form1').append("<input type='hidden' name='edit' value='"+id+"'/>");
+                $("#submitButton").text("Update Info");
+                $("#employee_"+id).addClass("rowBg").css("background","#EAF1FB");
+                $("#selected_id").val(id);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //$('#grid_12').removeBlockMessages().blockMessage('Error while contacting server, please try again', {type: 'error'});
+            }
+        });
     }
 
     function add_employee() {
-        window.location.href = '<?php echo base_url();?>employees/add';
+        $("#adding_form").show(400);
+        $("#full_name").val('');
+        $("#contact_number").val('');
+        $("#address").val('');
+        
+        $('#form1').attr('action', '<?php echo base_url(); ?>employees');
+        $("#submitButton").text("Save Info");
+    }
+
+    function add_employee_cancel() {
+        $("#adding_form").hide(400);
     }
 
     function delete_employee(id) {
@@ -139,6 +256,7 @@
     }
 
     $(document).ready(function () {
+        $("#adding_form").hide();
         $('[data-tooltip="true"]').tooltip();
 
         $(document).ready(function () {

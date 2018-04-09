@@ -61,7 +61,8 @@ class Employees extends CI_Controller
             'assets/plugins/datatables/buttons.print.min.js',
             'assets/plugins/datatables/dataTables.fixedHeader.min.js',
             'assets/plugins/datatables/dataTables.keyTable.min.js',
-            'assets/pages/datatables.init.js'
+            'assets/pages/datatables.init.js',
+            'assets/plugins/parsleyjs/dist/parsley.min.js'
         );
 
         $data['css'] = array(
@@ -71,6 +72,59 @@ class Employees extends CI_Controller
             'assets/plugins/datatables/responsive.bootstrap.min.css',
             'assets/plugins/datatables/scroller.bootstrap.min.css'
         );
+        
+        $data['form_validation'] = '<script type="text/javascript">
+										$(document).ready(function() {
+											$("#form1").parsley();
+
+											// Enable max_price after filling the min_price
+											$("#max_price").prop("disabled", true);
+                                            $("#min_price").blur(function(){
+                                                if($(this).val().length != 0){
+                                                    $("#max_price").prop("disabled", false);
+                                                    $("#max_price").attr("data-parsley-min", $(this).val());
+                                                }
+                                            });
+
+										});
+
+                                        $(".dropify").dropify({
+                                            messages: {
+                                                "default": "Drag and drop a file here or click",
+                                                "replace": "Drag and drop or click to replace",
+                                                "remove": "Remove",
+                                                "error": "Ooops, something wrong appended."
+                                            },
+                                            error: {
+                                                "fileSize": "The file size is too big (1M max)."
+                                            }
+                                        });
+									</script>';
+
+        if (isset($_POST['OkSaveData'])) {
+
+            $this->form_validation->set_rules('data[full_name]', 'Employee/Labor Name', 'trim|required');
+
+            if ($this->form_validation->run() == FALSE) {
+                $validation_error = validation_errors();
+                $data['validation_error'] = $validation_error;
+            } else {
+                $_POST['data']['created'] = date("Y-m-d h:i:s");
+                //$add_rate = $this->employee_mod->add_employee($_POST['data']);
+                $save_data = $this->customer_mod->add_customer($_POST['data']);
+
+                if($_POST['data']['employee_type'] == 0){
+                    $employee_type_name = "Casual Labor";
+                }elseif($_POST['data']['employee_type'] == 1){
+                    $employee_type_name = "Labor";
+                }else{
+                    $employee_type_name = "Employee";
+                }
+                $flash_msgs = array('flash_msgs' => $employee_type_name.' has been added successfully', 'alerts' => 'success');
+                $this->session->set_userdata($flash_msgs);
+                redirect(base_url() . 'employees', 'location', '301'); // 301 redirected
+            }
+        }
 
         // Send $data array() to index page
         $data['content'] = $this->load->view('employees/index', $data, true);
@@ -312,5 +366,31 @@ class Employees extends CI_Controller
         $flash_msgs = array('flash_msgs' => 'The selected employee/labor has been deleted successfully', 'alerts' => 'success');
         $this->session->set_userdata($flash_msgs);
         redirect(base_url() . 'employees', 'location', '301'); // 301 redirected
+    }
+    
+    /*
+     * Select info by ajax
+     * */
+    public function getinfo(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $employee_id = $this->input->post('id');
+
+            $employee_data = $this->customer_mod->get_customer_by_id($employee_id);
+            //print_r($transaction_arr); exit();
+
+            header('Cache-Control: no-cache, must-revalidate');
+            header('Expires: ' . date('r', time() + (86400 * 365)));
+            header('Content-type: application/json');
+
+            echo json_encode(array(
+                'id' => $employee_data->id,
+                'full_name' => $employee_data->full_name,
+                'contact_number' => $employee_data->contact_number,
+                'address' => $employee_data->address,
+                'employee_type' => $employee_data->employee_type
+            ));
+            exit();
+        }
     }
 }

@@ -58,7 +58,8 @@ class Products extends CI_Controller
             'assets/plugins/datatables/buttons.print.min.js',
             'assets/plugins/datatables/dataTables.fixedHeader.min.js',
             'assets/plugins/datatables/dataTables.keyTable.min.js',
-            'assets/pages/datatables.init.js'
+            'assets/pages/datatables.init.js',
+            'assets/plugins/parsleyjs/dist/parsley.min.js'
         );
 
         $data['css'] = array(
@@ -68,6 +69,12 @@ class Products extends CI_Controller
             'assets/plugins/datatables/responsive.bootstrap.min.css',
             'assets/plugins/datatables/scroller.bootstrap.min.css'
         );
+        
+        $data['form_validation'] = '<script type="text/javascript">
+										$(document).ready(function() {
+											$("#form1").parsley();
+										});
+									</script>';
         
         if (isset($_POST['OkSaveData'])) {
             $product_id = $_POST['data']['id'];
