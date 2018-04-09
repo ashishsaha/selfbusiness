@@ -1,0 +1,188 @@
+@charset "utf-8";
+/* CSS Document */
+
+@import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i');
+
+body {
+    font-family: 'Didact Gothic', sans-serif;
+	font-size:13px;
+	color: #b4b2b0;
+}
+
+p {
+    font-size: 14px;
+}
+
+.dashbord{
+	padding:200px 0;	
+}
+.dashbordLeft{
+  background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    margin: 0;	
+}
+.dashbordLeft .nav-pills > li.active > a, .dashbordLeft .nav-pills > li.active > a:focus, .dashbordLeft .nav-pills > li.active > a:hover {
+    color: #003764;
+	font-weight:700;
+	  font-family: "Open Sans",sans-serif;
+    cursor: pointer;
+    display: block;
+    max-width: 100%;
+	background:none;
+}
+
+.dashbordLeft ul li{   border-top: 1px solid #e2e2e2;
+    color: #777471;
+    cursor: pointer;
+    display: block;
+    font-family: "Open Sans",sans-serif;
+    font-size: 17px;
+    font-weight: normal;
+    margin: -1px 0 0;
+    max-width: 100%;
+    padding: 16px;
+	background:none;
+}
+.dashbordLeft .nav > li > a {
+    display: block;
+    padding:0;
+    position: relative;
+	color: #777471;
+}
+.dashbordRight .tab-content{
+	margin:0;
+	font-family: "Open Sans",sans-serif;
+}
+
+.dashbordRight h2{
+	 color: #b4b2b0;
+    font-family: "Open Sans",sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+	margin:0 0 20px 0;
+	 border-bottom: 2px solid #ddd;
+	 padding:0 0 20px 0;
+}
+
+
+#tab1 .table > tbody > tr > td, #tab1 .table > tbody > tr > th, #tab1 .table > tfoot > tr > td, #tab1 .table > tfoot > tr > th, #tab1 .table > thead > tr > td, #tab1 .table > thead > tr > th 
+{
+    border-bottom: none;
+	border: none !important;
+}
+
+.dashbordRight .table > thead > tr > th{
+	font-size:13px;	
+}
+
+.dashbordRight .table > tbody > tr > td{
+	font-size:14px;	
+}
+
+.dashbordRight .table-bordered {
+    border: none !important;
+	
+}
+.dashbordRight .tab-content img {
+    animation-duration: 0.0s;
+    animation-name: opacity;
+    width: 60%;
+}
+
+.dashbordRight .topMargin{
+	margin-top:50px;	
+}
+
+.myTransactions table > thead > tr > th{
+	border-bottom:2px solid #ddd !important;
+	border-left:none !important;
+	border-right:none !important;
+	border-top:none !important;
+	
+}
+
+.myTransactions table > tbody > tr > td, .myTransactions table > tfoot > tr > td, .myTransactions table > tfoot > tr > td{
+	border-left:none !important;
+	border-right:none !important;
+	border-bottom:none !important;
+	border-top:none !important;
+	
+}
+.clear{ clear:both;}
+
+#tab3{color: #b4b2b0;
+    font-family: "Open Sans",sans-serif;
+}
+
+#tab3 .panel-info {
+    border: medium none;
+    box-shadow: none;
+}
+#tab3 .panel-leftFrom .panel {
+    border-radius: 0;
+    padding: 20px 85px 0 0;
+}
+#tab3 .panel-leftFrom, #tab3 .panel-rightFrom{
+    border-radius: 0;
+    padding:0;
+}
+
+#tab3 .headingCart {
+    border-bottom: 1px solid #b4b2b0;
+    overflow: hidden;
+}
+
+.btmUpdate{}
+#tab3 .btmUpdate .nextBTM{
+	background-color: #003764;
+    border-color: #003764;
+    border-radius: 0;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 10px;
+    width:320px;
+	margin:0 auto;
+	display:block;
+}
+#tab3 .headingCart .cartheading, #tab4 .headingCart .cartheading{
+	margin:0 0 10px 0;
+	line-height:.7;
+}
+
+
+#tab3 .panel-body {
+    padding:0;
+}
+
+.updatePassword{
+	margin:20px 0;
+}
+
+#tab4 .form-signin {
+    margin: 0 auto;
+    max-width: 430px;
+    padding:0;
+}
+
+
+@media (min-width: 768px) {
+
+    .dashbord .brand-pills > li > a {
+        border-top-right-radius: 0px;
+    	border-bottom-right-radius: 0px;
+    }
+    
+    .dashbord li.brand-nav.active a:after{
+    	content: " ";
+    	display: block;
+    	width: 0;
+    	height: 0;
+    	position: absolute;
+    	top: 50%;
+    	margin-top: -20px;
+    	left: 100%;
+    	z-index: 2;
+    }
+}

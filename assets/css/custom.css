@@ -1,0 +1,229 @@
+ @import url('https://fonts.googleapis.com/css?family=Righteous');
+body {
+	background: #E5E5E5;
+}
+html {
+	background: #E5E5E5;
+}
+/*.logo > span {
+	 text-shadow: 0 1px 2px #171717;
+ }*/
+.navbar-default {
+	background-color: #1e97c9;
+}
+.navbar-default h4 {
+	color: rgba(255,255,255,0.8);
+	font-size: 18px;
+}
+.footer {
+	/*color: rgba(255,255,255,0.6);*/
+	color: grey;
+}
+.notification-box ul li a {
+	color: rgba(255,255,255,0.6);
+}
+.app-search .form-control, .app-search .form-control:focus {
+	border: 1px solid rgba(255,255,255,0.6);
+}
+.logo {
+	font-family: 'Righteous', cursive;
+	color: #fff !important;
+	font-size: 18px;
+}
+.topbar .topbar-left {
+	border-bottom: 1px solid rgba(246,246,246,0.3);
+}
+.topbar .topbar-left {
+	background: #174E68;
+	border-top: 3px solid #1f9acd;
+}
+.navbar-default {
+	border-color: rgba(255, 255, 255, 0.6);
+}
+#sidebar-menu .menu-title {
+	display: none;
+}
+.card-box {
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+#sidebar-menu .subdrop {
+	border-left: 3px solid #1f9acd;
+	color: #71f9acd !important;
+}
+.wrapper-page .logo {
+	font-size: 36px;
+}
+/* LIST page right side button*/
+.service-status, .list-status {
+	display: inline-block;
+	float: right;
+	list-style: outside none none;
+	padding: 0;
+	text-align: right;
+	width: auto;
+}
+.service-status li, .list-status li {
+	display: inline-block;
+	font-size: 14px;
+	/*margin-right: 20px;*/
+	/*width: 125px;*/
+}
+.dt-buttons.btn-group {
+	display: none !important;
+}
+.content-page .content {
+	margin-top: 93px;
+	padding: 0 5px;
+}
+.nav > li > .user-profile-dropdown {
+	line-height: 40px;
+	color: #fff!important;
+}
+.card-box {
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2)!important;
+}
+#sidebar-menu ul ul li a.active {
+	color: #71b6f9;
+}
+.action-user .logout-user {
+	color: #d9534f!important;
+}
+.action-user .logout-user:hover {
+	color: #fff!important;
+}
+.action-user .profile-user {
+	color: #5cb85c!important;
+}
+.action-user .profile-user:hover {
+	color: #fff!important;
+}
+.action-user .change-password-user {
+	color: #f0ad4e!important;
+}
+.action-user .change-password-user:hover {
+	color: #fff!important;
+}
+.user-box {
+	/*border-bottom: 1px solid rgba(246, 246, 246, 0.3);*/
+	margin-bottom: 10px;
+}
+.user-box h5 .user_name {
+	color: rgba(255,255,255,0.3)
+}
+.user-box h5 .role_type {
+	color: rgba(255,255,255,0.5)
+}
+.navbar-nav li {
+	vertical-align: top;
+}
+.customer-page-container{
+	margin-left: 0px;
+}
+
+.left-top-customer {
+	 background: #174E68 none repeat scroll 0 0;
+	 margin-left: -45px;
+ }
+
+
+ .top-customer-list{
+	 margin-top: 21px;
+ }
+ .top-customer-list a{
+	 border-radius: 50%;
+	 display: inline-block;
+	 height: 25px;
+	 line-height: 25px;
+	 text-align: center;
+	 width: 25px;
+	 background: #fff;
+	 margin-right: -5px;
+ }
+ .top-customer-list a:hover{
+	 background-color:rgba(255,255,255,0.3)
+ }
+ .top-customer-list .logout-user {
+	color: #d9534f!important;
+}
+ .top-customer-list .logout-user:hover {
+	 color: #fff!important;
+ }
+ .top-customer-list .profile-user {
+	 color: #5cb85c!important;
+ }
+ .top-customer-list .profile-user:hover {
+	 color: #fff!important;
+ }
+ .top-customer-list .change-password-user {
+	 color: #f0ad4e!important;
+ }
+ .top-customer-list .change-password-user:hover {
+	 color: #fff!important;
+ }
+
+ .customer-footer{
+	 left:0px;
+	 position: inherit;
+	 color: #000;
+ }
+ .customer-panel{
+	 padding-bottom: 0px;
+ }
+
+ /*.checkbox.checkbox-success.checkbox-single {
+	 margin-top: 8px;
+	 min-height: 0;
+ }*/
+ .logo > span {
+	 text-shadow: 1px 1px 1px #9d9d9d;
+ }
+
+ .dont-have-account{
+	 color: #dadada!important;
+ }
+
+
+ /*-----------------------------------------*/
+ /*----------START CUSTOMER PANEL-----------*/
+ /*-----------------------------------------*/
+ .services_name li {
+	 display: inline-block;
+	 margin-bottom: 4px;
+	 vertical-align: top;
+ }
+ .services_name li span {
+	 background: #fff none repeat scroll 0 0;
+	 border: 7px solid #fff;
+	 border-radius: 4px;
+	 box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	 color: #2a3f54;
+	 display: block;
+	 font-size: 18px;
+	 font-weight: bold;
+	 padding: 24px 17px;
+	 text-align: center;
+	 text-decoration: none;
+	 transition: background-color 0.5s ease 0s;
+	 width: 243px;
+ }
+
+ .btn_go_to_staff_selection{
+	 margin-right: 80px;
+ }
+
+
+ /*-----------------------------------------*/
+ /*----------END CUSTOMER PANEL-----------*/
+ /*-----------------------------------------*/
+
+
+
+
+
+
+
+@media only screen and (min-width: 100px) and (max-width: 460px) {
+	.corporate-account-name{
+		display: none;
+}
+}
