@@ -79,6 +79,8 @@
                         <li>
                             <a href="<?php echo base_url() ?>products" <?php if ($active_menu == 'products') { ?> class="active"<?php } ?>>Products/Items</a></li>
                         <li>
+                            <a href="<?php echo base_url() ?>brands" <?php if ($active_menu == 'brands') { ?> class="active"<?php } ?>>Brands</a></li>
+                        <li>
                             <a href="<?php echo base_url() ?>customers" <?php if ($active_menu == 'customers') { ?> class="active"<?php } ?>>Customers/Suppliers</a></li>
                         <li>
                             <a href="<?php echo base_url() ?>employees" <?php if ($active_menu == 'employees') { ?> class="active"<?php } ?>>Employee / Labor</a>
