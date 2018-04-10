@@ -102,6 +102,8 @@ class Employees extends CI_Controller
 									</script>';
 
         if (isset($_POST['OkSaveData'])) {
+            $employee_id = $_POST['data']['id'];
+            unset($_POST['data']['id']);
 
             $this->form_validation->set_rules('data[full_name]', 'Employee/Labor Name', 'trim|required');
 
@@ -109,18 +111,31 @@ class Employees extends CI_Controller
                 $validation_error = validation_errors();
                 $data['validation_error'] = $validation_error;
             } else {
-                $_POST['data']['created'] = date("Y-m-d h:i:s");
+                
                 //$add_rate = $this->employee_mod->add_employee($_POST['data']);
-                $save_data = $this->customer_mod->add_customer($_POST['data']);
-
-                if($_POST['data']['employee_type'] == 0){
-                    $employee_type_name = "Casual Labor";
-                }elseif($_POST['data']['employee_type'] == 1){
+                
+                
+                if($_POST['data']['employee_type'] == 1){
                     $employee_type_name = "Labor";
                 }else{
                     $employee_type_name = "Employee";
                 }
-                $flash_msgs = array('flash_msgs' => $employee_type_name.' has been added successfully', 'alerts' => 'success');
+                
+                if($employee_id){
+                    $_POST['data']['updated'] = date("Y-m-d h:i:s");
+                    //$this->employee_mod->update_employee($_POST['data'], $employee_id);
+                    $this->customer_mod->update_customer($_POST['data'], $employee_id);
+                    $msgs = $employee_type_name.' has been updated successfully';
+                    
+                }else{
+                    $_POST['data']['created'] = date("Y-m-d h:i:s");
+                    $save_data = $this->customer_mod->add_customer($_POST['data']);
+                    $msgs = $employee_type_name.' has been added successfully';
+                }
+                
+
+                
+                $flash_msgs = array('flash_msgs' => $msgs, 'alerts' => 'success');
                 $this->session->set_userdata($flash_msgs);
                 redirect(base_url() . 'employees', 'location', '301'); // 301 redirected
             }

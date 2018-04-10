@@ -30,6 +30,7 @@
                         <input type="hidden" name="action" id="action" value="">
                         <input type="hidden" name="OkSaveData" id="OkSaveData" value="TRUE">
                         <input type="hidden" name="option_upload" id="option_upload" value="0">
+                        <input type="hidden" name="data[id]" id="id" value="">
                         <input id="selected_id" value="1" type="hidden" />
                         
                         <div class="card-box">
