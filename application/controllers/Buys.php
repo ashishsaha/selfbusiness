@@ -25,6 +25,7 @@ class Buys extends CI_Controller
         parent::__construct();
         //$this->load->library('email');
         $this->load->model('product_mod');
+        $this->load->model('brand_mod');
         $this->load->model('customer_mod');
         $this->load->model('invoice_mod');
     }
@@ -105,93 +106,11 @@ class Buys extends CI_Controller
         $data['form_validation'] = '<script type="text/javascript">
 										$(document).ready(function() {
 											$("#form1").parsley();
-
-											$("#total_bosta").keyup(function() {
-                                                var current_val = $(this).val();
-                                                var bosta_per_kg = parseFloat($("#bosta_per_kg").val());
-                                                // Calculation Mann
-                                                var total_mann = (current_val * bosta_per_kg)/40;
-                                                $("#total_mann").val(total_mann.toFixed(2));
-                                                // Calculation KG
-                                                var total_kg = (current_val * bosta_per_kg);
-                                                $("#total_kg").val(total_kg.toFixed(2));
-
-                                                // Calculate product cost
-                                                var price_per_mann = $("#price_per_mann").val();
-                                                var product_cost = parseFloat(price_per_mann) * total_mann;
-                                                $("#product_cost").val(product_cost.toFixed(2));
-
-                                                // Bosta price
-                                                var price_per_bosta = $("#price_per_bosta").val();
-                                                var total_bosta = Math.ceil(current_val);
-                                                var bosta_cost = parseFloat(price_per_bosta * total_bosta);
-                                                $("#bosta_cost").val(bosta_cost.toFixed(2));
-
-                                                // Total cost
-                                                calculation_total_cost();
-                                            });
-
-											$("#bosta_per_kg").keyup(function() {
-                                                var current_val = $(this).val();
-                                                var total_bosta = parseFloat($("#total_bosta").val());
-                                                // Calculation Mann
-                                                var total_mann = (current_val * total_bosta)/40;
-                                                $("#total_mann").val(total_mann.toFixed(2));
-                                                // Calculation KG
-                                                var total_kg = (current_val * total_bosta);
-                                                $("#total_kg").val(total_kg.toFixed(2));
-
-                                                // Calculate product cost
-                                                var price_per_mann = $("#price_per_mann").val();
-                                                var total_product_cost = parseFloat(price_per_mann * total_mann);
-                                                $("#product_cost").val(total_product_cost.toFixed(2));
-                                                calculation_total_cost();
-                                            });
-
-											$("#price_per_mann").keyup(function() {
-                                                var current_val = $(this).val();
-                                                var total_mann = parseFloat($("#total_mann").val());
-                                                // Calculation Mann
-                                                var total_product_cost = parseFloat(current_val * total_mann);
-                                                $("#product_cost").val(total_product_cost.toFixed(2));
-                                                calculation_total_cost();
-                                            });
-
-											$("#price_per_bosta").keyup(function() {
-                                                var current_val = $(this).val();
-                                                var total_bosta = Math.ceil($("#total_bosta").val());
-                                                // Calculation Mann
-                                                var bosta_cost = parseFloat(current_val * total_bosta);
-                                                $("#bosta_cost").val(bosta_cost.toFixed(2));
-                                                calculation_total_cost();
-                                            });
-
-                                            $("#transportation_cost").keyup(function() {
-                                                var current_val = $(this).val();
-                                                calculation_total_cost();
-                                            });
-
-											$("#casual_labor_cost").keyup(function() {
-                                                var current_val = $(this).val();
-                                                calculation_total_cost();
-                                            });
 										});
-
-										function calculation_total_cost(){
-										        var product_cost = $("#product_cost").val();
-										        var bosta_cost = $("#bosta_cost").val();
-										        var transportation_cost = $("#transportation_cost").val();
-										        var casual_labor_cost = $("#casual_labor_cost").val();
-										        var total_kg = $("#total_kg").val();
-										        var total_purchase_cost = parseFloat(product_cost)+parseFloat(bosta_cost)+parseFloat(transportation_cost)+parseFloat(casual_labor_cost);
-										        var per_kg_purchase_price = total_purchase_cost/parseFloat(total_kg);
-										        $("#total_purchase_cost").val(total_purchase_cost.toFixed(2));
-										        $("#per_kg_purchase_price").val(per_kg_purchase_price.toFixed(2));
-										}
 									</script>';
 
         if (isset($_POST['OkSaveData'])) {
-
+            echo '<pre>'; print_r($_POST); exit;
             $this->form_validation->set_rules('data[total_bosta]', 'Total Bosta', 'trim|required');
             $this->form_validation->set_rules('data[bosta_per_kg]', 'Bosta Per KG', 'trim|required');
             $this->form_validation->set_rules('data[total_mann]', 'Total Mann', 'trim|required');
@@ -218,6 +137,7 @@ class Buys extends CI_Controller
 
         // get all product name
         $data['products']  = $this->product_mod->get_all_products();
+        $data['brands']  = $this->brand_mod->get_all_brands();
 
         // Send $data array() to index page
         $data['content'] = $this->load->view('buys/add', $data, true);
