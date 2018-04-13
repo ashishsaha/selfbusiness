@@ -110,22 +110,51 @@ class Buys extends CI_Controller
 									</script>';
 
         if (isset($_POST['OkSaveData'])) {
-            echo '<pre>'; print_r($_POST); exit;
-            $this->form_validation->set_rules('data[total_bosta]', 'Total Bosta', 'trim|required');
-            $this->form_validation->set_rules('data[bosta_per_kg]', 'Bosta Per KG', 'trim|required');
-            $this->form_validation->set_rules('data[total_mann]', 'Total Mann', 'trim|required');
-            $this->form_validation->set_rules('data[total_kg]', 'Total KG', 'trim|required');
-            $this->form_validation->set_rules('data[price_per_mann]', 'Price per Mann', 'trim|required');
+            
+            $this->form_validation->set_rules('data[customer_id]', 'Supplier Name', 'trim|required');
+            $this->form_validation->set_rules('product_id[]', 'Product ID', 'trim|required');
+            $this->form_validation->set_rules('brand_id[]', 'Brand ID', 'trim|required');
 
             if ($this->form_validation->run() == FALSE) {
                 $validation_error = validation_errors();
                 $data['validation_error'] = $validation_error;
             } else {
-                $_POST['data']['status'] = 1;
+                // Adding invoice
+                $_POST['data']['customer_id'] = $_POST['data']['customer_id'] ;
+                $_POST['data']['description'] = $_POST['data']['description'] ;
+                $_POST['data']['total_purchase_cost'] = $_POST['total_purchase_cost'];
+                $_POST['data']['invoice_type'] = 0; //purchase
                 $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
-                $_POST['data']['invoice_type'] = 0;
                 $_POST['data']['created'] = date("Y-m-d h:i:s");
-                $add_buy_invoice = $this->invoice_mod->add_invoice($_POST['data']);
+                $last_insert_id = $this->invoice_mod->add_invoice($_POST['data']);
+
+                // Add invoice details
+                $product_id_arr         =  $_POST['product_id'];
+                $brand_id_arr           =  $_POST['brand_id'];
+                $total_bosta_arr        =  $_POST['total_bosta'];
+                $bosta_per_kg_arr       =  $_POST['bosta_per_kg'];
+                $price_per_bosta_arr    =  $_POST['price_per_bosta'];
+                $sub_total_price_arr    =  $_POST['sub_total_price'];
+
+                if(count($product_id_arr)>0){
+                    foreach($product_id_arr as $key=>$product_id){
+                        $total_maan = ($total_bosta_arr[$key] * $bosta_per_kg_arr[$key])/40;
+                        $total_kg = ($total_bosta_arr[$key] * $bosta_per_kg_arr[$key]);
+                        $detail_data_arr = array(
+                            'invoice_id' => $last_insert_id,
+                            'product_id' => $product_id,
+                            'brand_id' => $brand_id_arr[$key],
+                            'total_bosta' => $total_bosta_arr[$key],
+                            'bosta_per_kg' => $bosta_per_kg_arr[$key],
+                            'total_maan' => $total_maan,
+                            'total_kg' => $total_kg,
+                            'price_per_bosta' => $price_per_bosta_arr[$key],
+                            'sub_total_price' => $sub_total_price_arr[$key],
+                        );
+                        $this->invoice_mod->add_invoice_detail($detail_data_arr);
+                    }
+                }
+                // Redirect
                 $flash_msgs = array('flash_msgs' => 'Purchase invoice has been saved successfully', 'alerts' => 'success');
                 $this->session->set_userdata($flash_msgs);
                 redirect(base_url() . 'buys', 'location', '301'); // 301 redirected

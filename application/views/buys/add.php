@@ -177,14 +177,14 @@
         var current_total_row = $("#total_row").val();
         $('#row' + i).html("<td>" + (i + 1) + "</td>" +
             "<td>"+
-                "<select class='form-control required' name='data[product_id]' id='product_id'>"+
+                "<select class='form-control required' name='product_id[]' id='product_id'>"+
                 <?php foreach ($products as $product) { ?>
                 "<option value='<?php echo $product->id; ?>'><?php echo $product->name; ?></option>"+
                 <?php } ?>
                 "</select>"+
             "</td>"+
             "<td>"+
-                "<select class='form-control required' name='data[brand_id]' id='brand_id'>"+
+                "<select class='form-control required' name='brand_id[]' id='brand_id'>"+
                 <?php foreach ($brands as $brand) { ?>
                 "<option value='<?php echo $brand->id; ?>'><?php echo $brand->name; ?></option>"+
                 <?php } ?>

@@ -48,6 +48,16 @@ class Invoice_mod extends CI_Model
     }
 
     /*
+     * Add  invoices detail info
+     * */
+    function add_invoice_detail($invoices_detail_array)
+    {
+        // Insert the new icon array into the rate table
+        $this->db->insert('invoice_details',$invoices_detail_array);
+        return $this->db->insert_id();
+    }
+
+    /*
      * Update invoices info
      * */
     function update_invoice($data,$id)
