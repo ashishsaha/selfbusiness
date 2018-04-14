@@ -122,7 +122,7 @@ class Buys extends CI_Controller
                 // Adding invoice
                 $_POST['data']['customer_id'] = $_POST['data']['customer_id'] ;
                 $_POST['data']['description'] = $_POST['data']['description'] ;
-                $_POST['data']['total_purchase_cost'] = $_POST['total_purchase_cost'];
+                $_POST['data']['total_cost'] = $_POST['total_purchase_cost'];
                 $_POST['data']['invoice_type'] = 0; //purchase
                 $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
                 $_POST['data']['created'] = date("Y-m-d h:i:s");
@@ -264,7 +264,7 @@ class Buys extends CI_Controller
                 // Update invoice
                 $_POST['data']['customer_id'] = $_POST['data']['customer_id'] ;
                 $_POST['data']['description'] = $_POST['data']['description'] ;
-                $_POST['data']['total_purchase_cost'] = $_POST['total_purchase_cost'];
+                $_POST['data']['total_cost'] = $_POST['total_purchase_cost'];
                 $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
                 $_POST['data']['updated'] = date("Y-m-d h:i:s");
                 $this->invoice_mod->update_invoice($_POST['data'], $invoice_id);

@@ -15,10 +15,10 @@
                     <!--<li><i class="fa fa-check-circle text-success"></i> Active</li>
                     <li><i class="fa fa-check-circle text-unsuccess"></i> Inactive</li>-->
                     <li>
-                        <button title="Add Buy Invoice" data-tooltip="true" type="button"
+                        <button title="Add Invoice" data-tooltip="true" type="button"
                                 class="btn btn-success waves-effect waves-light"
                                 onclick="javascript:add_buy_invoice();"><i
-                                class="fa fa-plus-circle"></i>&nbsp;Add Buy Invoice
+                                class="fa fa-plus-circle"></i>&nbsp;Add Invoice
                         </button>
                     </li>
                 </ul>
@@ -29,8 +29,9 @@
                 <thead>
                 <tr>
                     <th style="width: 5%">ID</th>
-                    <th title="Supplier Name">Purchase From</th>
+                    <th title="Supplier Name">Supplier Name</th>
                     <th title="Total Purchase Cost">Total Cost</th>
+                    <th title="Purchase Date">Purchase Date</th>
                     <th style="width: 10%">Action</th>
                 </tr>
                 </thead>
@@ -51,7 +52,8 @@
                         <tr>
                             <td><?php echo $buy_invoice->id; ?> </td>
                             <td><?php echo $buy_invoice->full_name; ?> </td>
-                            <td><?php echo $buy_invoice->total_purchase_cost; ?> </td>
+                            <td><?php echo $buy_invoice->total_cost; ?> </td>
+                            <td><?php echo date("Y-m-d", strtotime($buy_invoice->created)); ?> </td>
                             <!--<td><span id="status_<?php /*echo $buy_invoice->id; */?>"><?php /*echo $status; */?></span></td>-->
                             <td class="actions">
                                 <button title="Update Invoice" data-tooltip="true" type="button"

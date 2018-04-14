@@ -15,10 +15,10 @@
                     <!--<li><i class="fa fa-check-circle text-success"></i> Active</li>
                     <li><i class="fa fa-check-circle text-unsuccess"></i> Inactive</li>-->
                     <li>
-                        <button title="Add Sells Invoice" data-tooltip="true" type="button"
+                        <button title="Add Invoice" data-tooltip="true" type="button"
                                 class="btn btn-success waves-effect waves-light"
                                 onclick="javascript:add_sell_invoice();"><i
-                                class="fa fa-plus-circle"></i>&nbsp;Add Sells Invoice
+                                class="fa fa-plus-circle"></i>&nbsp;Add Invoice
                         </button>
                     </li>
                 </ul>
@@ -29,8 +29,9 @@
                 <thead>
                 <tr>
                     <th style="width: 5%">ID</th>
-                    <th title="Customer Name">Sell to(Customer)</th>
-                    <th title="Total Sell Cost">Total Cost</th>
+                    <th title="Customer Name">Customer Name</th>
+                    <th title="Total Cost">Total Cost</th>
+                    <th title="Selling Date">Selling Date</th>
                     <th style="width: 10%">Action</th>
                 </tr>
                 </thead>
@@ -51,7 +52,8 @@
                         <tr>
                             <td><?php echo $buy_invoice->id; ?> </td>
                             <td><?php echo $buy_invoice->full_name; ?> </td>
-                            <td><?php echo $buy_invoice->total_selling_cost; ?> </td>
+                            <td><?php echo $buy_invoice->total_cost; ?> </td>
+                            <td><?php echo date("Y-m-d", strtotime($buy_invoice->created)); ?> </td>
                             <!--<td><span id="status_<?php /*echo $buy_invoice->id; */?>"><?php /*echo $status; */?></span></td>-->
                             <td class="actions">
                                 <button title="Update Sell Invoice" data-tooltip="true" type="button"

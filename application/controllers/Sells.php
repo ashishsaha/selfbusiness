@@ -122,7 +122,7 @@ class Sells extends CI_Controller
                 // Adding invoice
                 $_POST['data']['customer_id'] = $_POST['data']['customer_id'] ;
                 $_POST['data']['description'] = $_POST['data']['description'] ;
-                $_POST['data']['total_selling_cost'] = $_POST['total_selling_cost'];
+                $_POST['data']['total_cost'] = $_POST['total_selling_cost'];
                 $_POST['data']['invoice_type'] = 1; //sell
                 $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
                 $_POST['data']['created'] = date("Y-m-d h:i:s");
