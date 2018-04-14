@@ -40,7 +40,7 @@ class Buys extends CI_Controller
 
         // SELECT ALL Purchase Invoice list
         $buy_invoice_data = $this->invoice_mod->get_all_buy_invoices();
-
+        //echo '<pre>';print_r($buy_invoice_data);die();
         // Define Data array
         $data = array(
             'page_title' => 'bsDMM System - All Purchase Invoice List',

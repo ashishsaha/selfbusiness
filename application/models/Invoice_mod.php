@@ -14,10 +14,10 @@ class Invoice_mod extends CI_Model
      * */
     function get_all_buy_invoices(){
         $where = '(bi.status="1" OR bi.status="0") AND bi.invoice_type=0';
-        $this->db->select("bi.*, c.full_name, p.name");
+        $this->db->select("bi.*, c.full_name");
         $this->db->from("invoices as bi");
         $this->db->join('customers as c', 'c.id = bi.customer_id', 'left');
-        $this->db->join('products as p', 'p.id = bi.product_id', 'left');
+        //$this->db->join('products as p', 'p.id = bi.product_id', 'left');
         $this->db->where($where);
         $query = $this->db->get();
         return $query->result();
@@ -28,10 +28,10 @@ class Invoice_mod extends CI_Model
      * */
     function get_all_sell_invoices(){
         $where = '(bi.status="1" OR bi.status="0") AND bi.invoice_type=1';
-        $this->db->select("bi.*, c.full_name, p.name");
+        $this->db->select("bi.*, c.full_name");
         $this->db->from("invoices as bi");
         $this->db->join('customers as c', 'c.id = bi.customer_id', 'left');
-        $this->db->join('products as p', 'p.id = bi.product_id', 'left');
+        //$this->db->join('products as p', 'p.id = bi.product_id', 'left');
         $this->db->where($where);
         $query = $this->db->get();
         return $query->result();

@@ -16,9 +16,8 @@
                 $this->session->unset_userdata('flash_msgs'); ?>
             </div>
         <?php } ?>
-        <?php //echo '<pre>'; print_r($suppliers); ?>
-        <form action="<?php echo base_url(); ?>sells/add" class="form-horizontal row-border" method="post"
-              name="form1" id="form1" enctype="multipart/form-data">
+        <?php //echo '<pre>'; print_r($customers); ?>
+        <form action="<?php echo base_url(); ?>sells/add" class="form-horizontal row-border" method="post" name="form1" id="form1" enctype="multipart/form-data">
             <input type="hidden" name="action" id="action" value="">
             <input type="hidden" name="OkSaveData" id="OkSaveData" value="TRUE">
             <input type="hidden" name="option_upload" id="option_upload" value="0">
@@ -31,7 +30,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">খরিদ্দারের নাম</label>
+                            <label class="col-md-3 control-label">Supplier Name</label>
                             <div class="col-md-9">
                                 <select class="form-control required" name="data[customer_id]" id="customer_id"">
                                 <?php
@@ -46,28 +45,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">পণ্যের নাম</label>
-                            <div class="col-md-9">
-                                <select class="form-control required" name="data[product_id]" id="product_id">
-                                <?php
-                                foreach ($products as $product) {
-                                    ?>
-                                    <option
-                                        value="<?php echo $product->id; ?>"><?php echo $product->name; ?></option>
-                                <?php
-                                }
-                                ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-sm-6">
                         <div class="form-group address_div">
-                            <label class="col-md-3 control-label" title="Product Description">নোট</label>
+                            <label class="col-md-3 control-label" title="Product Description">Note</label>
                             <div class="col-md-9">
                                 <input class="form-control" placeholder="Product Description"
                                        type="text"
@@ -77,136 +59,95 @@
                         </div>
                     </div>
                 </div>
-                <hr>
                 <div class="row">
 
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">মোট কেজি </label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Total KG"
-                                       type="number"  min="1" step="0.01"
-                                       name="data[total_kg]" id="total_kg" parsley-trigger="change"
-                                       value="0" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">মোট মণ</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Total Mann"
-                                       type="number" min="0.01" step="0.01"
-                                       name="data[total_mann]" id="total_mann" parsley-trigger="change"
-                                       value="0" readonly/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">কত কেজি বস্তা ?</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Bosta Per KG"
-                                       type="number" min="1" step="0.01"
-                                       name="data[bosta_per_kg]" id="bosta_per_kg" value="0"/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">মোট বস্তা </label>
-                            <div class="col-md-7">
-                                <input class="form-control required" type="number" value="0"  min="1" step="0.01" name="data[total_bosta]" id="total_bosta" readonly/>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-12 column">
+                    <div id="info"></div>
+                    <table class="table table-bordered table-hover" id="whole_purchase">
+                        <thead>
+                        <tr>
+                            <th class="text-center" width="3%">#</th>
+                            <th width="23%">Product Name</th>
+                            <th width="21%">Brand Name</th>
+                            <th width="10%">Total Bosta</th>
+                            <th width="10%">Bosta/KG</th>
+                            <th width="14%">Price/Bosta</th>
+                            <th width="17%">Sub total</th>
+                            <th width="5%" class="text-center">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <input type="hidden" id="total_row" value="1" />
+                        <tr id='row0'>
+                            <td>1</td>
+                            <td>
+                                <select class="form-control required" name="product_id[]" id="product_id">
+                                    <?php foreach ($products as $product) { ?>
+                                        <option value="<?php echo $product->id; ?>"><?php echo $product->name; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control required" name="brand_id[]" id="brand_id">
+                                    <?php foreach ($brands as $brand) { ?>
+                                        <option value="<?php echo $brand->id; ?>"><?php echo $brand->name; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" id='total_bosta0' name='total_bosta[]' placeholder='Total Bosta' value="0" min="0"  class="form-control num_val required" onkeyup="totalBosta(0)" />
+                            </td>
+                            <td>
+                                <input type="number" id='bosta_per_kg0' name='bosta_per_kg[]' placeholder='Bosta/KG' min="0.00" value="0.00" placeholder='0.00' step="0.01" class="form-control num_val required" />
+                            </td>
+                            <td>
+                                <input type="number" id='price_per_bosta0' name='price_per_bosta[]' placeholder='0.00' value="0.00" step="0.01" class="form-control required" onkeyup="pricePerBosta(0)" />
+                            </td>
+                            <td>
+                                <input type="number" readonly id='sub_total_price0' name='sub_total_price[]' placeholder='0.00' value="0.00" step="0.01" class="form-control" required/>
+                            </td>
+                            <td><a style="display: none" onclick="deleteRow(0)" id="delete_row0" class="pull-right btn btn-default">X</a></td>
+                        </tr>
+                        <tr id='row1'></tr>
+                        </tbody>
+                    </table>
+                    <a id="add_row" class="btn btn-success pull-right btn-xs">Add more [+]</a>
                 </div>
-                <hr>
+
                 <div class="row">
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">প্রতি কেজি দর</label>
-                            <div class="col-md-7">
-                                <input class="form-control required"
-                                       type="number"  min="0" step="0.01"
-                                       name="data[per_kg_selling_price]" id="per_kg_selling_price" parsley-trigger="change"
-                                       value="0"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">প্রতি মণের দর</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" type="number" value="0"  min="0.01" step="0.01" name="data[price_per_mann]" id="price_per_mann" readonly/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">একটি বস্তার দর</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Per Bosta Price"
-                                       type="number" min="0" step="0.01"
-                                       name="data[price_per_bosta]" id="price_per_bosta" parsley-trigger="change"
-                                       value="0" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">বস্তার মোট দর</label>
-                            <div class="col-md-7">
-                                <input class="form-control required"
-                                       type="number"  min="0" step="0.01"
-                                       name="data[bosta_cost]" id="bosta_cost" parsley-trigger="change"
-                                       value="0" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">পণ্যের দর</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Product Cost"
-                                       type="number"  min="0" step="0.01"
-                                       name="data[product_cost]" id="product_cost" value="0" readonly/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">মোট খরচ</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Per Bosta Price"
-                                       type="number" min="0" step="0.01"
-                                       name="data[total_selling_cost]" id="total_selling_cost" parsley-trigger="change"
-                                       value="0" readonly/>
-                            </div>
+                    <div class="col-sm-12">
+                        <div class="col-md-6"></div>
+                        <div class="col-sm-6">
+                            <table class=" table mrg20T table-hover table-style" style="margin-top: 6px">
+                                <tbody class="tbody-style">
+                                <input type="hidden" name="total_selling_cost" id="total_selling_cost" value="0" />
+                                <tr class="font-bold font-black tr-style" style="text-align: right">
+                                    <td align="right"> <b>Grand Total :</b></td>
+                                    <td ><b>$<span id="total_selling_cost_text">0.00</span></b></td>
+                                </tr>
+                                <tr class="font-bold font-black tr-style">
+                                    <td colspan="5" align="right"> </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 col-sm-6" style="text-align: right">
+                    <div class="col-md-12">
+                        <div class="col-md-6"></div>
+                    <div class="col-md-6" style="text-align: right">
                         <div class="form-group">
                             <label class="col-md-5 control-label">&nbsp;</label>
                             <div class="col-md-7">
-                                <button type="button" class="btn" onclick="javascript:sell_cancel();">Cancel
+                                <button type="button" class="btn" onclick="javascript:product_cancel();">Cancel
                                 </button>
                                 <button class="btn btn-primary waves-effect waves-light" type="submit"> Save Sell Info
                                 </button>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -228,7 +169,115 @@
     }
 </style>
 <script type="text/javascript">
-    function sell_cancel(){
+
+    /** ADD ROW **/
+    var i = 1;
+    $("#add_row").click(function () {
+        var current_total_row = $("#total_row").val();
+        $('#row' + i).html("<td>" + (i + 1) + "</td>" +
+            "<td>"+
+                "<select class='form-control required' name='product_id[]' id='product_id'>"+
+                <?php foreach ($products as $product) { ?>
+                "<option value='<?php echo $product->id; ?>'><?php echo $product->name; ?></option>"+
+                <?php } ?>
+                "</select>"+
+            "</td>"+
+            "<td>"+
+                "<select class='form-control required' name='brand_id[]' id='brand_id'>"+
+                <?php foreach ($brands as $brand) { ?>
+                "<option value='<?php echo $brand->id; ?>'><?php echo $brand->name; ?></option>"+
+                <?php } ?>
+                "</select>"+
+            "</td>"+
+            "<td><input type='number' id='total_bosta"+ i +"' name='total_bosta[]' placeholder='Total Bosta' value='0' min='0'  class='form-control num_val required' onkeyup='totalBosta(" + i + ")' /></td>" +
+            "<td><input type='number' id='bosta_per_kg"+i+"' name='bosta_per_kg[]' placeholder='Bosta/KG' min='0.00' value='0.00' placeholder='0.00' step='0.01' class='form-control required'  /></td>" +
+            "<td><input type='number' id='price_per_bosta"+i+"' name='price_per_bosta[]' placeholder='0.00' value='0.00' step='0.01' class='form-control required' onkeyup='pricePerBosta(" + i + ")' /></td>" +
+            "<td><input type='number' readonly id='sub_total_price"+i+"' name='sub_total_price[]' placeholder='0.00' value='0.00' step='0.01' class='form-control' required/></td>" +
+            //if(parseInt(current_total_row)>0){
+            "<td><a onClick='deleteRow(" + i + ")' id='delete_row" + i + "' class='pull-right btn btn-default' >X</a></td>");
+            //}else{
+            //"<td></td>");
+            //}
+        $('#whole_purchase').append('<tr id="row' + (i + 1) + '"></tr>');
+        /*if(parseInt(current_total_row)>0){
+            $("#delete_row0").css("display","block");
+        }else{
+            $("#delete_row0").css("display","none");
+        }*/
+        $("#total_row").val((parseInt(current_total_row) + 1));
+        i++;
+    });
+
+    function deleteRow(i){
+        var current_row_sub_total = $("#sub_total_price"+i).val();
+        var total_selling_cost = $("#total_selling_cost").val();
+        var total_selling_cost_cal = parseFloat(total_selling_cost) - parseFloat(current_row_sub_total);
+        $('#total_selling_cost_text').text(total_selling_cost_cal.toFixed(2)); // Write
+        $('#total_selling_cost').val(total_selling_cost_cal.toFixed(2)); // Write
+
+        var current_total_row = $("#total_row").val();
+        $("#total_row").val((parseInt(current_total_row) - 1));
+
+        $("#row"+i).remove();
+    }
+
+    /* on keyup total bosta Change */
+    function totalBosta(i) {
+        var prev_sub_total = $("#sub_total_price"+i).val();
+
+        var total_bosta = $('#total_bosta'+i).val();
+        total_bosta = parseInt(total_bosta) || 0;
+
+        var price_per_bosta = $('#price_per_bosta'+i).val();
+        if( price_per_bosta.length === 0 ) { price_per_bosta = 0.00; }
+
+        var  subTotalCal =  parseFloat(total_bosta * price_per_bosta);
+        $('#sub_total_price'+i).val(subTotalCal.toFixed(2));
+
+        var calculated_sub_total = subTotalCal - parseFloat(prev_sub_total);
+        calSellTotal(calculated_sub_total);
+    }
+
+    /* on keyup total bosta Change */
+    function pricePerBosta(i) {
+        var prev_sub_total = $("#sub_total_price"+i).val();
+
+        var total_bosta = $('#total_bosta'+i).val();
+        total_bosta = parseInt(total_bosta) || 0;
+
+        var price_per_bosta = $('#price_per_bosta'+i).val();
+        if( price_per_bosta.length === 0 ) { price_per_bosta = 0.00; }
+
+        var  subTotalCal =  parseFloat(total_bosta * price_per_bosta);
+        $('#sub_total_price'+i).val(subTotalCal.toFixed(2));
+
+        var calculated_sub_total = subTotalCal - parseFloat(prev_sub_total);
+        calSellTotal(calculated_sub_total);
+    }
+
+
+    /** Total purchase cost Calculation **/
+    function calSellTotal(sub_total){
+        var total_selling_cost = $("#total_selling_cost").val();
+        var total_selling_cost_cal = sub_total + parseFloat(total_selling_cost);
+        $('#total_selling_cost_text').text(total_selling_cost_cal.toFixed(2)); // Write
+        $('#total_selling_cost').val(total_selling_cost_cal.toFixed(2)); // Write
+    }
+
+
+    function product_cancel(){
         window.location.href = '<?php echo base_url();?>sells';
     }
 </script>
+
+<style type="text/css">
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance:textfield;
+    }
+</style>

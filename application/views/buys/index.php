@@ -29,12 +29,7 @@
                 <thead>
                 <tr>
                     <th style="width: 5%">ID</th>
-                    <th title="Purchase Product Name">Purchase Product</th>
                     <th title="Supplier Name">Purchase From</th>
-                    <th title="Total Bosta">Total Bosta</th>
-                    <th title="Total KG">Total KG/Bosta</th>
-                    <th title="Total KG">Total KG</th>
-                    <th title="Purchase Cost">Purchase Cost</th>
                     <th title="Total Purchase Cost">Total Cost</th>
                     <th style="width: 10%">Action</th>
                 </tr>
@@ -55,12 +50,7 @@
                         ?>
                         <tr>
                             <td><?php echo $buy_invoice->id; ?> </td>
-                            <td><?php echo $buy_invoice->name; ?> </td>
                             <td><?php echo $buy_invoice->full_name; ?> </td>
-                            <td><?php echo $buy_invoice->total_bosta; ?> </td>
-                            <td><?php echo $buy_invoice->bosta_per_kg; ?> </td>
-                            <td><?php echo $buy_invoice->total_kg; ?> </td>
-                            <td><?php echo $buy_invoice->product_cost; ?> </td>
                             <td><?php echo $buy_invoice->total_purchase_cost; ?> </td>
                             <!--<td><span id="status_<?php /*echo $buy_invoice->id; */?>"><?php /*echo $status; */?></span></td>-->
                             <td class="actions">
