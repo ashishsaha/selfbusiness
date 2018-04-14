@@ -43,7 +43,7 @@ class Employees extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - All Employee List',
+            'page_title' => 'bsSelfBusiness System - All Employee List',
             'sidebar_menu_title' => 'Employee Management',
             'sidebar_menu' => 'Employee List',
             'employee_data' => $employee_data
@@ -158,7 +158,7 @@ class Employees extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - Add Employee/Labor',
+            'page_title' => 'bsSelfBusiness System - Add Employee/Labor',
             'sidebar_menu_title' => 'Employee Management',
             'sidebar_menu' => 'Add Employee/Labor'
         );

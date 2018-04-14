@@ -42,7 +42,7 @@ class Users extends CI_Controller
      * */
     public function login()
     {
-        $data['page_title'] = 'Login - bsDMM System';
+        $data['page_title'] = 'Login - bsSelfBusiness System';
         // Set required fields for validation
         $this->form_validation->set_rules('username', 'email', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -107,7 +107,7 @@ class Users extends CI_Controller
     /* Registration */
     function registration(){
 
-        $data['page_title'] = 'Customer Registration - bsDMM System';
+        $data['page_title'] = 'Customer Registration - bsSelfBusiness System';
 
         $var_account_name = $this->set_account_name_var();
         $data['var_account_name'] = $var_account_name;
@@ -183,7 +183,7 @@ class Users extends CI_Controller
     /* Forgot Password */
     function forget_password(){
 
-        $data['page_title'] = 'Forget Password - bsDMM System';
+        $data['page_title'] = 'Forget Password - bsSelfBusiness System';
 
         $var_account_name = $this->set_account_name_var();
         $data['var_account_name'] = $var_account_name;
@@ -262,7 +262,7 @@ class Users extends CI_Controller
     /* Reset Password */
     function reset_password(){
 
-        $data['page_title'] = 'Forget Password - bsDMM System';
+        $data['page_title'] = 'Forget Password - bsSelfBusiness System';
 
         $var_account_name = $this->set_account_name_var();
         $data['var_account_name'] = $var_account_name;
@@ -400,7 +400,7 @@ class Users extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Add User - bsDMM System',
+            'page_title' => 'Add User - bsSelfBusiness System',
             'sidebar_menu_title' => 'User Management',
             'sidebar_menu' => 'Add User'
         );
@@ -514,7 +514,7 @@ class Users extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Update User - bsDMM System',
+            'page_title' => 'Update User - bsSelfBusiness System',
             'sidebar_menu_title' => 'User Management',
             'sidebar_menu' => 'Update User'
         );
@@ -708,7 +708,7 @@ class Users extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Add User - bsDMM System',
+            'page_title' => 'Add User - bsSelfBusiness System',
             'sidebar_menu_title' => 'User Management',
             'sidebar_menu' => 'Add User'
         );
@@ -822,7 +822,7 @@ class Users extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Update User - bsDMM System',
+            'page_title' => 'Update User - bsSelfBusiness System',
             'sidebar_menu_title' => 'User Management',
             'sidebar_menu' => 'Update User'
         );
@@ -1018,7 +1018,7 @@ class Users extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Add Admin - bsDMM System',
+            'page_title' => 'Add Admin - bsSelfBusiness System',
             'sidebar_menu_title' => 'Admin Management',
             'sidebar_menu' => 'Add Admin'
         );
@@ -1128,7 +1128,7 @@ class Users extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Update Admin - bsDMM System',
+            'page_title' => 'Update Admin - bsSelfBusiness System',
             'sidebar_menu_title' => 'Admin Management',
             'sidebar_menu' => 'Update Admin'
         );
@@ -1324,7 +1324,7 @@ class Users extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Add Staff - bsDMM System',
+            'page_title' => 'Add Staff - bsSelfBusiness System',
             'sidebar_menu_title' => 'Staff Management',
             'sidebar_menu' => 'Add Staff'
         );
@@ -1491,7 +1491,7 @@ class Users extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Update Staff - bsDMM System',
+            'page_title' => 'Update Staff - bsSelfBusiness System',
             'sidebar_menu_title' => 'Staff Management',
             'sidebar_menu' => 'Update Staff'
         );
@@ -1712,7 +1712,7 @@ class Users extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Update User Profile - bsDMM System',
+            'page_title' => 'Update User Profile - bsSelfBusiness System',
             'sidebar_menu_title' => 'User Management',
             'sidebar_menu' => 'Update User Profile'
         );
@@ -1826,11 +1826,11 @@ class Users extends CI_Controller
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
-        $this->session->set_userdata('active_menu', '');
+        $this->session->set_userdata('active_menu', 'change_password');
 
         // Define Data array
         $data = array(
-            'page_title' => 'Change User Password - bsDMM System',
+            'page_title' => 'Change User Password - bsSelfBusiness System',
             'sidebar_menu_title' => 'User Management',
             'sidebar_menu' => 'Change User Password'
         );
@@ -1916,7 +1916,7 @@ class Users extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Update User Profile - bsDMM System',
+            'page_title' => 'Update User Profile - bsSelfBusiness System',
             'sidebar_menu_title' => 'User Management',
             'sidebar_menu' => 'Update User Profile'
         );
@@ -2046,7 +2046,7 @@ class Users extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Change User Password - bsDMM System',
+            'page_title' => 'Change User Password - bsSelfBusiness System',
             'sidebar_menu_title' => 'User Management',
             'sidebar_menu' => 'Change User Password'
         );

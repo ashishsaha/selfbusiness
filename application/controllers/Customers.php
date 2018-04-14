@@ -41,7 +41,7 @@ class Customers extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - All Customer List',
+            'page_title' => 'bsSelfBusiness System - All Customer List',
             'sidebar_menu_title' => 'Customer Management',
             'sidebar_menu' => 'Customer List',
             'customer_data' => $customer_data
@@ -87,7 +87,7 @@ class Customers extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - Add Customer/Supplier',
+            'page_title' => 'bsSelfBusiness System - Add Customer/Supplier',
             'sidebar_menu_title' => 'Customer Management',
             'sidebar_menu' => 'Add Customer/Supplier'
         );

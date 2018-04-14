@@ -40,7 +40,7 @@ class Products extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - All product List',
+            'page_title' => 'bsSelfBusiness System - All product List',
             'sidebar_menu_title' => 'Setting Management',
             'sidebar_menu' => 'Product List',
             'product_data' => $product_data

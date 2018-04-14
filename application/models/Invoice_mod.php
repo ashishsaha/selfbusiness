@@ -88,6 +88,19 @@ class Invoice_mod extends CI_Model
     }
 
     /*
+     * Get individual details by invoices id
+     * */
+    function get_invoice_details_by_invoice_id($invoice_id)
+    {
+        $where = '(invoice_id="'.$invoice_id.'")';
+        $this->db->select("*");
+        $this->db->from("invoice_details");
+        $this->db->where($where);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    /*
      * Delete buy invoices info
      * */
     function delete_product($product_id)
@@ -95,6 +108,15 @@ class Invoice_mod extends CI_Model
         $data=array('status'=>'-1');
         $this->db->where('id',$product_id);
         $this->db->update('invoices',$data);
+    }
+
+    /*
+     * Delete invoices details data
+     * */
+    function delete_invoice_details($invoice_id)
+    {
+        $this->db->where('invoice_id', $invoice_id);
+        $this->db->delete('invoice_details');
     }
 
 }

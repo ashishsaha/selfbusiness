@@ -1,9 +1,9 @@
 <div class="text-center">
-    <a href="javascript:void(0);" class="logo" style="cursor:default;"><span>bsDMM System</span></a>
+    <a href="javascript:void(0);" class="logo" style="cursor:default;"><span>bsSelfBusiness System</span></a>
 </div>
-<div class="m-t-40 card-box">
+<div class="m-t-40 card-box" style="background: #C3D87B">
     <div class="text-center">
-        <h4 class="text-uppercase font-bold m-b-0">Sign In</h4>
+        <h4 class="text-uppercase font-bold m-b-0" style="color: white">Sign In</h4>
         <br />
     </div>
 

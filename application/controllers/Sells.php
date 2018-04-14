@@ -43,7 +43,7 @@ class Sells extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - All Sells Invoice List',
+            'page_title' => 'bsSelfBusiness System - All Sells Invoice List',
             'sidebar_menu_title' => 'Purchase/Sell Management',
             'sidebar_menu' => 'Sells Invoice List',
             'buy_invoice_data' => $buy_invoice_data
@@ -174,148 +174,7 @@ class Sells extends CI_Controller
         $this->load->view('layout/admin_layout', $data);
     }
 
-    /* ADD Buy Info 
-    public function add()
-    {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
-            redirect('users/login');
-        }
-        $this->session->unset_userdata('active_menu');
-        $this->session->set_userdata('active_menu', 'sells');
-
-        // Define Data array
-        $data = array(
-            'page_title' => 'bsDMM System - Add Sell Info',
-            'sidebar_menu_title' => 'Buy / Sell Management',
-            'sidebar_menu' => 'Add Sell Info'
-        );
-
-        $data['js'] = array(
-            'assets/plugins/parsleyjs/dist/parsley.min.js',
-            'assets/plugins/fileuploads/js/dropify.min.js'
-        );
-
-        $data['css'] = array(
-            'assets/plugins/fileuploads/css/dropify.min.css',
-            'assets/plugins/custombox/dist/custombox.min.css'
-        );
-
-        $data['form_validation'] = '<script type="text/javascript">
-										$(document).ready(function() {
-											$("#form1").parsley();
-
-											$("#total_kg").keyup(function() {
-                                                var current_val = $(this).val();
-                                                var total_mann = (current_val)/40;
-                                                $("#total_mann").val(total_mann.toFixed(2));
-
-                                                // Calculation Bosta
-                                                var bosta_per_kg = parseFloat($("#bosta_per_kg").val());
-                                                if(bosta_per_kg > 0){
-                                                    var total_bosta = parseFloat(current_val)/bosta_per_kg;
-                                                }else{
-                                                    var total_bosta = 0;
-                                                }
-
-                                                $("#total_bosta").val(total_bosta.toFixed(2));
-
-                                                // Calculate product cost
-                                                var per_kg_selling_price = parseFloat($("#per_kg_selling_price").val());
-                                                var product_cost = per_kg_selling_price * parseFloat(current_val);
-                                                $("#product_cost").val(product_cost.toFixed(2));
-
-                                                // Bosta Price
-                                                var price_per_bosta = $("#price_per_bosta").val();
-                                                var total_bosta     = Math.ceil($("#total_bosta").val());
-                                                var bosta_cost      = parseFloat(price_per_bosta * total_bosta);
-                                                $("#bosta_cost").val(bosta_cost.toFixed(2));
-
-                                                // Total cost
-                                                calculation_total_cost();
-                                            });
-
-											$("#per_kg_selling_price").keyup(function() {
-                                                var current_val = $(this).val();
-                                                var total_kg = parseFloat($("#total_kg").val());
-
-                                                // Calculation man
-                                                var price_per_mann = current_val * 40;
-                                                $("#price_per_mann").val(price_per_mann.toFixed(2));
-
-                                                // Product cost
-                                                var product_cost = total_kg * current_val;
-                                                $("#product_cost").val(product_cost.toFixed(2));
-
-                                                // Bosta Price
-                                                var price_per_bosta = $("#price_per_bosta").val();
-                                                var total_bosta     = Math.ceil($("#total_bosta").val());
-                                                var bosta_cost      = parseFloat(price_per_bosta * total_bosta);
-                                                $("#bosta_cost").val(bosta_cost.toFixed(2));
-
-                                                var total_selling_cost = product_cost +  bosta_cost;
-                                                $("#total_selling_cost").val(total_selling_cost.toFixed(2));
-                                            });
-
-											$("#bosta_per_kg").keyup(function() {
-                                                var current_val = $(this).val();
-                                                var total_kg = parseFloat($("#total_kg").val());
-                                                // Calculation Bosta
-                                                var total_bosta = (total_kg)/current_val;
-                                                $("#total_bosta").val(total_bosta.toFixed(2));
-                                            });
-
-											$("#price_per_bosta").keyup(function() {
-                                                var current_val = $(this).val();
-                                                var total_bosta = Math.ceil($("#total_bosta").val());
-                                                // Calculation Mann
-                                                var bosta_cost = parseFloat(current_val * total_bosta);
-                                                $("#bosta_cost").val(bosta_cost.toFixed(2));
-                                                calculation_total_cost();
-                                            });
-										});
-
-										function calculation_total_cost(){
-										        var product_cost = $("#product_cost").val();
-										        var bosta_cost = $("#bosta_cost").val();
-										        var total_selling_cost = parseFloat(product_cost) + parseFloat(bosta_cost);
-										        $("#total_selling_cost").val(total_selling_cost.toFixed(2));
-										}
-									</script>';
-
-        if (isset($_POST['OkSaveData'])) {
-
-            $this->form_validation->set_rules('data[total_kg]', 'Total KG', 'trim|required');
-            $this->form_validation->set_rules('data[total_mann]', 'Total Mann', 'trim|required');
-            $this->form_validation->set_rules('data[bosta_per_kg]', 'Bosta Per KG', 'trim|required');
-            $this->form_validation->set_rules('data[total_bosta]', 'Total Bosta', 'trim|required');
-            $this->form_validation->set_rules('data[per_kg_selling_price]', 'Per KG Price', 'trim|required');
-
-            if ($this->form_validation->run() == FALSE) {
-                $validation_error = validation_errors();
-                $data['validation_error'] = $validation_error;
-            } else {
-                $_POST['data']['status'] = 1;
-                $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
-                $_POST['data']['invoice_type'] = 1;
-                $_POST['data']['created'] = date("Y-m-d h:i:s");
-                $add_buy_invoice = $this->invoice_mod->add_invoice($_POST['data']);
-                $flash_msgs = array('flash_msgs' => 'Sell invoice has been saved successfully', 'alerts' => 'success');
-                $this->session->set_userdata($flash_msgs);
-                redirect(base_url() . 'sells', 'location', '301'); // 301 redirected
-            }
-        }
-
-        // get all customer info
-        $data['customers']  = $this->customer_mod->get_all_supplier_customer(array("is_customer" => 1));
-
-        // get all product name
-        $data['products']  = $this->product_mod->get_all_products();
-
-        // Send $data array() to index page
-        $data['content'] = $this->load->view('sells/add', $data, true);
-        // Use Layout
-        $this->load->view('layout/admin_layout', $data);
-    }*/
+    
 
     /* Product Status*/
     public function status()

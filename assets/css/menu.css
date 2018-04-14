@@ -187,7 +187,7 @@ File: Menu
   top: 70px;
   width: 250px;
   z-index: 10;
-  background: #174E68;
+  background: #0EAC5C;
   bottom: 50px;
   height: 100%;
   margin-bottom: -70px;
@@ -278,7 +278,7 @@ File: Menu
   color: #71b6f9;
 }
 #sidebar-menu ul ul a {
-  color: #1f9acd;
+  color: #ffffff;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
@@ -302,8 +302,8 @@ File: Menu
   margin-top: 2px;
 }
 #sidebar-menu .subdrop {
-  border-left: 3px solid #1f9acd;
-  color: #1f9acd !important;
+  border-left: 3px solid #ffffff;
+  color: #ffffff !important;
 }
 #sidebar-menu > ul > li > a {
   color: #fff;
@@ -311,11 +311,11 @@ File: Menu
   /*padding: 12px 20px;*/
   padding: 6px 20px;
   margin: 4px 0px;
-  background-color: #174E68;
+  background-color: #0EAC5C;
   border-left: 3px solid transparent;
 }
 #sidebar-menu > ul > li > a:hover {
-  color: #1f9acd;
+  color: #ffffff;
   text-decoration: none;
 }
 #sidebar-menu > ul > li > a > span {
@@ -341,8 +341,8 @@ File: Menu
   margin-right: 0px;
 }
 #sidebar-menu > ul > li > a.active {
-  border-left: 3px solid #1f9acd;
-    color: #1f9acd !important;
+  border-left: 3px solid #ffffff;
+    color: #ffffff !important;
 }
 .menu-title {
   padding: 12px 20px !important;

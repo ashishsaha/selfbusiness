@@ -41,7 +41,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - All Account Pay Option',
+            'page_title' => 'bsSelfBusiness System - All Account Pay Option',
             'sidebar_menu_title' => 'Payment Management',
             'sidebar_menu' => 'All Account Pay Option'
         );
@@ -86,7 +86,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - All Account Receive Option',
+            'page_title' => 'bsSelfBusiness System - All Account Receive Option',
             'sidebar_menu_title' => 'Payment Management',
             'sidebar_menu' => 'All Account Receive Option'
         );
@@ -194,7 +194,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - transaction info',
+            'page_title' => 'bsSelfBusiness System - transaction info',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Home Cost Transaction Info',
             'add_button' => 'Add Home Expense',
@@ -279,7 +279,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - transaction info',
+            'page_title' => 'bsSelfBusiness System - transaction info',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Home Cost Transaction Info',
             'home_cost_transaction_data' => $home_cost_transaction_data
@@ -362,7 +362,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - transaction info',
+            'page_title' => 'bsSelfBusiness System - transaction info',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Mill Cost Transaction Info',
             'add_button' => 'Add Mill Expense',
@@ -447,7 +447,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - transaction info',
+            'page_title' => 'bsSelfBusiness System - transaction info',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Mill Cost Transaction Info',
             'home_cost_transaction_data' => $home_cost_transaction_data
@@ -530,7 +530,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - transaction info',
+            'page_title' => 'bsSelfBusiness System - transaction info',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Daily Cost Transaction Info',
             'add_button' => 'Add Daily Expense',
@@ -615,7 +615,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - transaction info',
+            'page_title' => 'bsSelfBusiness System - transaction info',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Mill Cost Transaction Info',
             'home_cost_transaction_data' => $home_cost_transaction_data
@@ -699,7 +699,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - transaction info',
+            'page_title' => 'bsSelfBusiness System - transaction info',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Pay to Supplier Transaction Info',
             'add_button' => 'Add Pay to Supplier Expense',
@@ -751,7 +751,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - Add Pay to Supplier',
+            'page_title' => 'bsSelfBusiness System - Add Pay to Supplier',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Add Pay to Supplier Expense'
         );
@@ -993,7 +993,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - transaction info',
+            'page_title' => 'bsSelfBusiness System - transaction info',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Pay to Employee Transaction Info',
             'add_button' => 'Add Pay to Employee Expense',
@@ -1045,7 +1045,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - Add Pay to Employee',
+            'page_title' => 'bsSelfBusiness System - Add Pay to Employee',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Add Pay to Employee Expense'
         );
@@ -1201,7 +1201,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - transaction info',
+            'page_title' => 'bsSelfBusiness System - transaction info',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Labor Cost Transaction Info',
             'add_button' => 'Add Labor Expense',
@@ -1288,7 +1288,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - transaction info',
+            'page_title' => 'bsSelfBusiness System - transaction info',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Labor Cost Transaction Info',
             'home_cost_transaction_data' => $home_cost_transaction_data
@@ -1370,7 +1370,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - transaction info',
+            'page_title' => 'bsSelfBusiness System - transaction info',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Receive from Customer Transaction Info',
             'add_button' => 'Add Receive from Customer Income',
@@ -1423,7 +1423,7 @@ class Transaction extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - Add Receive from Customer',
+            'page_title' => 'bsSelfBusiness System - Add Receive from Customer',
             'sidebar_menu_title' => 'Transaction Management',
             'sidebar_menu' => 'Add Receive from Customer'
         );

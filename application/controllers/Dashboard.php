@@ -19,7 +19,7 @@ class Dashboard extends CI_Controller {
 
 		// Define Data array
 		$data = array(
-			'page_title' => 'Dashboard - bsDMM System',
+			'page_title' => 'Dashboard - bsSelfBusiness System',
 			'sidebar_menu_title' => 'DASHBOARD'
 		);
 

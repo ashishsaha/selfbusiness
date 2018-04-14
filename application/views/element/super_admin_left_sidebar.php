@@ -31,7 +31,7 @@
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </a>  &nbsp;
 
-                    <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Change password" href="<?php echo base_url() ?>users/change_password/<?php echo $this->session->userdata['userData']['session_user_id']; ?>" class="text-custom  change-password-user" title="Change Password">
+                    <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Change password" href="<?php echo base_url() ?>users/change_password/<?php echo $this->session->userdata['userData']['session_user_id']; ?>" class="text-custom  change-password-user <?php if ($active_menu == 'change_password') { ?> active <?php } ?>" title="Change Password">
                         <i class="fa fa-unlock-alt" aria-hidden="true"></i>
                     </a>
 
@@ -53,9 +53,9 @@
                         <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="<?php echo base_url() ?>buys" <?php if ($active_menu == 'buys') { ?> class="active"<?php } ?>>Purchase Info</a></li>
+                            <a href="<?php echo base_url() ?>buys" <?php if ($active_menu == 'buys') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Purchase Info</a></li>
                         <li>
-                            <a href="<?php echo base_url() ?>sells" <?php if ($active_menu == 'sells') { ?> class="active"<?php } ?>>Sell Info</a></li>
+                            <a href="<?php echo base_url() ?>sells" <?php if ($active_menu == 'sells') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Sell Info</a></li>
                     </ul>
                 </li>
 
@@ -64,10 +64,10 @@
                         <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="<?php echo base_url() ?>transaction/pay" <?php if ($active_menu == 'pay') { ?> class="active"<?php } ?>>Account Pay</a>
+                            <a href="<?php echo base_url() ?>transaction/pay" <?php if ($active_menu == 'pay') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Account Pay</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url() ?>transaction/receive" <?php if ($active_menu == 'receive') { ?> class="active"<?php } ?>>Account Receive</a>
+                            <a href="<?php echo base_url() ?>transaction/receive" <?php if ($active_menu == 'receive') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Account Receive</a>
                         </li>
                     </ul>
                 </li>
@@ -77,13 +77,13 @@
                         <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="<?php echo base_url() ?>products" <?php if ($active_menu == 'products') { ?> class="active"<?php } ?>>Products/Items</a></li>
+                            <a href="<?php echo base_url() ?>products" <?php if ($active_menu == 'products') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Products/Items</a></li>
                         <li>
-                            <a href="<?php echo base_url() ?>brands" <?php if ($active_menu == 'brands') { ?> class="active"<?php } ?>>Brands</a></li>
+                            <a href="<?php echo base_url() ?>brands" <?php if ($active_menu == 'brands') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Brands</a></li>
                         <li>
-                            <a href="<?php echo base_url() ?>customers" <?php if ($active_menu == 'customers') { ?> class="active"<?php } ?>>Customers/Suppliers</a></li>
+                            <a href="<?php echo base_url() ?>customers" <?php if ($active_menu == 'customers') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Customers/Suppliers</a></li>
                         <li>
-                            <a href="<?php echo base_url() ?>employees" <?php if ($active_menu == 'employees') { ?> class="active"<?php } ?>>Employee / Labor</a>
+                            <a href="<?php echo base_url() ?>employees" <?php if ($active_menu == 'employees') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Employee / Labor</a>
                         </li>
                     </ul>
                 </li>
@@ -93,7 +93,7 @@
                         <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="<?php echo base_url() ?>users" <?php if ($active_menu == 'users') { ?> class="active"<?php } ?>>Users</a>
+                            <a href="<?php echo base_url() ?>users" <?php if ($active_menu == 'users') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Users</a>
                         </li>
                         <?php /*
                         <li>
@@ -107,13 +107,13 @@
                         <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="<?php echo base_url() ?>settings/companysettings" <?php if ($active_menu == 'settings') { ?> class="active"<?php } ?>>Company Setting</a>
+                            <a href="<?php echo base_url() ?>settings/companysettings" <?php if ($active_menu == 'settings') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Company Setting</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url() ?>accounts/index" <?php if ($active_menu == 'parentaccounts') { ?> class="active"<?php } ?>>Parent Accounts</a>
+                            <a href="<?php echo base_url() ?>accounts/index" <?php if ($active_menu == 'parentaccounts') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Parent Accounts</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url() ?>accounts/child_accounts" <?php if ($active_menu == 'childaccounts') { ?> class="active"<?php } ?>>Child Accounts</a>
+                            <a href="<?php echo base_url() ?>accounts/child_accounts" <?php if ($active_menu == 'childaccounts') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Child Accounts</a>
                         </li>
                     </ul>
                 </li>
