@@ -42,7 +42,7 @@ class Sells extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - All Sells Invoice List',
+            'page_title' => 'bsSelfBusiness System - All Sells Invoice List',
             'sidebar_menu_title' => 'Purchase/Sell Management',
             'sidebar_menu' => 'Sells Invoice List',
             'buy_invoice_data' => $buy_invoice_data
@@ -88,7 +88,7 @@ class Sells extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - Add Sell Info',
+            'page_title' => 'bsSelfBusiness System - Add Sell Info',
             'sidebar_menu_title' => 'Buy / Sell Management',
             'sidebar_menu' => 'Add Sell Info'
         );

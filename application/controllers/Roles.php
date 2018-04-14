@@ -119,7 +119,7 @@ class Roles extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Add Role - bsDMM System',
+            'page_title' => 'Add Role - bsSelfBusiness System',
             'sidebar_menu_title' => 'USER MANAGEMENT',
             'sidebar_menu' => 'Add Role'
         );
@@ -172,7 +172,7 @@ class Roles extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'Update Role - bsDMM System',
+            'page_title' => 'Update Role - bsSelfBusiness System',
             'sidebar_menu_title' => 'USER MANAGEMENT',
             'sidebar_menu' => 'Update Role'
         );

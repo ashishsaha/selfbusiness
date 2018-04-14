@@ -28,15 +28,15 @@
 
             <div class="card-box">
                 <div class="row">
-                    <h4 class="header-title m-t-0 m-b-30"><i class="fa fa-info-circle"></i>&nbsp;Change Password</h4>
+                    <h4 class="header-title m-t-0 m-b-30"><i class="fa fa-arrows"></i>&nbsp;Change Password</h4>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Current Password*
+                            <label class="col-md-4 control-label">Current Password*
                                 <!--&nbsp;<span class="red">*</span>--></label>
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <input id="password"  class="form-control required" placeholder="Current Password" type="password"
                                        name="data[password]"
                                        value=""/>
@@ -49,9 +49,9 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">New Password*
+                            <label class="col-md-4 control-label">New Password*
                                 <!--&nbsp;<span class="red">*</span>--></label>
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <input id="newpassword1"  class="form-control required" placeholder="New password" type="password"
                                        name="data[newpassword1]"
                                        value=""/>
@@ -60,8 +60,8 @@
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Confirm Password *</label>
-                            <div class="col-md-9">
+                            <label class="col-md-4 control-label">Confirm Password *</label>
+                            <div class="col-md-8">
                                 <input id="newpassword2" data-parsley-equalto="#newpassword1"  class="form-control required" placeholder="Confirm new password" type="password"
                                        name="data[newpassword2]"  value="" />
                             </div>
@@ -72,10 +72,10 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">&nbsp;</label>
-                            <div class="col-md-9">
-                                <button class="btn btn-primary waves-effect waves-light" type="submit"><i
-                                        class="fa fa-check" aria-hidden="true"></i> Submit
+                            <label class="col-md-4 control-label">&nbsp;</label>
+                            <div class="col-md-8">
+                                <button class="btn btn-success waves-effect waves-light" type="submit"><i
+                                        class="fa fa-save" aria-hidden="true"></i>&nbsp;Update
                                 </button>
                             </div>
                         </div>

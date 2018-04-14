@@ -1,7 +1,7 @@
 <div class="topbar">
     <!-- LOGO -->
     <div class="topbar-left">
-        <a href="<?php echo base_url() ?>dashboard" class="logo"><span>bsDMM System</span><i
+        <a href="<?php echo base_url() ?>dashboard" class="logo"><span>bsSelfBusiness System</span><i
                 class="zmdi zmdi-layers"></i></a>
     </div>
 

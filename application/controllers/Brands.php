@@ -40,7 +40,7 @@ class Brands extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - All brand List',
+            'page_title' => 'bsSelfBusiness System - All brand List',
             'sidebar_menu_title' => 'Setting Management',
             'sidebar_menu' => 'Brand List',
             'brand_data' => $brand_data

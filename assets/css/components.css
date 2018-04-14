@@ -58,10 +58,10 @@ File: Components
 .btn-pink {
   color: #ffffff !important;
 }
-.btn-custom {
+/*.btn-custom {
   background-color: #71b6f9;
   border-color: #71b6f9;
-}
+}*/
 .btn-custom:hover,
 .btn-custom:focus,
 .btn-custom:active,
@@ -71,8 +71,8 @@ File: Components
 .btn-custom:focus,
 .btn-custom:hover,
 .open > .dropdown-toggle.btn-custom {
-  background-color: #59a9f8 !important;
-  border: 1px solid #59a9f8 !important;
+  background-color: #B2D059 !important;
+  border: 1px solid #b7d063 !important;
 }
 .btn-default {
   background-color: rgba(218, 230, 236, 0.3);
@@ -214,8 +214,8 @@ File: Components
   border-bottom: 2px solid #c2d6e0 !important;
 }
 .btn-bordred.btn-custom {
-  background-color: #71b6f9;
-  border-bottom: 2px solid #4fa4f8 !important;
+  background-color: #b7d063;
+  border-bottom: 2px solid #B2D059 !important;
 }
 .btn-bordred.btn-primary {
   border-bottom: 2px solid #1576c2 !important;

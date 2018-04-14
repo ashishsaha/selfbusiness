@@ -62,97 +62,99 @@
                 </div>
                 <div class="row">
 
-                <div class="col-md-12 column">
-                    <div id="info"></div>
-                    <table class="table table-bordered table-hover" id="whole_purchase">
-                        <thead>
-                        <tr>
-                            <th class="text-center" width="3%">#</th>
-                            <th width="23%">Product Name</th>
-                            <th width="21%">Brand Name</th>
-                            <th width="10%">Total Bosta</th>
-                            <th width="10%">Bosta/KG</th>
-                            <th width="14%">Price/Bosta</th>
-                            <th width="17%">Sub total</th>
-                            <th width="5%" class="text-center">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <input type="hidden" id="total_row" value="1" />
-                        <tr id='row0'>
-                            <td>1</td>
-                            <td>
-                                <select class="form-control required" name="product_id[]" id="product_id">
-                                    <?php foreach ($products as $product) { ?>
-                                        <option value="<?php echo $product->id; ?>"><?php echo $product->name; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control required" name="brand_id[]" id="brand_id">
-                                    <?php foreach ($brands as $brand) { ?>
-                                        <option value="<?php echo $brand->id; ?>"><?php echo $brand->name; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="number" id='total_bosta0' name='total_bosta[]' placeholder='Total Bosta' value="0" min="0"  class="form-control num_val required" onkeyup="totalBosta(0)" />
-                            </td>
-                            <td>
-                                <input type="number" id='bosta_per_kg0' name='bosta_per_kg[]' placeholder='Bosta/KG' min="0.00" value="0.00" placeholder='0.00' step="0.01" class="form-control num_val required" />
-                            </td>
-                            <td>
-                                <input type="number" id='price_per_bosta0' name='price_per_bosta[]' placeholder='0.00' value="0.00" step="0.01" class="form-control required" onkeyup="pricePerBosta(0)" />
-                            </td>
-                            <td>
-                                <input type="number" readonly id='sub_total_price0' name='sub_total_price[]' placeholder='0.00' value="0.00" step="0.01" class="form-control" required/>
-                            </td>
-                            <td><a style="display: none" onclick="deleteRow(0)" id="delete_row0" class="pull-right btn btn-default">X</a></td>
-                        </tr>
-                        <tr id='row1'></tr>
-                        </tbody>
-                    </table>
-                    <a id="add_row" class="btn btn-success pull-right btn-xs">Add more [+]</a>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="col-md-6"></div>
-                        <div class="col-sm-6">
-                            <table class=" table mrg20T table-hover table-style" style="margin-top: 6px">
-                                <tbody class="tbody-style">
-                                <input type="hidden" name="total_purchase_cost" id="total_purchase_cost" value="0" />
-                                <tr class="font-bold font-black tr-style" style="text-align: right">
-                                    <td align="right"> <b>Grand Total :</b></td>
-                                    <td ><b>$<span id="total_purchase_cost_text">0.00</span></b></td>
-                                </tr>
-                                <tr class="font-bold font-black tr-style">
-                                    <td colspan="5" align="right"> </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="col-md-12 column">
+                        <div id="info"></div>
+                        <table class="table table-bordered table-hover" id="whole_purchase">
+                            <thead>
+                            <tr>
+                                <th class="text-center" width="3%">#</th>
+                                <th width="23%">Product Name</th>
+                                <th width="21%">Brand Name</th>
+                                <th width="10%">Total Bosta</th>
+                                <th width="10%">Bosta/KG</th>
+                                <th width="14%">Price/Bosta</th>
+                                <th width="17%">Sub total</th>
+                                <th width="5%" class="text-center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <input type="hidden" id="total_row" value="1" />
+                            <tr id='row0'>
+                                <td>1</td>
+                                <td>
+                                    <select class="form-control required" name="product_id[]" id="product_id">
+                                        <?php foreach ($products as $product) { ?>
+                                            <option value="<?php echo $product->id; ?>"><?php echo $product->name; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control required" name="brand_id[]" id="brand_id">
+                                        <?php foreach ($brands as $brand) { ?>
+                                            <option value="<?php echo $brand->id; ?>"><?php echo $brand->name; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" id='total_bosta0' name='total_bosta[]' placeholder='Total Bosta' value="0" min="0"  class="form-control num_val required" onkeyup="totalBosta(0)" />
+                                </td>
+                                <td>
+                                    <input type="number" id='bosta_per_kg0' name='bosta_per_kg[]' placeholder='Bosta/KG' min="0.00" value="0.00" placeholder='0.00' step="0.01" class="form-control num_val required" />
+                                </td>
+                                <td>
+                                    <input type="number" id='price_per_bosta0' name='price_per_bosta[]' placeholder='0.00' value="0.00" step="0.01" class="form-control required" onkeyup="pricePerBosta(0)" />
+                                </td>
+                                <td>
+                                    <input type="number" readonly id='sub_total_price0' name='sub_total_price[]' placeholder='0.00' value="0.00" step="0.01" class="form-control" required/>
+                                </td>
+                                <td><a style="display: none" onclick="deleteRow(0)" id="delete_row0" class="pull-right btn btn-default cross_row">X</a></td>
+                            </tr>
+                            <tr id='row1'></tr>
+                            </tbody>
+                        </table>
+                        <a id="add_row" class="btn btn-success pull-right btn-xs">Add more [+]</a>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6"></div>
-                    <div class="col-md-6" style="text-align: right">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">&nbsp;</label>
-                            <div class="col-md-7">
-                                <button type="button" class="btn" onclick="javascript:product_cancel();">Cancel
-                                </button>
-                                <button class="btn btn-primary waves-effect waves-light" type="submit"> Save Purchase Info
-                                </button>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-md-6"></div>
+                            <div class="col-sm-6">
+                                <table class=" table mrg20T table-hover table-style" style="margin-top: 6px">
+                                    <tbody class="tbody-style">
+                                    <input type="hidden" name="total_purchase_cost" id="total_purchase_cost" value="0" />
+                                    <tr class="font-bold font-black tr-style" style="text-align: right">
+                                        <td align="right"> <b>Grand Total :</b></td>
+                                        <td ><b>$<span id="total_purchase_cost_text">0.00</span></b></td>
+                                    </tr>
+                                    <tr class="font-bold font-black tr-style">
+                                        <td colspan="5" align="right"> </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    </div>
-                </div>
 
-            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6"></div>
+                        <div class="col-md-6" style="text-align: right">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">&nbsp;</label>
+                                <div class="col-md-7">
+                                    <button type="button" class="btn" onclick="javascript:invoice_cancel();"><i
+                                            class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back
+                                    </button>
+                                    <button class="btn btn-success waves-effect waves-light" type="submit"><i
+                                            class="fa fa-save" aria-hidden="true"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                </div>
         </form>
     </div>
 </div>
@@ -194,17 +196,11 @@
             "<td><input type='number' id='bosta_per_kg"+i+"' name='bosta_per_kg[]' placeholder='Bosta/KG' min='0.00' value='0.00' placeholder='0.00' step='0.01' class='form-control required'  /></td>" +
             "<td><input type='number' id='price_per_bosta"+i+"' name='price_per_bosta[]' placeholder='0.00' value='0.00' step='0.01' class='form-control required' onkeyup='pricePerBosta(" + i + ")' /></td>" +
             "<td><input type='number' readonly id='sub_total_price"+i+"' name='sub_total_price[]' placeholder='0.00' value='0.00' step='0.01' class='form-control' required/></td>" +
-            //if(parseInt(current_total_row)>0){
-            "<td><a onClick='deleteRow(" + i + ")' id='delete_row" + i + "' class='pull-right btn btn-default' >X</a></td>");
-            //}else{
-            //"<td></td>");
-            //}
+            "<td><a onClick='deleteRow(" + i + ")' id='delete_row" + i + "' class='pull-right btn btn-default cross_row' >X</a></td>");
         $('#whole_purchase').append('<tr id="row' + (i + 1) + '"></tr>');
-        /*if(parseInt(current_total_row)>0){
-            $("#delete_row0").css("display","block");
-        }else{
-            $("#delete_row0").css("display","none");
-        }*/
+        if((parseInt(current_total_row) + 1)>1){
+            $(".cross_row").show();
+        }
         $("#total_row").val((parseInt(current_total_row) + 1));
         i++;
     });
@@ -217,8 +213,10 @@
         $('#total_purchase_cost').val(total_purchase_cost_cal.toFixed(2)); // Write
 
         var current_total_row = $("#total_row").val();
+        if((parseInt(current_total_row) - 1)<2){
+            $(".cross_row").hide();
+        }
         $("#total_row").val((parseInt(current_total_row) - 1));
-
         $("#row"+i).remove();
     }
 
@@ -266,12 +264,15 @@
     }
 
 
-    function product_cancel(){
+    function invoice_cancel(){
         window.location.href = '<?php echo base_url();?>buys';
     }
 </script>
 
 <style type="text/css">
+    .cross_row{
+        color: red;
+    }
     input[type=number]::-webkit-outer-spin-button,
     input[type=number]::-webkit-inner-spin-button {
         -webkit-appearance: none;

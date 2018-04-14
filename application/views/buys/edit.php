@@ -22,16 +22,16 @@
             <input type="hidden" name="action" id="action" value="">
             <input type="hidden" name="OkSaveData" id="OkSaveData" value="TRUE">
             <input type="hidden" name="option_upload" id="option_upload" value="0">
-
             <div class="card-box">
                 <div class="row">
                     <h4 class="header-title m-t-0 m-b-30"><i class="fa fa-arrows"></i> Update Purchase Invoice
                     </h4>
                 </div>
+
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">যোগানদারের নাম</label>
+                            <label class="col-md-3 control-label">Supplier Name</label>
                             <div class="col-md-9">
                                 <select class="form-control required" name="data[customer_id]" id="customer_id"">
                                 <?php
@@ -46,30 +46,11 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">পণ্যের নাম</label>
-                            <div class="col-md-9">
-                                <select class="form-control required" name="data[product_id]" id="product_id">
-                                    <?php
-                                    foreach ($products as $product) {
-                                        ?>
-                                        <option
-                                            value="<?php echo $product->id; ?>" <?php if($invoice_data->product_id == $product->id){?> selected="selected" <?php } ?>><?php echo $product->name; ?></option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-sm-6">
                         <div class="form-group address_div">
-                            <label class="col-md-3 control-label" title="Product Description">নোট</label>
+                            <label class="col-md-3 control-label" title="Product Description">Note</label>
                             <div class="col-md-9">
                                 <input class="form-control" placeholder="Product Description"
                                        type="text"
@@ -79,157 +60,114 @@
                         </div>
                     </div>
                 </div>
-                <hr>
                 <div class="row">
 
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">মোট বস্তা</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" type="number" value="<?php echo $invoice_data->total_bosta;?>"  min="1" step="0.01" name="data[total_bosta]" id="total_bosta" />
+                    <div class="col-md-12 column">
+                        <div id="info"></div>
+                        <table class="table table-bordered table-hover" id="whole_purchase">
+                            <thead>
+                            <tr>
+                                <th class="text-center" width="3%">#</th>
+                                <th width="23%">Product Name</th>
+                                <th width="21%">Brand Name</th>
+                                <th width="10%">Total Bosta</th>
+                                <th width="10%">Bosta/KG</th>
+                                <th width="14%">Price/Bosta</th>
+                                <th width="17%">Sub total</th>
+                                <th width="5%" class="text-center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $count_invoice_details_data  = count($invoice_details_data);
+                            ?>
+                            <input type="hidden" id="total_row" value="<?php echo $count_invoice_details_data;?>" />
+                            <?php
+                            if($count_invoice_details_data > 0){
+                                $i=0;
+                                foreach($invoice_details_data as $data){ ?>
+                                    <tr id='row<?php echo $i;?>'>
+                                <td><?php echo ($i+1);?></td>
+                                <td>
+                                    <select class="form-control required" name="product_id[]" id="product_id">
+                                        <?php foreach ($products as $product) { ?>
+                                            <option value="<?php echo $product->id; ?>" <?php if($data->product_id == $product->id){?> selected="selected" <?php } ?>><?php echo $product->name; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control required" name="brand_id[]" id="brand_id">
+                                        <?php foreach ($brands as $brand) { ?>
+                                            <option value="<?php echo $brand->id; ?>" <?php if($data->brand_id == $brand->id){?> selected="selected" <?php } ?>><?php echo $brand->name; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" id='total_bosta<?php echo $i;?>' name='total_bosta[]' placeholder='Total Bosta' value="<?php echo intval($data->total_bosta);?>" min="0"  class="form-control num_val required" onkeyup="totalBosta(<?php echo $i;?>)" />
+                                </td>
+                                <td>
+                                    <input type="number" id='bosta_per_kg<?php echo $i;?>' name='bosta_per_kg[]' placeholder='Bosta/KG' min="0.00" value="<?php echo $data->bosta_per_kg;?>" placeholder='0.00' step="0.01" class="form-control num_val required" />
+                                </td>
+                                <td>
+                                    <input type="number" id='price_per_bosta<?php echo $i;?>' name='price_per_bosta[]' placeholder='0.00' value="<?php echo $data->price_per_bosta;?>" step="0.01" class="form-control required" onkeyup="pricePerBosta(<?php echo $i;?>)" />
+                                </td>
+                                <td>
+                                    <input type="number" readonly id='sub_total_price<?php echo $i;?>' name='sub_total_price[]' placeholder='0.00' value="<?php echo $data->sub_total_price;?>" step="0.01" class="form-control" required/>
+                                </td>
+                                <td><a onclick="deleteRow('<?php echo $i;?>')" id="delete_row<?php echo $i;?>" class="pull-right btn btn-default cross_row">X</a></td>
+                            </tr>
+                                <?php
+                                    $i++;
+                                }
+                            }?>
+                            <tr id='row<?php echo $count_invoice_details_data;?>'></tr>
+                            </tbody>
+                        </table>
+                        <a id="add_row" class="btn btn-success pull-right btn-xs">Add more [+]</a>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-md-6"></div>
+                            <div class="col-sm-6">
+                                <table class=" table mrg20T table-hover table-style" style="margin-top: 6px">
+                                    <tbody class="tbody-style">
+                                    <input type="hidden" name="total_purchase_cost" id="total_purchase_cost" value="<?php echo $invoice_data->total_purchase_cost;?>" />
+                                    <tr class="font-bold font-black tr-style" style="text-align: right">
+                                        <td align="right"> <b>Grand Total :</b></td>
+                                        <td ><b>$<span id="total_purchase_cost_text"><?php echo number_format($invoice_data->total_purchase_cost,2);?></span></b></td>
+                                    </tr>
+                                    <tr class="font-bold font-black tr-style">
+                                        <td colspan="5" align="right"> </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">কত কেজি বস্তা ?</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Bosta Per KG"
-                                       type="number" min="1" step="0.01"
-                                       name="data[bosta_per_kg]" id="bosta_per_kg" value="<?php echo $invoice_data->bosta_per_kg;?>"/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6" style="text-align: right">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">&nbsp;</label>
+                                    <div class="col-md-7">
+                                        <button type="button" class="btn" onclick="javascript:invoice_cancel();"><i
+                                                class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back
+                                        </button>
+                                        <button class="btn btn-info waves-effect waves-light" type="button" onclick="javascript:invoice_reset(<?php echo $invoice_id;?>);"><i
+                                                class="fa fa-refresh" aria-hidden="true"></i> Reset
+                                        </button>
+                                        <button class="btn btn-success waves-effect waves-light" type="submit"><i
+                                                class="fa fa-save" aria-hidden="true"></i> Update
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">মোট মণ </label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Total Mann"
-                                       type="number" min="1" step="0.01"
-                                       name="data[total_mann]" id="total_mann" parsley-trigger="change"
-                                       value="<?php echo $invoice_data->total_mann;?>" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">মোট কেজি</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Total KG"
-                                       type="number"  min="1" step="0.01"
-                                       name="data[total_kg]" id="total_kg" parsley-trigger="change"
-                                       value="<?php echo $invoice_data->total_kg;?>" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">এক মণের দর</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" type="number" value="<?php echo $invoice_data->price_per_mann;?>"  min="1" step="0.01" name="data[price_per_mann]" id="price_per_mann" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">পণ্যের দর</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Product Cost"
-                                       type="number"  min="0" step="0.01"
-                                       name="data[product_cost]" id="product_cost" value="<?php echo $invoice_data->product_cost;?>" readonly/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">একটি বস্তার দর</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Per Bosta Price"
-                                       type="number" min="0" step="0.01"
-                                       name="data[price_per_bosta]" id="price_per_bosta" parsley-trigger="change"
-                                       value="<?php echo $invoice_data->price_per_bosta;?>" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">বস্তার মোট দর</label>
-                            <div class="col-md-7">
-                                <input class="form-control required"
-                                       type="number"  min="0" step="0.01"
-                                       name="data[bosta_cost]" id="bosta_cost" parsley-trigger="change"
-                                       value="<?php echo $invoice_data->bosta_cost;?>" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">পরিবহন খরচ</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" type="number" min="0" step="0.01" value="<?php echo $invoice_data->transportation_cost;?>" name="data[transportation_cost]" id="transportation_cost" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">লেবার খরচ</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Casual Labor Cost"
-                                       type="number"  min="0" step="0.01"
-                                       name="data[casual_labor_cost]" id="casual_labor_cost" value="<?php echo $invoice_data->casual_labor_cost;?>"/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">মোট খরচ</label>
-                            <div class="col-md-7">
-                                <input class="form-control required" placeholder="Per Bosta Price"
-                                       type="number" min="0" step="0.01"
-                                       name="data[total_purchase_cost]" id="total_purchase_cost" parsley-trigger="change"
-                                       value="<?php echo $invoice_data->total_purchase_cost;?>" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">প্রতি কেজি খরচ</label>
-                            <div class="col-md-7">
-                                <input class="form-control required"
-                                       type="number"  min="0" step="0.01"
-                                       name="data[per_kg_purchase_price]" id="per_kg_purchase_price" parsley-trigger="change"
-                                       value="<?php echo $invoice_data->per_kg_purchase_price;?>" readonly/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 col-sm-6" style="text-align: right">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">&nbsp;</label>
-                            <div class="col-md-7">
-                                <button type="button" class="btn" onclick="javascript:invoice_cancel();">Cancel
-                                </button>
-                                <button type="button" class="btn btn-info" onclick="javascript:invoice_reset(<?php echo $invoice_id;?>);">Reset
-                                </button>
-                                <button class="btn btn-primary waves-effect waves-light" type="submit"> Update Purchase Info
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -238,6 +176,11 @@
 </div>
 
 
+<?php
+/*echo '<pre>';
+print_r($invoice_details_data);
+print_r($invoice_data);*/
+?>
 <style type="text/css">
     .form-horizontal .checkbox {
         padding-top: 0 !important;
@@ -250,10 +193,119 @@
     }
 </style>
 <script type="text/javascript">
+
+    /** ADD ROW **/
+    var i = parseInt('<?php echo $count_invoice_details_data;?>');
+    $("#add_row").click(function () {
+        var current_total_row = $("#total_row").val();
+        $('#row' + i).html("<td>" + (i + 1) + "</td>" +
+            "<td>"+
+            "<select class='form-control required' name='product_id[]' id='product_id'>"+
+            <?php foreach ($products as $product) { ?>
+            "<option value='<?php echo $product->id; ?>'><?php echo $product->name; ?></option>"+
+            <?php } ?>
+            "</select>"+
+            "</td>"+
+            "<td>"+
+            "<select class='form-control required' name='brand_id[]' id='brand_id'>"+
+            <?php foreach ($brands as $brand) { ?>
+            "<option value='<?php echo $brand->id; ?>'><?php echo $brand->name; ?></option>"+
+            <?php } ?>
+            "</select>"+
+            "</td>"+
+            "<td><input type='number' id='total_bosta"+ i +"' name='total_bosta[]' placeholder='Total Bosta' value='0' min='0'  class='form-control num_val required' onkeyup='totalBosta(" + i + ")' /></td>" +
+            "<td><input type='number' id='bosta_per_kg"+i+"' name='bosta_per_kg[]' placeholder='Bosta/KG' min='0.00' value='0.00' placeholder='0.00' step='0.01' class='form-control required'  /></td>" +
+            "<td><input type='number' id='price_per_bosta"+i+"' name='price_per_bosta[]' placeholder='0.00' value='0.00' step='0.01' class='form-control required' onkeyup='pricePerBosta(" + i + ")' /></td>" +
+            "<td><input type='number' readonly id='sub_total_price"+i+"' name='sub_total_price[]' placeholder='0.00' value='0.00' step='0.01' class='form-control' required/></td>" +
+            "<td><a onClick='deleteRow(" + i + ")' id='delete_row" + i + "' class='pull-right btn btn-default cross_row' >X</a></td>");
+        $('#whole_purchase').append('<tr id="row' + (i + 1) + '"></tr>');
+        if((parseInt(current_total_row) + 1)>1){
+            $(".cross_row").show();
+        }
+        $("#total_row").val((parseInt(current_total_row) + 1));
+        i++;
+    });
+
+    function deleteRow(i){
+        var current_row_sub_total = $("#sub_total_price"+i).val();
+        var total_purchase_cost = $("#total_purchase_cost").val();
+        var total_purchase_cost_cal = parseFloat(total_purchase_cost) - parseFloat(current_row_sub_total);
+        $('#total_purchase_cost_text').text(total_purchase_cost_cal.toFixed(2)); // Write
+        $('#total_purchase_cost').val(total_purchase_cost_cal.toFixed(2)); // Write
+
+        var current_total_row = $("#total_row").val();
+        if((parseInt(current_total_row) - 1)<2){
+            $(".cross_row").hide();
+        }
+        $("#total_row").val((parseInt(current_total_row) - 1));
+        $("#row"+i).remove();
+    }
+
+    /* on keyup total bosta Change */
+    function totalBosta(i) {
+        var prev_sub_total = $("#sub_total_price"+i).val();
+
+        var total_bosta = $('#total_bosta'+i).val();
+        total_bosta = parseInt(total_bosta) || 0;
+
+        var price_per_bosta = $('#price_per_bosta'+i).val();
+        if( price_per_bosta.length === 0 ) { price_per_bosta = 0.00; }
+
+        var  subTotalCal =  parseFloat(total_bosta * price_per_bosta);
+        $('#sub_total_price'+i).val(subTotalCal.toFixed(2));
+
+        var calculated_sub_total = subTotalCal - parseFloat(prev_sub_total);
+        calPurchaseTotal(calculated_sub_total);
+    }
+
+    /* on keyup total bosta Change */
+    function pricePerBosta(i) {
+        var prev_sub_total = $("#sub_total_price"+i).val();
+
+        var total_bosta = $('#total_bosta'+i).val();
+        total_bosta = parseInt(total_bosta) || 0;
+
+        var price_per_bosta = $('#price_per_bosta'+i).val();
+        if( price_per_bosta.length === 0 ) { price_per_bosta = 0.00; }
+
+        var  subTotalCal =  parseFloat(total_bosta * price_per_bosta);
+        $('#sub_total_price'+i).val(subTotalCal.toFixed(2));
+
+        var calculated_sub_total = subTotalCal - parseFloat(prev_sub_total);
+        calPurchaseTotal(calculated_sub_total);
+    }
+
+
+    /** Total purchase cost Calculation **/
+    function calPurchaseTotal(sub_total){
+        var total_purchase_cost = $("#total_purchase_cost").val();
+        var total_purchase_cost_cal = sub_total + parseFloat(total_purchase_cost);
+        $('#total_purchase_cost_text').text(total_purchase_cost_cal.toFixed(2)); // Write
+        $('#total_purchase_cost').val(total_purchase_cost_cal.toFixed(2)); // Write
+    }
+
     function invoice_reset(id){
         window.location.href = '<?php echo base_url();?>buys/edit/'+id;
     }
+
     function invoice_cancel(){
         window.location.href = '<?php echo base_url();?>buys';
     }
+</script>
+
+<style type="text/css">
+    .cross_row{
+        color: red;
+    }
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance:textfield;
+    }
+</style>
+<script type="text/javascript">
 </script>

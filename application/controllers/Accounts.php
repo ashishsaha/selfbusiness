@@ -40,7 +40,7 @@ class Accounts extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - All Parent Account List',
+            'page_title' => 'bsSelfBusiness System - All Parent Account List',
             'sidebar_menu_title' => 'Setting Management',
             'sidebar_menu' => 'Parent Account List',
             'parent_account_data' => $parent_account_data
@@ -86,7 +86,7 @@ class Accounts extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - Add Parent Account',
+            'page_title' => 'bsSelfBusiness System - Add Parent Account',
             'sidebar_menu_title' => 'Setting Management',
             'sidebar_menu' => 'Add Parent Account'
         );
@@ -263,7 +263,7 @@ class Accounts extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - All Child Account List',
+            'page_title' => 'bsSelfBusiness System - All Child Account List',
             'sidebar_menu_title' => 'Setting Management',
             'sidebar_menu' => 'Child Account List',
             'child_account_data' => $child_account_data
@@ -309,7 +309,7 @@ class Accounts extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsDMM System - Add Child Account',
+            'page_title' => 'bsSelfBusiness System - Add Child Account',
             'sidebar_menu_title' => 'Setting Management',
             'sidebar_menu' => 'Add Child Account'
         );
