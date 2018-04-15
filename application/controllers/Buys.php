@@ -120,6 +120,7 @@ class Buys extends CI_Controller
                 $data['validation_error'] = $validation_error;
             } else {
                 // Adding invoice
+                $_POST['data']['invoice_no'] = $this->invoice_mod->set_invoice_no(0); // 0 For buy
                 $_POST['data']['customer_id'] = $_POST['data']['customer_id'] ;
                 $_POST['data']['description'] = $_POST['data']['description'] ;
                 $_POST['data']['total_cost'] = $_POST['total_purchase_cost'];
@@ -212,7 +213,7 @@ class Buys extends CI_Controller
         }
     }
 
-    /* Edit Product */
+    /* Edit Buy */
     public function edit()
     {
         if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
@@ -318,6 +319,55 @@ class Buys extends CI_Controller
 
         // Send $data array() to index page
         $data['content'] = $this->load->view('buys/edit', $data, true);
+        // Use Layout
+        $this->load->view('layout/admin_layout', $data);
+    }
+    
+    /* Buy Details */
+    public function details()
+    {
+        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+            redirect('users/login');
+        }
+        $this->session->unset_userdata('active_menu');
+        $this->session->set_userdata('active_menu', 'buys');
+
+        // Define Data array
+        $data = array(
+            'page_title' => 'Purchase Invoice Details',
+            'sidebar_menu_title' => 'Buy / Sell Management',
+            'sidebar_menu' => 'Purchase Invoice Details'
+        );
+
+        $data['js'] = array(
+            'assets/plugins/parsleyjs/dist/parsley.min.js',
+            'assets/plugins/fileuploads/js/dropify.min.js'
+        );
+        $data['css'] = array(
+            'assets/plugins/fileuploads/css/dropify.min.css'
+        );
+
+        $data['form_validation'] = '<script type="text/javascript">
+										$(document).ready(function() {
+											$("#form1").parsley();
+										});
+									</script>';
+
+        $invoice_id = $this->uri->segment(3);
+
+        if (!empty($invoice_id)) {
+            $invoice_data = $this->invoice_mod->get_invoice($invoice_id);
+            echo '<pre>'; print_r($invoice_data);die();
+            $invoice_details_data = $this->invoice_mod->get_invoice_details_by_invoice_id($invoice_id);
+        }
+
+        $data['invoice_data'] = $invoice_data;
+        $data['invoice_details_data'] = $invoice_details_data;
+        $data['invoice_id'] = $invoice_id;
+
+
+        // Send $data array() to index page
+        $data['content'] = $this->load->view('buys/details', $data, true);
         // Use Layout
         $this->load->view('layout/admin_layout', $data);
     }

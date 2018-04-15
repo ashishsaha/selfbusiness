@@ -28,7 +28,7 @@
                    class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th style="width: 5%">ID</th>
+                    <th style="width: 5%">Invoice</th>
                     <th title="Customer Name">Customer Name</th>
                     <th title="Total Cost">Total Cost</th>
                     <th title="Selling Date">Selling Date</th>
@@ -50,7 +50,7 @@
                         }
                         ?>
                         <tr>
-                            <td><?php echo $buy_invoice->id; ?> </td>
+                            <td><?php echo $buy_invoice->invoice_no; ?> </td>
                             <td><?php echo $buy_invoice->full_name; ?> </td>
                             <td><?php echo $buy_invoice->total_cost; ?> </td>
                             <td><?php echo date("Y-m-d", strtotime($buy_invoice->created)); ?> </td>
@@ -130,7 +130,7 @@
         $(document).ready(function () {
             $('#datatable-buttons').DataTable({
                 "order": [
-                    [ 1, "desc" ]
+                    [ 0, "desc" ]
                 ]
             });
         });

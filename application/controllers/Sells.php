@@ -78,7 +78,7 @@ class Sells extends CI_Controller
         $this->load->view('layout/admin_layout', $data);
     }
     
-    /* ADD Buy Info */
+    /* ADD Sell Info */
     public function add()
     {
         if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
@@ -120,6 +120,7 @@ class Sells extends CI_Controller
                 $data['validation_error'] = $validation_error;
             } else {
                 // Adding invoice
+                $_POST['data']['invoice_no'] = $this->invoice_mod->set_invoice_no(1); // 1 For sell
                 $_POST['data']['customer_id'] = $_POST['data']['customer_id'] ;
                 $_POST['data']['description'] = $_POST['data']['description'] ;
                 $_POST['data']['total_cost'] = $_POST['total_selling_cost'];
@@ -213,8 +214,118 @@ class Sells extends CI_Controller
             exit();
         }
     }
+    
+    /* Edit Sell */
+    public function edit()
+    {
+        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+            redirect('users/login');
+        }
+        $this->session->unset_userdata('active_menu');
+        $this->session->set_userdata('active_menu', 'sells');
 
-    /* Edit Product */
+        // Define Data array
+        $data = array(
+            'page_title' => 'Update Sell Invoice',
+            'sidebar_menu_title' => 'Buy / Sell Management',
+            'sidebar_menu' => 'Update Sell Invoice'
+        );
+
+        $data['js'] = array(
+            'assets/plugins/parsleyjs/dist/parsley.min.js',
+            'assets/plugins/fileuploads/js/dropify.min.js'
+        );
+        $data['css'] = array(
+            'assets/plugins/fileuploads/css/dropify.min.css'
+        );
+
+        $data['form_validation'] = '<script type="text/javascript">
+										$(document).ready(function() {
+											$("#form1").parsley();
+										});
+									</script>';
+
+        $invoice_id = $this->uri->segment(3);
+
+        if (!empty($invoice_id)) {
+            $invoice_data = $this->invoice_mod->get_invoice_by_id($invoice_id);
+            $invoice_details_data = $this->invoice_mod->get_invoice_details_by_invoice_id($invoice_id);
+        }
+
+        if (isset($_POST['OkSaveData'])) {
+            $data['invoice_id'] = $invoice_id;
+
+            $this->form_validation->set_rules('data[customer_id]', 'Customer Name', 'trim|required');
+            $this->form_validation->set_rules('product_id[]', 'Product ID', 'trim|required');
+            $this->form_validation->set_rules('brand_id[]', 'Brand ID', 'trim|required');
+
+            if ($this->form_validation->run() == FALSE) {
+                $validation_error = validation_errors();
+                $data['validation_error'] = $validation_error;
+            } else {
+
+                // Update invoice
+                $_POST['data']['customer_id'] = $_POST['data']['customer_id'] ;
+                $_POST['data']['description'] = $_POST['data']['description'] ;
+                $_POST['data']['total_cost'] = $_POST['total_cost'];
+                $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
+                $_POST['data']['updated'] = date("Y-m-d h:i:s");
+                $this->invoice_mod->update_invoice($_POST['data'], $invoice_id);
+
+                // Remove existing invoice details by invoice_id
+                $this->invoice_mod->delete_invoice_details($invoice_id);
+
+                // Update invoice details
+                $product_id_arr         =  $_POST['product_id'];
+                $brand_id_arr           =  $_POST['brand_id'];
+                $total_bosta_arr        =  $_POST['total_bosta'];
+                $bosta_per_kg_arr       =  $_POST['bosta_per_kg'];
+                $price_per_bosta_arr    =  $_POST['price_per_bosta'];
+                $sub_total_price_arr    =  $_POST['sub_total_price'];
+
+                if(count($product_id_arr)>0){
+                    foreach($product_id_arr as $key=>$product_id){
+                        $total_maan = ($total_bosta_arr[$key] * $bosta_per_kg_arr[$key])/40;
+                        $total_kg = ($total_bosta_arr[$key] * $bosta_per_kg_arr[$key]);
+                        $detail_data_arr = array(
+                            'invoice_id' => $invoice_id,
+                            'product_id' => $product_id,
+                            'brand_id' => $brand_id_arr[$key],
+                            'total_bosta' => $total_bosta_arr[$key],
+                            'bosta_per_kg' => $bosta_per_kg_arr[$key],
+                            'total_maan' => $total_maan,
+                            'total_kg' => $total_kg,
+                            'price_per_bosta' => $price_per_bosta_arr[$key],
+                            'sub_total_price' => $sub_total_price_arr[$key],
+                        );
+                        $this->invoice_mod->add_invoice_detail($detail_data_arr);
+                    }
+                }
+
+                $flash_msgs = array('flash_msgs' => 'Sell invoice has been updated successfully', 'alerts' => 'success');
+                $this->session->set_userdata($flash_msgs);
+                redirect(base_url() . 'sells', 'location', '301'); // 301 redirected
+            }
+        }
+
+        $data['invoice_data'] = $invoice_data;
+        $data['invoice_details_data'] = $invoice_details_data;
+        $data['invoice_id'] = $invoice_id;
+
+        // get all customer name
+        $data['customers']  = $this->customer_mod->get_all_supplier_customer(array("is_customer" => 1));
+
+        // get all product name
+        $data['products']  = $this->product_mod->get_all_products();
+        $data['brands']  = $this->brand_mod->get_all_brands();
+
+        // Send $data array() to index page
+        $data['content'] = $this->load->view('sells/edit', $data, true);
+        // Use Layout
+        $this->load->view('layout/admin_layout', $data);
+    }
+
+    /* Edit Product 
     public function edit()
     {
         if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
@@ -372,7 +483,7 @@ class Sells extends CI_Controller
         $data['content'] = $this->load->view('sells/edit', $data, true);
         // Use Layout
         $this->load->view('layout/admin_layout', $data);
-    }
+    }*/
 
     /*
      * Delete sell invoice

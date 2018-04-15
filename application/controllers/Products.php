@@ -86,7 +86,7 @@ class Products extends CI_Controller
                 $validation_error = validation_errors();
                 $data['validation_error'] = $validation_error;
             } else {
-                $_POST['data']['status'] = (!empty($_POST['data']['status'])) ? 1 : 0;
+                $_POST['data']['status'] = 1;
                 if($product_id){
                     $this->product_mod->update_product($_POST['data'], $product_id);
                     $msgs = 'Product has been updated successfully';

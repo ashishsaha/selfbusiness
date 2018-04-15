@@ -63,7 +63,7 @@
 
                 <div class="col-md-12 column">
                     <div id="info"></div>
-                    <table class="table table-bordered table-hover" id="whole_purchase">
+                    <table class="table table-bordered table-hover" id="whole_sell">
                         <thead>
                         <tr>
                             <th class="text-center" width="3%">#</th>
@@ -106,7 +106,7 @@
                             <td>
                                 <input type="number" readonly id='sub_total_price0' name='sub_total_price[]' placeholder='0.00' value="0.00" step="0.01" class="form-control" required/>
                             </td>
-                            <td><a style="display: none" onclick="deleteRow(0)" id="delete_row0" class="pull-right btn btn-default">X</a></td>
+                            <td><a style="display: none" onclick="deleteRow(0)" id="delete_row0" class="pull-right btn btn-default cross_row">X</a></td>
                         </tr>
                         <tr id='row1'></tr>
                         </tbody>
@@ -193,21 +193,15 @@
             "<td><input type='number' id='bosta_per_kg"+i+"' name='bosta_per_kg[]' placeholder='Bosta/KG' min='0.00' value='0.00' placeholder='0.00' step='0.01' class='form-control required'  /></td>" +
             "<td><input type='number' id='price_per_bosta"+i+"' name='price_per_bosta[]' placeholder='0.00' value='0.00' step='0.01' class='form-control required' onkeyup='pricePerBosta(" + i + ")' /></td>" +
             "<td><input type='number' readonly id='sub_total_price"+i+"' name='sub_total_price[]' placeholder='0.00' value='0.00' step='0.01' class='form-control' required/></td>" +
-            //if(parseInt(current_total_row)>0){
-            "<td><a onClick='deleteRow(" + i + ")' id='delete_row" + i + "' class='pull-right btn btn-default' >X</a></td>");
-            //}else{
-            //"<td></td>");
-            //}
-        $('#whole_purchase').append('<tr id="row' + (i + 1) + '"></tr>');
-        /*if(parseInt(current_total_row)>0){
-            $("#delete_row0").css("display","block");
-        }else{
-            $("#delete_row0").css("display","none");
-        }*/
+            "<td><a onClick='deleteRow(" + i + ")' id='delete_row" + i + "' class='pull-right btn btn-default cross_row' >X</a></td>");
+        $('#whole_sell').append('<tr id="row' + (i + 1) + '"></tr>');
+        if((parseInt(current_total_row) + 1)>1){
+            $(".cross_row").show();
+        }
         $("#total_row").val((parseInt(current_total_row) + 1));
         i++;
     });
-
+    
     function deleteRow(i){
         var current_row_sub_total = $("#sub_total_price"+i).val();
         var total_selling_cost = $("#total_selling_cost").val();
@@ -216,8 +210,10 @@
         $('#total_selling_cost').val(total_selling_cost_cal.toFixed(2)); // Write
 
         var current_total_row = $("#total_row").val();
+        if((parseInt(current_total_row) - 1)<2){
+            $(".cross_row").hide();
+        }
         $("#total_row").val((parseInt(current_total_row) - 1));
-
         $("#row"+i).remove();
     }
 
@@ -271,6 +267,10 @@
 </script>
 
 <style type="text/css">
+    .cross_row{
+        color: red;
+    }
+    
     input[type=number]::-webkit-outer-spin-button,
     input[type=number]::-webkit-inner-spin-button {
         -webkit-appearance: none;

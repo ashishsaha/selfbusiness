@@ -46,28 +46,11 @@
                                 </div>
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label"  title="Brand Status?">Status</label>
-                                        <div class="col-md-9">
-                                            <div class="checkbox checkbox-success checkbox-single">
-                                                <input id="status" title="Brand Status" name="data[status]" aria-label="Single checkbox Two" type="checkbox">
-                                                <label></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                            
-
-                            <div class="row">
-                                <div class="col-md-12 col-sm-6" style="text-align: right">
-                                    <div class="form-group">
                                         <label class="col-md-3 control-label">&nbsp;</label>
                                         <div class="col-md-9">
-                                            <button type="button" class="btn" onclick="javascript:add_brand_cancel();">Cancel
-                                            </button>
                                             <button class="btn btn-primary waves-effect waves-light" id="submitButton" type="submit"> Save Info
+                                            </button>
+                                            <button type="button" class="btn" onclick="javascript:add_brand_cancel();">Cancel
                                             </button>
                                         </div>
                                     </div>
@@ -169,7 +152,6 @@
     function edit_brand(id) {
         $("#id").val('');
         $("#name").val('');
-        $("#status").prop('checked', false);
         var selected_id = $("#selected_id").val();
         $("#brand_"+selected_id).css("background","none");
         $.ajax({
@@ -182,9 +164,6 @@
                 
                 $("#id").val(data.id);
                 $("#name").val(data.name);
-                var status = parseInt(data.status);
-                    $("#status").prop('checked', status);
-                
                 
                 $('#form1').attr('action', '<?php echo base_url(); ?>brands');
                 //$('#form1').append("<input type='hidden' name='edit' value='"+id+"'/>");
@@ -202,7 +181,6 @@
         $("#adding_form").show(400);
         $("#id").val('');
         $("#name").val('');
-        $("#status").prop('checked', false);
         
         $('#form1').attr('action', '<?php echo base_url(); ?>brands');
         $("#submitButton").text("Save Info");
@@ -224,7 +202,7 @@
         $(document).ready(function () {
             $('#datatable-buttons').DataTable({
                 "order": [
-                    [ 1, "desc" ]
+                    [0, "desc" ]
                 ]
             });
         });

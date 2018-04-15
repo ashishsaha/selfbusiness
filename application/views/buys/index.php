@@ -28,11 +28,11 @@
                    class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th style="width: 5%">ID</th>
+                    <th style="width: 5%">Invoice</th>
                     <th title="Supplier Name">Supplier Name</th>
                     <th title="Total Purchase Cost">Total Cost</th>
                     <th title="Purchase Date">Purchase Date</th>
-                    <th style="width: 10%">Action</th>
+                    <th style="width: 12%">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -50,7 +50,7 @@
                         }
                         ?>
                         <tr>
-                            <td><?php echo $buy_invoice->id; ?> </td>
+                            <td><?php echo $buy_invoice->invoice_no; ?> </td>
                             <td><?php echo $buy_invoice->full_name; ?> </td>
                             <td><?php echo $buy_invoice->total_cost; ?> </td>
                             <td><?php echo date("Y-m-d", strtotime($buy_invoice->created)); ?> </td>
@@ -60,6 +60,18 @@
                                         class="on-default edit-row"
                                         onclick="javascript:edit_buy_invoice(<?php echo $buy_invoice->id; ?>);">
                                     <i class="fa fa-edit"></i></button>
+                                &nbsp;
+                                
+                                <button title="View Invoice" data-tooltip="true" type="button"
+                                        class="on-default view-row"
+                                        onclick="javascript:details_buy_invoice(<?php echo $buy_invoice->id; ?>);">
+                                    <i class="fa fa-eye"></i></button>
+                                &nbsp;
+                                
+                                <button title="Print Invoice" data-tooltip="true" type="button"
+                                        class="on-default print-row"
+                                        onclick="javascript:print_buy_invoice(<?php echo $buy_invoice->id; ?>);">
+                                    <i class="fa fa-print"></i></button>
                                 &nbsp;
 
                                 <button title="Delete Invoice" data-tooltip="true" type="button"
@@ -113,6 +125,10 @@
 </div>
 
 <script type="text/javascript">
+    function details_buy_invoice(id) {
+        window.location.href = '<?php echo base_url();?>buys/details/' + id;
+    }
+    
     function edit_buy_invoice(id) {
         window.location.href = '<?php echo base_url();?>buys/edit/' + id;
     }
@@ -130,7 +146,7 @@
         $(document).ready(function () {
             $('#datatable-buttons').DataTable({
                 "order": [
-                    [ 1, "desc" ]
+                    [ 0, "desc" ]
                 ]
             });
         });

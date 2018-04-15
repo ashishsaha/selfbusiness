@@ -46,29 +46,10 @@
                                 </div>
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label"  title="Is Customer?">Status</label>
-                                        <div class="col-md-9">
-                                            <div class="checkbox checkbox-success checkbox-single">
-                                                <input id="is_customer" title="Is Customer?" name="data[status]" aria-label="Single checkbox Two" type="checkbox">
-                                                <label></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                            
-
-                            <div class="row">
-                                <div class="col-md-12 col-sm-6" style="text-align: right">
-                                    <div class="form-group">
                                         <label class="col-md-3 control-label">&nbsp;</label>
                                         <div class="col-md-9">
-                                            <button type="button" class="btn" onclick="javascript:add_product_cancel();">Cancel
-                                            </button>
-                                            <button class="btn btn-primary waves-effect waves-light" id="submitButton" type="submit"> Save Info
-                                            </button>
+                                            <button class="btn btn-primary waves-effect waves-light" id="submitButton" type="submit"> Save Info </button>
+                                            <button type="button" class="btn" onclick="javascript:add_product_cancel();"> Cancel </button>
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +154,6 @@
     function edit_product(id) {
         $("#id").val('');
         $("#name").val('');
-        $("#is_customer").prop('checked', false);
         var selected_id = $("#selected_id").val();
         $("#product_"+selected_id).css("background","none");
         $.ajax({
@@ -186,8 +166,6 @@
                 
                 $("#id").val(data.id);
                 $("#name").val(data.name);
-                var is_customer = parseInt(data.status);
-                    $("#is_customer").prop('checked', is_customer);
                 
                 
                 $('#form1').attr('action', '<?php echo base_url(); ?>products');
@@ -206,7 +184,6 @@
         $("#adding_form").show(400);
         $("#id").val('');
         $("#name").val('');
-        $("#is_customer").prop('checked', false);
         
         $('#form1').attr('action', '<?php echo base_url(); ?>products');
         $("#submitButton").text("Save Info");
@@ -228,7 +205,7 @@
         $(document).ready(function () {
             $('#datatable-buttons').DataTable({
                 "order": [
-                    [ 1, "desc" ]
+                    [ 0, "desc" ]
                 ]
             });
         });
