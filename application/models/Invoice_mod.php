@@ -168,7 +168,7 @@ class Invoice_mod extends CI_Model
     function get_invoice($id)
     {
         $where = '(inv.id="'.$id.'")';
-        $this->db->select("inv.id, inv.customer_id, inv.total_cost, c.id, c.full_name, c.contact_number");
+        $this->db->select("inv.id, inv.invoice_no, inv.customer_id, inv.total_cost, inv.created, c.id, c.full_name, c.contact_number, c.address");
         $this->db->from("invoices as inv");
         $this->db->join('customers as c', 'c.id = inv.customer_id', 'left');
         $this->db->where($where);
@@ -189,9 +189,10 @@ class Invoice_mod extends CI_Model
     function get_invoice_details($invoice_id)
     {
         $where = '(invoice_id="'.$invoice_id.'")';
-        $this->db->select("*");
+        $this->db->select("invd.*, p.name, b.name as brand_name");
         $this->db->from("invoice_details as invd");
         $this->db->join('products as p', 'p.id = invd.product_id', 'left');
+        $this->db->join('brands as b', 'b.id = invd.brand_id', 'left');
         $this->db->where($where);
         $query = $this->db->get();
         return $query->result();

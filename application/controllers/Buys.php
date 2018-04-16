@@ -28,6 +28,7 @@ class Buys extends CI_Controller
         $this->load->model('brand_mod');
         $this->load->model('customer_mod');
         $this->load->model('invoice_mod');
+        $this->load->model('setting_mod');
     }
 
     public function index()
@@ -357,13 +358,16 @@ class Buys extends CI_Controller
 
         if (!empty($invoice_id)) {
             $invoice_data = $this->invoice_mod->get_invoice($invoice_id);
-            echo '<pre>'; print_r($invoice_data);die();
-            $invoice_details_data = $this->invoice_mod->get_invoice_details_by_invoice_id($invoice_id);
+            $invoice_details_data = $this->invoice_mod->get_invoice_details($invoice_id);
+            //echo '<pre>'; print_r($invoice_details_data);die();
         }
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        //echo '<pre>'; print_r($company_info[0]);die();
 
         $data['invoice_data'] = $invoice_data;
         $data['invoice_details_data'] = $invoice_details_data;
         $data['invoice_id'] = $invoice_id;
+        $data['company_info'] = $company_info[0];
 
 
         // Send $data array() to index page
