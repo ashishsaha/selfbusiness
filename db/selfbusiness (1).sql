@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2018 at 07:18 PM
+-- Generation Time: Apr 17, 2018 at 08:14 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.20
 
@@ -87,8 +87,8 @@ CREATE TABLE `company_setup` (
   `bank_name` text,
   `bank_branch` text,
   `bank_location` text,
-  `purchase_invoice_no` int(6) DEFAULT NULL,
-  `sell_invoice_no` int(6) DEFAULT NULL,
+  `purchase_invoice_prefix` varchar(20) DEFAULT NULL,
+  `sell_invoice_prefix` varchar(20) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -97,8 +97,8 @@ CREATE TABLE `company_setup` (
 -- Dumping data for table `company_setup`
 --
 
-INSERT INTO `company_setup` (`id`, `company_name`, `contact_no`, `address`, `proprietor`, `bank_account_name`, `bank_account_number`, `bank_name`, `bank_branch`, `bank_location`, `purchase_invoice_no`, `sell_invoice_no`, `created`, `updated`) VALUES
-(1, 'Geeta Daal Meals and Industries Ltd', '01712954527', 'Dignagar, Kanaipur', 'Tapon Saha', '["Shibu Saha"]', '["2132321"]', '["NBL"]', '["Kanaipur Bazar"]', '["Kanaipur"]', NULL, NULL, NULL, '2018-04-07 12:50:25');
+INSERT INTO `company_setup` (`id`, `company_name`, `contact_no`, `address`, `proprietor`, `bank_account_name`, `bank_account_number`, `bank_name`, `bank_branch`, `bank_location`, `purchase_invoice_prefix`, `sell_invoice_prefix`, `created`, `updated`) VALUES
+(1, 'Geeta Daal Meals and Industries Ltd', '01712954527', 'Dignagar, Kanaipur', 'Tapon Saha', '["Shibu Saha"]', '["2132321"]', '["NBL"]', '["Kanaipur Bazar"]', '["Kanaipur"]', 'PINV', 'SINV', NULL, '2018-04-07 12:50:25');
 
 -- --------------------------------------------------------
 
@@ -138,7 +138,8 @@ INSERT INTO `customers` (`id`, `full_name`, `contact_number`, `is_customer`, `is
 (7, 'Rahim Molla', '12323', 0, 0, 0x33, 'Sator', NULL, NULL, NULL, NULL, NULL, 1, '2018-01-30 09:29:21', NULL),
 (8, 'Ranjon Saha', '1232323', 0, 0, 0x33, 'Address#1, Address#2', NULL, NULL, NULL, NULL, NULL, 1, '2018-01-30 09:30:04', NULL),
 (9, 'Nannu Molla', '12345678', 0, 0, 0x31, 'Test', NULL, NULL, NULL, NULL, NULL, 1, '2018-01-31 08:13:11', NULL),
-(10, 'Kamal Sheikh', '13123', 0, 0, 0x32, 'Labor', NULL, NULL, NULL, NULL, NULL, 1, '2018-01-31 08:16:08', NULL);
+(10, 'Kamal Sheikh', '13123', 0, 0, 0x32, 'Labor', NULL, NULL, NULL, NULL, NULL, 1, '2018-01-31 08:16:08', NULL),
+(11, 'Bappy Saha', '123123', 1, 0, 0x30, 'Pabna', '["N\\/A"]', '["N\\/A"]', '["N\\/A"]', '["N\\/A"]', '["N\\/A"]', 1, '2018-04-10 11:18:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -148,11 +149,12 @@ INSERT INTO `customers` (`id`, `full_name`, `contact_number`, `is_customer`, `is
 
 CREATE TABLE `invoices` (
   `id` bigint(20) NOT NULL,
+  `invoice_no` varchar(20) DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
   `description` text,
   `transportation_cost` float(10,2) DEFAULT '0.00',
   `labor_cost` float(10,2) DEFAULT '0.00',
-  `total_purchase_cost` float(14,2) DEFAULT '0.00' COMMENT 'Total cost of dynamic product sum(sub_total_price)',
+  `total_cost` float(14,2) DEFAULT '0.00' COMMENT 'Total cost of dynamic product sum(sub_total_price)',
   `accumulated_cost` float(14,2) DEFAULT '0.00',
   `invoice_type` tinyint(1) DEFAULT '0' COMMENT '0: purchase 1: sell',
   `status` tinyint(1) DEFAULT '1',
@@ -166,12 +168,12 @@ CREATE TABLE `invoices` (
 -- Dumping data for table `invoices`
 --
 
-INSERT INTO `invoices` (`id`, `customer_id`, `description`, `transportation_cost`, `labor_cost`, `total_purchase_cost`, `accumulated_cost`, `invoice_type`, `status`, `created_by`, `updated_by`, `created`, `updated`) VALUES
-(1, 5, '', 110.00, 200.00, 12870.00, 0.00, 0, 0, 1, 1, '2018-01-09 11:25:30', '2018-02-09 10:36:18'),
-(2, 5, '', 0.00, 0.00, 0.00, 50.00, 1, 1, 1, 1, '2018-02-05 10:51:22', '2018-02-06 09:59:37'),
-(3, 3, 'From kanaipur bazar', 100.00, 200.00, 12850.00, 0.00, 0, 1, 1, NULL, '2018-02-09 10:55:31', NULL),
-(4, 5, '', 100.00, 500.00, 16680.00, 0.00, 0, 1, 1, 1, '2018-02-10 09:45:33', '2018-02-10 09:48:30'),
-(5, 2, '', 2500.00, 100.00, 168200.00, 0.00, 0, 1, 1, NULL, '2018-03-03 11:27:39', NULL);
+INSERT INTO `invoices` (`id`, `invoice_no`, `customer_id`, `description`, `transportation_cost`, `labor_cost`, `total_cost`, `accumulated_cost`, `invoice_type`, `status`, `created_by`, `updated_by`, `created`, `updated`) VALUES
+(1, 'SINV000001', 5, '', 0.00, 0.00, 54205.00, 0.00, 1, 1, 1, NULL, '2018-04-16 10:54:21', NULL),
+(2, 'SINV000002', 4, '', 0.00, 0.00, 39750.00, 0.00, 1, 1, 1, NULL, '2018-04-16 10:55:37', NULL),
+(3, 'PINV000001', 3, '', 0.00, 0.00, 24150.00, 0.00, 0, 1, 1, NULL, '2018-04-16 10:57:08', NULL),
+(4, 'PINV000002', 3, '', 0.00, 0.00, 51065.00, 0.00, 0, 1, 1, NULL, '2018-04-16 10:57:34', NULL),
+(5, '3', 2, 'This group for the store management related 2', 0.00, 0.00, 26250.00, 0.00, 0, 1, 1, NULL, '2018-04-16 11:15:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -191,6 +193,18 @@ CREATE TABLE `invoice_details` (
   `price_per_bosta` float(10,2) DEFAULT NULL,
   `sub_total_price` float(12,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoice_details`
+--
+
+INSERT INTO `invoice_details` (`id`, `invoice_id`, `product_id`, `brand_id`, `total_bosta`, `bosta_per_kg`, `total_maan`, `total_kg`, `price_per_bosta`, `sub_total_price`) VALUES
+(1, 1, 4, 1, 20.00, 50.00, 25.00, 1000.00, 1750.00, 35000.00),
+(2, 1, 2, 1, 23.00, 25.00, 14.38, 575.00, 835.00, 19205.00),
+(3, 2, 2, 1, 50.00, 25.00, 31.25, 1250.00, 795.00, 39750.00),
+(4, 3, 2, 1, 30.00, 25.00, 18.75, 750.00, 805.00, 24150.00),
+(5, 4, 4, 1, 35.00, 50.00, 43.75, 1750.00, 1459.00, 51065.00),
+(6, 5, 2, 1, 30.00, 25.00, 18.75, 750.00, 875.00, 26250.00);
 
 -- --------------------------------------------------------
 
@@ -272,6 +286,7 @@ INSERT INTO `roles` (`id`, `name`, `status`) VALUES
 CREATE TABLE `transaction` (
   `id` bigint(20) NOT NULL,
   `trans_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: Hand Cash 1: Bank Transaction 3: Cheque',
+  `ref_invoice_no` varchar(50) DEFAULT NULL,
   `child_account_id` varchar(255) NOT NULL,
   `payment_from_or_to` int(11) DEFAULT NULL COMMENT 'Actually here will be id of supplier/customer and if transaction is not against person then it should be save as 0',
   `amount` double(12,2) NOT NULL DEFAULT '0.00',
@@ -292,19 +307,19 @@ CREATE TABLE `transaction` (
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`id`, `trans_type`, `child_account_id`, `payment_from_or_to`, `amount`, `note`, `status`, `trans_date`, `bank_account_from`, `bank_account_to`, `checque_no`, `salary_month`, `created_by`, `created`, `updated_by`, `updated`) VALUES
-(1, 0, '7', 0, 475.00, 'Testb', 1, '2018-01-24 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(2, 1, '7', 0, 475.00, 'It was for flour purchase', 1, '2018-01-25 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(3, 2, '7', 0, 500.00, '', 1, '2018-01-24 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(4, 0, '7', 0, 350.00, 'Test', -1, '2018-01-26 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(5, 0, '7', 0, 7000.00, 'Purchase machine equipment', 1, '2018-01-25 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(6, 0, '2', 9, 6750.00, 'For parts purchasing', 1, '2018-01-26 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(7, 0, '8', 0, 78.00, 'Tea bill and biscuit bill ', 1, '2018-01-25 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(8, 1, '3', 5, 275000.00, 'It has been sent by Madhob', 1, '2018-01-26 00:00:00', 'Shibu Saha,2132321,NBL,Kanaipur Bazar,Kanaipur', 'Ashish ,23242,NBL,Kanaipur,Faridpur', NULL, NULL, 1, NULL, 1, '2018-01-31 00:00:00'),
-(9, 0, '3', 2, 200000.00, '', 1, '2018-01-29 00:00:00', NULL, NULL, NULL, NULL, 1, '2018-01-29 00:00:00', 1, NULL),
-(10, 0, '5', 7, 5000.00, 'It is last month Salary', 1, '2018-01-30 00:00:00', NULL, NULL, NULL, 'January', 1, '2018-01-30 00:00:00', 1, '2018-01-30 00:00:00'),
-(11, 0, '2', 10, 800.00, '', 1, '2018-01-31 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
-(12, 0, '6', 5, 20000.00, 'note test', 1, '2018-01-31 00:00:00', NULL, NULL, NULL, NULL, 1, '2018-01-31 00:00:00', 1, '2018-01-31 00:00:00');
+INSERT INTO `transaction` (`id`, `trans_type`, `ref_invoice_no`, `child_account_id`, `payment_from_or_to`, `amount`, `note`, `status`, `trans_date`, `bank_account_from`, `bank_account_to`, `checque_no`, `salary_month`, `created_by`, `created`, `updated_by`, `updated`) VALUES
+(1, 0, NULL, '7', 0, 475.00, 'Testb', 1, '2018-01-24 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(2, 1, NULL, '7', 0, 475.00, 'It was for flour purchase', 1, '2018-01-25 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(3, 2, NULL, '7', 0, 500.00, '', 1, '2018-01-24 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(4, 0, NULL, '7', 0, 350.00, 'Test', -1, '2018-01-26 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(5, 0, NULL, '7', 0, 7000.00, 'Purchase machine equipment', 1, '2018-01-25 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(6, 0, NULL, '2', 9, 6750.00, 'For parts purchasing', 1, '2018-01-26 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(7, 0, NULL, '8', 0, 78.00, 'Tea bill and biscuit bill ', 1, '2018-01-25 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(8, 1, NULL, '3', 5, 275000.00, 'It has been sent by Madhob', 1, '2018-01-26 00:00:00', 'Shibu Saha,2132321,NBL,Kanaipur Bazar,Kanaipur', 'Ashish ,23242,NBL,Kanaipur,Faridpur', NULL, NULL, 1, NULL, 1, '2018-01-31 00:00:00'),
+(9, 0, NULL, '3', 2, 200000.00, '', 1, '2018-01-29 00:00:00', NULL, NULL, NULL, NULL, 1, '2018-01-29 00:00:00', 1, NULL),
+(10, 0, NULL, '5', 7, 5000.00, 'It is last month Salary', 1, '2018-01-30 00:00:00', NULL, NULL, NULL, 'January', 1, '2018-01-30 00:00:00', 1, '2018-01-30 00:00:00'),
+(11, 0, NULL, '2', 10, 800.00, '', 1, '2018-01-31 00:00:00', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+(12, 0, NULL, '6', 5, 20000.00, 'note test', 1, '2018-01-31 00:00:00', NULL, NULL, NULL, NULL, 1, '2018-01-31 00:00:00', 1, '2018-01-31 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -463,7 +478,7 @@ ALTER TABLE `company_setup`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `invoices`
 --
@@ -473,7 +488,7 @@ ALTER TABLE `invoices`
 -- AUTO_INCREMENT for table `invoice_details`
 --
 ALTER TABLE `invoice_details`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `parent_accounts`
 --

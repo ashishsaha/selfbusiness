@@ -121,7 +121,8 @@ class Buys extends CI_Controller
                 $data['validation_error'] = $validation_error;
             } else {
                 // Adding invoice
-                $_POST['data']['invoice_no'] = $this->invoice_mod->set_invoice_no(0); // 0 For buy
+                $invoice_no_generator = $this->invoice_mod->invoice_no_generator(0);
+                $_POST['data']['invoice_no'] = $invoice_no_generator; // 0 For buy
                 $_POST['data']['customer_id'] = $_POST['data']['customer_id'] ;
                 $_POST['data']['description'] = $_POST['data']['description'] ;
                 $_POST['data']['total_cost'] = $_POST['total_purchase_cost'];
