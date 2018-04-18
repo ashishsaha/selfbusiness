@@ -39,13 +39,29 @@
                                 <?php //echo '<pre>'; print_r($labor_list_data);?>
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Supplier</label>
+                                        <label class="col-md-3 control-label">Labor</label>
                                         <div class="col-md-9">
-                                            <select class="form-control required" name="data[payment_from_or_to]" id="payment_from_or_to" onchange="select_supplier()" data-parsley-id="6">
-                                                <option value="">Select Labor</option>
+                                            <select class="form-control" name="data[payment_from_or_to]" id="payment_from_or_to" onchange="select_supplier()" data-parsley-id="6">
+                                                <option value="">N/A</option>
                                                 <?php
                                                 foreach($labor_list_data as $supplier){?>
                                                     <option value="<?php echo  $supplier->id; ?>"><?php echo  $supplier->full_name; ?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Ref. Invoice No</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control" name="data[ref_invoice_no]" id="ref_invoice_no" onchange="select_supplier()" data-parsley-id="6">
+                                                <option value="">N/A</option>
+                                                <?php
+                                                foreach($invoice_list_data as $invoice){?>
+                                                    <option value="<?php echo  $invoice->id; ?>"><?php echo  $invoice->invoice_no; ?></option>
                                                 <?php
                                                 }
                                                 ?>
@@ -220,6 +236,7 @@
         var selected_id = $("#selected_id").val();
         $("#trans_"+selected_id).css("background","none");
         $('select#trans_type option').removeAttr("selected");
+        $('select#ref_invoice_no option').removeAttr("selected");
         $.ajax({
             type: 'POST',
             url: '<?php echo base_url() ?>transaction/getinfo',
@@ -229,8 +246,10 @@
                 console.log(data);
                 $("#adding_form").show(400);
                 var payment_from_or_to = data.payment_from_or_to;
+                var ref_invoice_no = data.ref_invoice_no;
                 var trans_type_val = data.trans_type;
                 $("#payment_from_or_to option[value='" + payment_from_or_to + "']").attr('selected', true);
+                $("#ref_invoice_no option[value='" + ref_invoice_no + "']").attr('selected', true);
                 $("#trans_type option[value='" + trans_type_val + "']").attr('selected', true);
                 $("#amount").val(data.amount);
                 $("#note").val(data.note);
@@ -252,6 +271,8 @@
         $("#adding_form").show(400);
         $("#note").val('');
         $("#amount").val('');
+        $('select#payment_from_or_to option').removeAttr("selected");
+        $('select#ref_invoice_no option').removeAttr("selected");
         var d = new Date();
         var trans_date = ("0" + (d.getMonth() + 1)).slice(-2) + "/" + ("0" + d.getDate()).slice(-2) + "/" + d.getFullYear();
         $("#trans_date").val(trans_date);
@@ -273,7 +294,7 @@
         $(document).ready(function () {
             $('#datatable-buttons').DataTable({
                 "order": [
-                    [ 1, "desc" ]
+                    [ 4, "desc" ]
                 ]
             });
         });

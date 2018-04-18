@@ -169,9 +169,14 @@ class Transaction extends CI_Controller
             header('Content-type: application/json');
 
             echo json_encode(array(
+                'id' => $transaction_arr->id,
                 'payment_from_or_to' => $transaction_arr->payment_from_or_to,
+                'ref_invoice_no' => $transaction_arr->ref_invoice_no,
                 'trans_type' => $transaction_arr->trans_type,
                 'trans_date' => date("m/d/Y", strtotime($transaction_arr->trans_date)),
+                'bank_account_from' => $transaction_arr->bank_account_from,
+                'bank_account_to' => $transaction_arr->bank_account_to,
+                'checque_no' => $transaction_arr->checque_no,
                 'amount' => $transaction_arr->amount,
                 'note' => $transaction_arr->note
             ));
@@ -731,6 +736,52 @@ class Transaction extends CI_Controller
             'assets/plugins/datatables/scroller.bootstrap.min.css',
             'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'
         );
+        
+        $data['form_validation'] = '<script type="text/javascript">
+										$(document).ready(function() {
+											$("#form1").parsley();
+										});
+									</script>';
+
+        if (isset($_POST['OkSaveData'])) {
+            
+            $transaction_id = $_POST['data']['id'];
+            unset($_POST['data']['id']);
+
+            $this->form_validation->set_rules('data[payment_from_or_to]', 'Supplier Name', 'trim|required');
+            $this->form_validation->set_rules('data[amount]', 'Transaction Amount', 'trim|required');
+
+            if ($this->form_validation->run() == FALSE) {
+                $validation_error = validation_errors();
+                $data['validation_error'] = $validation_error;
+            } else {
+                //echo '<pre>';print_r($_POST['data']); exit;
+                $_POST['data']['status'] = 1;
+                $_POST['data']['child_account_id'] = 3;
+                
+                $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
+                $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
+                if($transaction_id){
+                    $_POST['data']['updated'] = date("Y-m-d");//print_r($_POST);die();
+                    $save_data = $this->transaction_mod->update_transaction($_POST['data'],$transaction_id);
+                    $msgs = 'Pay to supplier has been updated successfully.';
+                }else{
+                    $_POST['data']['created'] =  date("Y-m-d");
+                    $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
+                    $save_data = $this->transaction_mod->add_transaction($_POST['data']);
+                    $msgs = 'Pay to supplier has been added successfully.';
+                }
+                
+
+                $flash_msgs = array('flash_msgs' => $msgs, 'alerts' => 'success');
+                $this->session->set_userdata($flash_msgs);
+                redirect(base_url() . 'transaction/pay_to_supplier', 'location', '301'); // 301 redirected
+            }
+        }
+        
+        // SELECT ALL supplier list
+        $condition = array('is_supplier' => 1);
+        $data['supplier_data'] = $this->customer_mod->get_all_customers($condition);
 
         // Send $data array() to index page
         $data['content'] = $this->load->view('transaction/paytosupplier', $data, true);
@@ -924,7 +975,8 @@ class Transaction extends CI_Controller
                 $str .= '<div class="form-group">';
                     $str .= '<label class="col-md-3 control-label">Company Account</label>';
                     $str .= '<div class="col-md-9">';
-                        $str .= '<select class="form-control required" name="data[bank_account_from]" id="bank_account_from" data-parsley-id="6">';
+                        $str .= '<select class="form-control" name="data[bank_account_from]" id="bank_account_from" data-parsley-id="6">';
+                        $str .= '<option value="">N/A</option>';
                             for($j=0; $j<$count_bank_account_name; $j++){
                                 $val = $bank_account_name[$j].','.$bank_account_number[$j].','.$bank_name[$j].','.$bank_branch[$j].','.$bank_location[$j];
                                 $str .= '<option value="'.$val.'">'.$val.'</option>';
@@ -1265,7 +1317,10 @@ class Transaction extends CI_Controller
 
         // SELECT ALL Customer list
         $data['labor_list_data'] = $this->customer_mod->get_all_labors();
-
+        
+        // SELECT Last 10 Purchase Invoice list
+        $data['invoice_list_data'] = $this->invoice_mod->get_invoice_list(0); // 0 for purchase invoice
+        //echo '<pre>';print_r($data['invoice_list_data']);die();
         // Send $data array() to index page
         $data['content'] = $this->load->view('transaction/laborcost', $data, true);
         // Use Layout

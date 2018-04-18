@@ -197,5 +197,19 @@ class Invoice_mod extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    
+    /*
+     * get the list of invoice
+     * */
+    function get_invoice_list($invoice_type){
+        $where = "invoice_type=".$invoice_type;
+        $this->db->select("id, invoice_no");
+        $this->db->limit(10);
+        $this->db->from("invoices");
+        $this->db->where($where);
+        $this->db->order_by("id", "desc");
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }

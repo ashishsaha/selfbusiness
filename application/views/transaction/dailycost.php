@@ -42,8 +42,6 @@
                                         <div class="col-md-9">
                                             <select class="form-control required" name="data[trans_type]" id="trans_type" data-parsley-id="6">
                                             <option value="0">Hand Cash</option>
-                                            <option value="1">Bank Transaction</option>
-                                            <option value="2">Cheque</option>
                                             </select>
                                         </div>
                                     </div>
