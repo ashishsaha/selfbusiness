@@ -32,7 +32,7 @@
                     <th style="width: 30%" title="Customer Name">Customer Name</th>
                     <th style="width: 16%" title="Total Cost">Total Cost</th>
                     <th style="width: 12%" title="Selling Date">Selling Date</th>
-                    <th style="width: 15%" style="width: 10%">Action</th>
+                    <th style="width: 15%" >Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -60,6 +60,18 @@
                                         class="on-default edit-row"
                                         onclick="javascript:edit_sell_invoice(<?php echo $buy_invoice->id; ?>);">
                                     <i class="fa fa-edit"></i></button>
+                                &nbsp;
+                                
+                                <button title="View Invoice" data-tooltip="true" type="button"
+                                        class="on-default view-row"
+                                        onclick="javascript:details_sell_invoice(<?php echo $buy_invoice->id; ?>);">
+                                    <i class="fa fa-eye"></i></button>
+                                &nbsp;
+                                
+                                <button title="Print Invoice" data-tooltip="true" type="button"
+                                        class="on-default print-row"
+                                        onclick="javascript:print_sell_invoice(<?php echo $buy_invoice->id; ?>);">
+                                    <i class="fa fa-print"></i></button>
                                 &nbsp;
 
                                 <button title="Delete Sell Invoice" data-tooltip="true" type="button"
@@ -113,6 +125,10 @@
 </div>
 
 <script type="text/javascript">
+    function details_sell_invoice(id) {
+        window.location.href = '<?php echo base_url();?>sells/details/' + id;
+    }
+    
     function edit_sell_invoice(id) {
         window.location.href = '<?php echo base_url();?>sells/edit/' + id;
     }
