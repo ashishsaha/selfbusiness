@@ -28,11 +28,11 @@
                    class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th style="width: 5%">Invoice</th>
-                    <th title="Customer Name">Customer Name</th>
-                    <th title="Total Cost">Total Cost</th>
-                    <th title="Selling Date">Selling Date</th>
-                    <th style="width: 10%">Action</th>
+                    <th style="width: 11%">Invoice No</th>
+                    <th style="width: 30%" title="Customer Name">Customer Name</th>
+                    <th style="width: 16%" title="Total Cost">Total Cost</th>
+                    <th style="width: 12%" title="Selling Date">Selling Date</th>
+                    <th style="width: 15%" style="width: 10%">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -103,7 +103,7 @@
                     }
                 } else { ?>
                     <tr>
-                        <td colspan="9" style="text-align:center;">No record found!</td>
+                        <td colspan="5" style="text-align:center;">No record found!</td>
                     </tr>
                 <?php } ?>
                 </tbody>

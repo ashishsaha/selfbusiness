@@ -118,47 +118,81 @@ class Invoice_mod extends CI_Model
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_details');
     }
+
+
+    public function invoice_no_generator($invoice_type = 0) // 0-purchase, 1-sells
+    {
+        // Get the company setting info
+        $this->db->select("purchase_invoice_prefix,sell_invoice_prefix");
+        $this->db->from("company_setup");
+        $this->db->where("id", 1);
+        $query = $this->db->get();
+        $result = $query->row();
+
+        if($invoice_type == 0){
+            $order_default_prefix = $result->purchase_invoice_prefix;
+        }else{
+            $order_default_prefix = $result->sell_invoice_prefix;
+        }
+
+        // Now get the last invoice info
+        $this->db->select('invoice_no');
+        $this->db->like('invoice_no', $order_default_prefix);
+        $this->db->from('invoices');
+        $this->db->where('invoice_type', $invoice_type);
+        $this->db->order_by("id", "desc");
+        $this->db->limit(1);
+        $query = $this->db->get();
+        $num_rows = $query->num_rows();
+
+        if ($num_rows > 0) {
+            $row = $query->row();
+            $invoice_no = $row->invoice_no;
+            $str_to_arr = explode($order_default_prefix, $invoice_no);
+            $only_number_val = $str_to_arr[1];
+            $only_number_val = $only_number_val + 1;
+            $length_of_total_number = strlen($str_to_arr[1]);
+            $generated_number = str_pad($only_number_val,$length_of_total_number,"0",STR_PAD_LEFT);
+        } else {
+            $generated_number=  "000001";
+        }
+
+        return $order_default_prefix.$generated_number;
+    }
     
     /*
      * Set invoice number
      * */
-    function set_invoice_no($invoice_type){
+    function set_invoice_no($invoice_type, $is_save = false, $existing_sell_invoice_no = 0){
         if($invoice_type == 0){
             $field_name = "purchase_invoice_no";
         }else{
             $field_name = "sell_invoice_no";
         }
-        $this->db->select($field_name);
-        $this->db->from("company_setup");
-        $query1 = $this->db->get();
-        $num_rows1 = $query1->num_rows();
 
-        if($num_rows1 === 1) {
+        if($is_save == true){
+            $where = "id=1";
+            $data[$field_name] = $existing_sell_invoice_no;
+            $str = $this->db->update_string($this->db->dbprefix('company_setup'), $data, $where);
+            $query = $this->db->query($str);
+        }else{
+            $this->db->select($field_name);
+            $this->db->from("company_setup");
+            $query1 = $this->db->get();
+
             $row1 = $query1->row();
             if($invoice_type == 0){
                 $invoice_no = $row1->purchase_invoice_no;
-                $prefix = 'PINV';
             }else{
                 $invoice_no = $row1->sell_invoice_no;
-                $prefix = 'SINV';
             }
-            if(empty($invoice_no)){
-                $invoice_no = $prefix."000001";
+
+            if($invoice_no == 0){
+                $invoice_no = 1;
             }else{
-                $invoice_no = substr($invoice_no,4);
                 $invoice_no = $invoice_no+1;
-                $invoice_no = str_pad($invoice_no,6,"0",STR_PAD_LEFT);
-                $invoice_no = $prefix.$invoice_no;
             }
-            
-            $where = "id=1";
-            $data[$field_name] = $invoice_no;
-            $str = $this->db->update_string($this->db->dbprefix('company_setup'), $data, $where);
-            $query = $this->db->query($str);
-            
             return $invoice_no;
-        } else {
-            return false;
         }
     }
     
