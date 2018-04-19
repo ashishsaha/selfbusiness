@@ -48,7 +48,7 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">&nbsp;</label>
                                         <div class="col-md-9">
-                                            <button class="btn btn-primary waves-effect waves-light" id="submitButton" type="submit"> Save Info
+                                            <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save Info
                                             </button>
                                             <button type="button" class="btn" onclick="javascript:add_brand_cancel();">Cancel
                                             </button>

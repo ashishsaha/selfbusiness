@@ -146,12 +146,23 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">&nbsp;</label>
                             <div class="col-md-9">
+                                <button type="button" class="btn" onclick="javascript:users_cancel();"><i
+                                        class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back
+                                </button>
+                                <button class="btn btn-info waves-effect waves-light" type="button" onclick="javascript:users_reset(<?php echo $user_id;?>);"><i
+                                        class="fa fa-refresh" aria-hidden="true"></i> Reset
+                                </button>
+                                <button class="btn btn-success waves-effect waves-light" type="submit"><i
+                                        class="fa fa-save" aria-hidden="true"></i> Update
+                                </button>
+                                
+                                <?php /*
                                 <button class="btn btn-primary waves-effect waves-light" type="submit"><i
                                         class="fa fa-check" aria-hidden="true"></i> Submit
                                 </button>
                                 <button type="button" class="btn" onclick="javascript:users_cancel();"><i
                                         class="fa fa-ban" aria-hidden="true"></i> Cancel
-                                </button>
+                                </button>*/?>
                             </div>
                         </div>
                     </div>
@@ -171,5 +182,9 @@
     function users_cancel() {
         var page_location = $('#page_location').val();
         window.location.href = '<?php echo base_url();?>users';
+    }
+    
+    function users_reset(id){
+        window.location.href = '<?php echo base_url();?>users/edit/'+id;
     }
 </script>

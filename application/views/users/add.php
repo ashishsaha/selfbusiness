@@ -132,11 +132,11 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">&nbsp;</label>
                             <div class="col-md-9">
-                                <button class="btn btn-primary waves-effect waves-light" type="submit"><i
-                                        class="fa fa-check" aria-hidden="true"></i> Submit
-                                </button>
                                 <button type="button" class="btn" onclick="javascript:users_cancel();"><i
-                                        class="fa fa-ban" aria-hidden="true"></i> Cancel
+                                        class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back
+                                </button>
+                                <button class="btn btn-success waves-effect waves-light" type="submit"><i
+                                        class="fa fa-save" aria-hidden="true"></i> Save
                                 </button>
                             </div>
                         </div>

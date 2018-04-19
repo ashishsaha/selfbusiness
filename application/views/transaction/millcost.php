@@ -15,6 +15,9 @@
                     <!--<li><i class="fa fa-check-circle text-success"></i> Active</li>
                     <li><i class="fa fa-check-circle text-unsuccess"></i> Inactive</li>-->
                     <li>
+                        <button type="button" class="btn" onclick="javascript:millcost_cancel();"><i
+                                class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back
+                        </button>
                         <button title="Add Home Expense" data-tooltip="true" type="button"
                                 class="btn btn-success waves-effect waves-light"
                                 onclick="javascript:add_home_expense();"><i
@@ -89,7 +92,7 @@
                                         <div class="col-md-9">
                                             <button type="button" class="btn" onclick="javascript:home_cost_cancel();">Cancel
                                             </button>
-                                            <button class="btn btn-primary waves-effect waves-light" id="submitButton" type="submit"> Save Info
+                                            <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save Info
                                             </button>
                                         </div>
                                     </div>
@@ -199,7 +202,7 @@
             success: function (data, textStatus, XMLHttpRequest) {
                 $("#adding_form").show(400);
                 var trans_type_val = data.trans_type;
-                $("#trans_type option[value='" + trans_type_val + "']").attr('selected', true);
+                $("#trans_type option[value='" + trans_type_val + "']").prop('selected', true);
                 $("#amount").val(data.amount);
                 $("#note").val(data.note);
                 var trans_date= data.trans_date;
@@ -220,6 +223,7 @@
         $("#adding_form").show(400);
         $("#note").val('');
         $("#amount").val('');
+        $('select#trans_type option').removeAttr("selected");
         var d = new Date();
         var trans_date = ("0" + (d.getMonth() + 1)).slice(-2) + "/" + ("0" + d.getDate()).slice(-2) + "/" + d.getFullYear();
         $("#trans_date").val(trans_date);
@@ -229,6 +233,10 @@
 
     function home_cost_cancel() {
         $("#adding_form").hide(400);
+    }
+    
+    function millcost_cancel(){
+        window.location.href = '<?php echo base_url();?>transaction/pay';
     }
 
     function delete_transaction(id) {

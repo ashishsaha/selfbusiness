@@ -82,7 +82,7 @@ class Transaction extends CI_Controller
         }
 
         $this->session->unset_userdata('active_menu');
-        $this->session->set_userdata('active_menu', 'pay');
+        $this->session->set_userdata('active_menu', 'receive');
 
         // Define Data array
         $data = array(

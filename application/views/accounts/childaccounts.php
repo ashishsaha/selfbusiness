@@ -21,6 +21,90 @@
                     </li>
                 </ul>
             </h4>
+            
+            <div id="adding_form" class="row">
+                <div class="col-sm-12">
+                    <form action="<?php echo base_url(); ?>accounts/child_accounts" class="form-horizontal row-border" method="post" name="form1" id="form1" enctype="multipart/form-data" novalidate="">
+                        <input type="hidden" name="action" id="action" value="">
+                        <input type="hidden" name="OkSaveData" id="OkSaveData" value="TRUE">
+                        <input type="hidden" name="option_upload" id="option_upload" value="0">
+                        <input type="hidden" name="data[id]" id="id" value="">
+                        <input id="selected_id" value="1" type="hidden" />
+                        <div class="card-box">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Account Name</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control required" placeholder="Child Account Name" type="text"
+                                       name="data[name]" id="name" parsley-trigger="change"
+                                       value=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Parent Account</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control required" name="data[parent_account_id]" id="parent_account_id"">
+                                            <?php
+                                            foreach ($parent_account_data as $accountList) {
+                                                ?>
+                                                <option
+                                                    value="<?php echo $accountList->id; ?>"><?php echo $accountList->name; ?></option>
+                                            <?php
+                                            }
+                                            ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" title="Child Account Description">Description</label>
+                                        <div class="col-md-9">
+                                            <?php /*<input class="form-control required" placeholder="Child Account Description"
+                                                   type="text"
+                                                   name="data[description]" id="description" parsley-trigger="change"
+                                                   value=""/>*/?>
+                                            <textarea name="data[description]" id="description" class="form-control required" placeholder="Child Account Description" style="min-height: 40px" cols="60" rows="1" parsley-trigger="change"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" title="Status">Status</label>
+                                        <div class="col-md-9">
+                                            <div class="checkbox checkbox-success checkbox-single">
+                                                <input id="status" title="Status" name="data[status]" aria-label="Single checkbox Two" type="checkbox">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12 col-sm-6" style="text-align: right">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">&nbsp;</label>
+                                        <div class="col-md-9">
+                                            <button type="button" class="btn" onclick="javascript:add_child_account_cancel();">Cancel
+                                            </button>
+                                            <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save Info
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <table <?php if (count($child_account_data) > 0){ ?>id="datatable-buttons"<?php } ?>
                    class="table table-striped table-bordered">
@@ -47,7 +131,7 @@
 													 </div>';
                         }
                         ?>
-                        <tr>
+                        <tr id="child_account_<?php echo $child_account->id; ?>">
                             <td><?php echo $child_account->id; ?> </td>
                             <td><?php echo $child_account->name; ?> </td>
                             <td><?php echo $child_account->parent_name; ?> </td>
@@ -111,11 +195,54 @@
 
 <script type="text/javascript">
     function edit_child_account(id) {
-        window.location.href = '<?php echo base_url();?>accounts/edit_child_account/' + id;
+        $("#id").val('');
+        $("#name").val('');
+        $("#description").val('');
+        $('select#parent_account_id option').removeAttr("selected");
+        $("#status").prop('checked', false);
+        var selected_id = $("#selected_id").val();
+        $("#child_account_"+selected_id).css("background","none");
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo base_url() ?>accounts/getchildaccountinfo',
+            dataType: 'json',
+            data: {'id': id},
+            success: function (data, textStatus, XMLHttpRequest) {
+                $("#adding_form").show(400);
+                
+                $("#id").val(data.id);
+                $("#name").val(data.name);
+                $("#description").val(data.description);
+                var parent_account_id_val = data.parent_account_id;
+                $("#parent_account_id option[value='" + parent_account_id_val + "']").prop('selected', true);
+                var status_val = parseInt(data.status);
+                $("#status").prop('checked', status_val);
+                
+                $('#form1').attr('action', '<?php echo base_url(); ?>accounts/child_accounts');
+                //$('#form1').append("<input type='hidden' name='edit' value='"+id+"'/>");
+                $("#submitButton").text("Update Info");
+                $("#child_account_"+id).addClass("rowBg").css("background","#EAF1FB");
+                $("#selected_id").val(id);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //$('#grid_12').removeBlockMessages().blockMessage('Error while contacting server, please try again', {type: 'error'});
+            }
+        });
     }
 
     function add_child_account() {
-        window.location.href = '<?php echo base_url();?>accounts/add_child_account';
+        $("#adding_form").show(400);
+        $("#id").val('');
+        $("#name").val('');
+        $("#description").val('');
+        $('select#parent_account_id option').removeAttr("selected");
+        $("#status").prop('checked', false);
+        $('#form1').attr('action', '<?php echo base_url(); ?>accounts/child_accounts');
+        $("#submitButton").text("Save Info");
+    }
+    
+    function add_child_account_cancel() {
+        $("#adding_form").hide(400);
     }
 
     function delete_child_account(id) {
@@ -123,6 +250,7 @@
     }
 
     $(document).ready(function () {
+        $("#adding_form").hide();
         $('[data-tooltip="true"]').tooltip();
     });
 

@@ -239,7 +239,7 @@
             <div class="col-md-9">
                 <button type="button" class="btn" onclick="javascript:customer_cancel();">Cancel
                 </button>
-                <button class="btn btn-primary waves-effect waves-light" type="submit"> Update Info
+                <button class="btn btn-success waves-effect waves-light" type="submit"> Update Info
                 </button>
             </div>
         </div>

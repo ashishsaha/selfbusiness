@@ -215,8 +215,14 @@
                             <label class="col-md-3 control-label">&nbsp;</label>
 
                             <div class="col-md-9">
-                                <button class="btn btn-primary waves-effect waves-light" type="submit"> Update Info
-                                </button>
+                                        <button class="btn btn-info waves-effect waves-light" type="button" onclick="javascript:setting_reset();"><i
+                                                class="fa fa-refresh" aria-hidden="true"></i> Reset
+                                        </button>
+                                        <button class="btn btn-success waves-effect waves-light" type="submit"><i
+                                                class="fa fa-save" aria-hidden="true"></i> Update
+                                        </button>
+                                <?php /*<button class="btn btn-primary waves-effect waves-light" type="submit"> Update Info
+                                </button>*/?>
                             </div>
                         </div>
                     </div>
@@ -240,8 +246,8 @@
 </style>
 
 <script type="text/javascript">
-    function setting_cancel() {
-        window.location.href = '<?php echo base_url();?>settings';
+    function setting_reset(){
+        window.location.href = '<?php echo base_url();?>settings/companysettings';
     }
 
 
