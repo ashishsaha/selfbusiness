@@ -243,14 +243,13 @@
             dataType: 'json',
             data: {'id': id},
             success: function (data, textStatus, XMLHttpRequest) {
-                console.log(data);
                 $("#adding_form").show(400);
                 var payment_from_or_to = data.payment_from_or_to;
                 var ref_invoice_no = data.ref_invoice_no;
                 var trans_type_val = data.trans_type;
-                $("#payment_from_or_to option[value='" + payment_from_or_to + "']").attr('selected', true);
-                $("#ref_invoice_no option[value='" + ref_invoice_no + "']").attr('selected', true);
-                $("#trans_type option[value='" + trans_type_val + "']").attr('selected', true);
+                $("#payment_from_or_to option[value='" + payment_from_or_to + "']").prop('selected', true);
+                $("#ref_invoice_no option[value='" + ref_invoice_no + "']").prop('selected', true);
+                $("#trans_type option[value='" + trans_type_val + "']").prop('selected', true);
                 $("#amount").val(data.amount);
                 $("#note").val(data.note);
                 var trans_date= data.trans_date;
