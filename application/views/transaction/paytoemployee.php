@@ -15,6 +15,9 @@
                     <!--<li><i class="fa fa-check-circle text-success"></i> Active</li>
                     <li><i class="fa fa-check-circle text-unsuccess"></i> Inactive</li>-->
                     <li>
+                        <button type="button" class="btn" onclick="javascript:paytoemployee_cancel();"><i
+                                class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back
+                        </button>
                         <button title="Add Pay To Employee" data-tooltip="true" type="button"
                                 class="btn btn-success waves-effect waves-light"
                                 onclick="javascript:add_pay_to_employee();"><i
@@ -126,6 +129,10 @@
 
     function home_cost_cancel() {
         $("#adding_form").hide(400);
+    }
+    
+    function paytoemployee_cancel(){
+        window.location.href = '<?php echo base_url();?>transaction/pay';
     }
 
     function delete_transaction(id) {

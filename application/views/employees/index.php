@@ -86,7 +86,7 @@
                                         <div class="col-md-9">
                                             <button type="button" class="btn" onclick="javascript:add_employee_cancel();">Cancel
                                             </button>
-                                            <button class="btn btn-primary waves-effect waves-light" id="submitButton" type="submit"> Save Info
+                                            <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save Info
                                             </button>
                                         </div>
                                     </div>
@@ -221,7 +221,7 @@
             success: function (data, textStatus, XMLHttpRequest) {
                 $("#adding_form").show(400);
                 var employee_type_val = data.employee_type;
-                $("#employee_type option[value='" + employee_type_val + "']").attr('selected', true);
+                $("#employee_type option[value='" + employee_type_val + "']").prop('selected', true);
                 $("#id").val(data.id);
                 $("#full_name").val(data.full_name);
                 $("#contact_number").val(data.contact_number);
@@ -243,6 +243,7 @@
         $("#full_name").val('');
         $("#contact_number").val('');
         $("#address").val('');
+        $('select#employee_type option').removeAttr("selected");
         
         $('#form1').attr('action', '<?php echo base_url(); ?>employees');
         $("#submitButton").text("Save Info");

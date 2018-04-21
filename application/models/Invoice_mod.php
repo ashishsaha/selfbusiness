@@ -161,42 +161,6 @@ class Invoice_mod extends CI_Model
     }
     
     /*
-     * Set invoice number
-     * */
-    function set_invoice_no($invoice_type, $is_save = false, $existing_sell_invoice_no = 0){
-        if($invoice_type == 0){
-            $field_name = "purchase_invoice_no";
-        }else{
-            $field_name = "sell_invoice_no";
-        }
-
-        if($is_save == true){
-            $where = "id=1";
-            $data[$field_name] = $existing_sell_invoice_no;
-            $str = $this->db->update_string($this->db->dbprefix('company_setup'), $data, $where);
-            $query = $this->db->query($str);
-        }else{
-            $this->db->select($field_name);
-            $this->db->from("company_setup");
-            $query1 = $this->db->get();
-
-            $row1 = $query1->row();
-            if($invoice_type == 0){
-                $invoice_no = $row1->purchase_invoice_no;
-            }else{
-                $invoice_no = $row1->sell_invoice_no;
-            }
-
-            if($invoice_no == 0){
-                $invoice_no = 1;
-            }else{
-                $invoice_no = $invoice_no+1;
-            }
-            return $invoice_no;
-        }
-    }
-    
-    /*
      * Get individual buy invoices info
      * */
     function get_invoice($id)

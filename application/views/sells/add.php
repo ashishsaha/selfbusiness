@@ -141,9 +141,11 @@
                         <div class="form-group">
                             <label class="col-md-5 control-label">&nbsp;</label>
                             <div class="col-md-7">
-                                <button type="button" class="btn" onclick="javascript:product_cancel();">Cancel
+                                <button type="button" class="btn" onclick="javascript:product_cancel();"><i
+                                            class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back
                                 </button>
-                                <button class="btn btn-primary waves-effect waves-light" type="submit"> Save Sell Info
+                                <button class="btn btn-success waves-effect waves-light" type="submit"><i
+                                            class="fa fa-save" aria-hidden="true"></i> Save
                                 </button>
                             </div>
                         </div>

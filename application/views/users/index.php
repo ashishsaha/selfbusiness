@@ -17,7 +17,7 @@
                     <li><i class="fa fa-check-circle text-unsuccess"></i> Inactive</li>
                     <li>
                         <button title="Add User" data-tooltip="true" type="button"
-                                class="btn btn-primary waves-effect waves-light" onclick="javascript:add_user();"><i
+                                class="btn btn-success waves-effect waves-light" onclick="javascript:add_user();"><i
                                 class="fa fa-plus-circle"></i>&nbsp;Add
                         </button>
                     </li>

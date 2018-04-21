@@ -153,7 +153,7 @@
                                     <th class="text-center" style="text-align: left; width: 19%">
                                         &nbsp;Bank Location
                                     </th>
-                                    <th></th>
+                                    <th class="text-center" style="width: 3%;">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -169,7 +169,8 @@
                                     $k = 0;
                                 for($j=0; $j<$count_bank_account_name; $j++){
                                 ?>
-                                <tr id='bankInfo<?php echo $j; ?>'>
+                                <input type="hidden" id="total_row" value="<?php echo $count_bank_account_name;?>" />
+                                <tr id='row<?php echo $j; ?>'>
                                     <td>
                                         <input class="form-control required"
                                                placeholder="Bank account name" type="text"
@@ -206,8 +207,8 @@
                                                value="<?php echo $bank_location[$j]; ?>"/>
                                     </td>
                                     <td>
-                                        <?php if($k > 0){?>
-                                            <a id="delete_sale_row_rule_three1" onclick="removeBankInfoFunction(<?php echo $k;?>)" class="pull-right btn btn-default" style="color: red;">X</a>
+                                        <?php if($bank_account_name[$j]){?>
+                                            <a onclick="deleteRow('<?php echo $k;?>')" id="delete_row<?php echo $k;?>" class="pull-right btn btn-default cross_row">X</a>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -216,7 +217,7 @@
                                     }
                                 }
                                 ?>
-                                <tr id='bankInfo<?php echo $k; ?>'></tr>
+                                <tr id='row<?php echo $k; ?>'></tr>
                                 </tbody>
                             </table>
                             <a id="add_bank_info_row"
@@ -237,9 +238,14 @@
             <label class="col-md-3 control-label">&nbsp;</label>
 
             <div class="col-md-9">
-                <button type="button" class="btn" onclick="javascript:customer_cancel();">Cancel
+                <button type="button" class="btn" onclick="javascript:customer_cancel();"><i
+                        class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back
                 </button>
-                <button class="btn btn-primary waves-effect waves-light" type="submit"> Update Info
+                <button class="btn btn-info waves-effect waves-light" type="button" onclick="javascript:customer_reset(<?php echo $customer_id;?>);"><i
+                        class="fa fa-refresh" aria-hidden="true"></i> Reset
+                </button>
+                <button class="btn btn-success waves-effect waves-light" type="submit"><i
+                        class="fa fa-save" aria-hidden="true"></i> Update
                 </button>
             </div>
         </div>
@@ -253,6 +259,9 @@
 
 
 <style type="text/css">
+    .cross_row{
+        color: red;
+    }
     .form-horizontal .checkbox {
         padding-top: 0 !important;
     }
@@ -269,11 +278,16 @@
     function customer_cancel() {
         window.location.href = '<?php echo base_url();?>customers';
     }
+    
+    function customer_reset(id){
+        window.location.href = '<?php echo base_url();?>customers/edit/'+id;
+    }
 
     // For multiple inventory
     var n = parseInt('<?php echo $count_bank_account_name;?>');;
     $('#add_bank_info_row').click(function () {
-        $('#bankInfo'+n).html("<td>"+
+        var current_total_row = $("#total_row").val();
+        $('#row'+n).html("<td>"+
             "<input class='form-control required' placeholder='Bank account name' type='text' name='bank_account_name[]' id='bank_account_name' parsley-trigger='change' value=''/>"+
             "</td>"+
             "<td>"+
@@ -288,15 +302,20 @@
             "<td>"+
             "<input class='form-control required' placeholder='Bank location' type='text' name='bank_location[]' id='bank_location' parsley-trigger='change' value=''/>"+
             "</td>"+
-            "<td><div style='float: left;'><a id='delete_inv_row" + n + "' onClick='removeBankInfoFunction(" + n + ")' class='pull-right btn btn-default' style='color: red' >X</a></div></td>");
-        $('#tab_product_inventory').append('<tr id="inventory' + (n + 1) + '"></tr>');
-        $('#bank_account_whole').append('<tr id="bankInfo'+ (n + 1) +'"></tr>');
+            //"<td><div style='float: left;'><a id='delete_inv_row" + n + "' onClick='removeBankInfoFunction(" + n + ")' class='pull-right btn btn-default' style='color: red' >X</a></div></td>");
+            "<td><a onClick='deleteRow(" + n + ")' id='delete_row" + n + "' class='pull-right btn btn-default cross_row' >X</a></td>");
+        //$('#tab_product_inventory').append('<tr id="inventory' + (n + 1) + '"></tr>');
+        $('#bank_account_whole').append('<tr id="row'+ (n + 1) +'"></tr>');
+        if((parseInt(current_total_row) + 1)>1){
+            $(".cross_row").show();
+        }
+        $("#total_row").val((parseInt(current_total_row) + 1));
         n++;
     });
 
     /** Delete Row **/
-    function removeBankInfoFunction(n) {
+    function deleteRow(n) {
         // Delete
-        $("#bankInfo" + n).remove();
+        $("#row" + n).remove();
     }
 </script>

@@ -133,7 +133,8 @@
                                 <div id="promo_rule_two10">
                                     <div class="row">
                                         <div class="col-md-12 column">
-                                            <table class="table table-bordered table-hover" id="bank_account_whole">
+                                            <table class="table table-bordered table-hover"
+                                                   id="bank_account_whole">
                                                 <thead>
                                                 <tr>
                                                     <th class="text-center" style="text-align: left; width: 19%">
@@ -151,12 +152,11 @@
                                                     <th class="text-center" style="text-align: left; width: 19%">
                                                         &nbsp;Bank Location
                                                     </th>
-                                                    <th class="text-center" style="width: 3%;">Action</th>
+                                                    <th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <input type="hidden" id="total_row" value="1" />
-                                                <tr id='row0'>
+                                                <tr id='bankInfo0'>
                                                     <td>
                                                         <input class="form-control required"
                                                                placeholder="Bank account name" type="text"
@@ -194,7 +194,7 @@
                                                     </td>
                                                     <td><a style="display: none" onclick="deleteRow(0)" id="delete_row0" class="pull-right btn btn-default cross_row">X</a></td>
                                                 </tr>
-                                                <tr id='row1'></tr>
+                                                <tr id='bankInfo1'></tr>
                                                 </tbody>
                                             </table>
                                             <a id="add_bank_info_row"
@@ -233,9 +233,6 @@
 
 
 <style type="text/css">
-    .cross_row{
-        color: red;
-    }
     .form-horizontal .checkbox {
         padding-top: 0 !important;
     }
@@ -256,8 +253,7 @@
     // For multiple inventory
     var n = 1;
     $('#add_bank_info_row').click(function () {
-        var current_total_row = $("#total_row").val();
-        $('#row'+n).html("<td>"+
+        $('#bankInfo'+n).html("<td>"+
             "<input class='form-control required' placeholder='Bank account name' type='text' name='bank_account_name[]' id='bank_account_name' parsley-trigger='change' value=''/>"+
             "</td>"+
             "<td>"+
@@ -272,21 +268,16 @@
             "<td>"+
             "<input class='form-control required' placeholder='Bank location' type='text' name='bank_location[]' id='bank_location' parsley-trigger='change' value=''/>"+
             "</td>"+
-            //"<td><div style='float: left;'><a id='delete_inv_row" + n + "' onClick='removeBankInfoFunction(" + n + ")' class='pull-right btn btn-default' style='color: red' >X</a></div></td>");
-            "<td><a onClick='deleteRow(" + n + ")' id='delete_row" + n + "' class='pull-right btn btn-default cross_row' >X</a></td>");
-        //$('#tab_product_inventory').append('<tr id="inventory' + (n + 1) + '"></tr>');
-        $('#bank_account_whole').append('<tr id="row'+ (n + 1) +'"></tr>');
-        if((parseInt(current_total_row) + 1)>1){
-            $(".cross_row").show();
-        }
-        $("#total_row").val((parseInt(current_total_row) + 1));
+            "<td><div style='float: left;'><a id='delete_inv_row" + n + "' onClick='removeBankInfoFunction(" + n + ")' class='pull-right btn btn-default' style='color: red' >X</a></div></td>");
+        $('#tab_product_inventory').append('<tr id="inventory' + (n + 1) + '"></tr>');
+        $('#bank_account_whole').append('<tr id="bankInfo'+ (n + 1) +'"></tr>');
         n++;
     });
 
     /** Delete Row **/
-    function deleteRow(n) {
+    function removeBankInfoFunction(n) {
         // Delete
-        $("#row" + n).remove();
+        $("#bankInfo" + n).remove();
     }
 
 </script>

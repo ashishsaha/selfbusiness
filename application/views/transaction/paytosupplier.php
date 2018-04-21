@@ -15,6 +15,9 @@
                     <!--<li><i class="fa fa-check-circle text-success"></i> Active</li>
                     <li><i class="fa fa-check-circle text-unsuccess"></i> Inactive</li>-->
                     <li>
+                        <button type="button" class="btn" onclick="javascript:paytosupplier_cancel();"><i
+                                class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back
+                        </button>
                         <button title="Add Pay To Supplier" data-tooltip="true" type="button"
                                 class="btn btn-success waves-effect waves-light"
                                 onclick="javascript:add_pay_to_supplier();"><i
@@ -38,7 +41,7 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Supplier</label>
                                         <div class="col-md-9">
-                                            <select class="form-control required" name="data[payment_from_or_to]" id="payment_from_or_to" onchange="select_supplier()" data-parsley-id="6">
+                                            <select class="form-control required" name="data[payment_from_or_to]" id="payment_from_or_to" onchange="select_supplier(), select_trans_type()" data-parsley-id="6">
                                                 <option value="">Select Supplier</option>
                                                 <?php
                                                 foreach($supplier_data as $supplier){?>
@@ -110,7 +113,7 @@
                                         <div class="col-md-9">
                                             <button type="button" class="btn" onclick="javascript:add_pay_to_supplier_cancel();">Cancel
                                             </button>
-                                            <button class="btn btn-primary waves-effect waves-light" id="submitButton" type="submit"> Save Info
+                                            <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save Info
                                             </button>
                                         </div>
                                     </div>
@@ -218,6 +221,9 @@
         $("#id").val('');
         $("#note").val('');
         $("#amount").val('');
+        $('select#trans_type option').removeAttr("selected");
+        $('#trans_type').attr('disabled', true);
+        $('select#payment_from_or_to option').removeAttr("selected");
         var d = new Date();
         var trans_date = ("0" + (d.getMonth() + 1)).slice(-2) + "/" + ("0" + d.getDate()).slice(-2) + "/" + d.getFullYear();
         $("#trans_date").val(trans_date);
@@ -235,6 +241,7 @@
             $('#trans_type').attr('disabled', false);
         }
         else {
+            $('select#trans_type option').removeAttr("selected");
             $('#trans_type').attr('disabled', true);
         }
     }
@@ -282,9 +289,9 @@
                 
                 $("#adding_form").show(400);
                 var payment_from_or_to = data.payment_from_or_to;
-                $("#payment_from_or_to option[value='" + payment_from_or_to + "']").attr('selected', true);
+                $("#payment_from_or_to option[value='" + payment_from_or_to + "']").prop('selected', true);
                 var trans_type_val = data.trans_type;
-                $("#trans_type option[value='" + trans_type_val + "']").attr('selected', true);
+                $("#trans_type option[value='" + trans_type_val + "']").prop('selected', true);
                 
                 if(bank_account_from_val || bank_account_to_val){
                     var selected_val = '';
@@ -356,6 +363,9 @@
         window.location.href = '<?php echo base_url();?>transaction/edit_pay_to_supplier/' + id;
     }
     */
+    function paytosupplier_cancel(){
+        window.location.href = '<?php echo base_url();?>transaction/pay';
+    }
 
     function delete_transaction(id) {
         window.location.href = '<?php echo base_url();?>transaction/delete/paytosupplier/' + id;

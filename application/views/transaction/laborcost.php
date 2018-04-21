@@ -15,6 +15,9 @@
                     <!--<li><i class="fa fa-check-circle text-success"></i> Active</li>
                     <li><i class="fa fa-check-circle text-unsuccess"></i> Inactive</li>-->
                     <li>
+                        <button type="button" class="btn" onclick="javascript:laborcost_cancel();"><i
+                                class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back
+                        </button>
                         <button title="Add Home Expense" data-tooltip="true" type="button"
                                 class="btn btn-success waves-effect waves-light"
                                 onclick="javascript:add_home_expense();"><i
@@ -124,7 +127,7 @@
                                         <div class="col-md-9">
                                             <button type="button" class="btn" onclick="javascript:home_cost_cancel();">Cancel
                                             </button>
-                                            <button class="btn btn-primary waves-effect waves-light" id="submitButton" type="submit"> Save Info
+                                            <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save Info
                                             </button>
                                         </div>
                                     </div>
@@ -281,6 +284,10 @@
 
     function home_cost_cancel() {
         $("#adding_form").hide(400);
+    }
+    
+    function laborcost_cancel(){
+        window.location.href = '<?php echo base_url();?>transaction/pay';
     }
 
     function delete_transaction(id) {
