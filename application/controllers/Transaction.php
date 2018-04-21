@@ -1153,7 +1153,7 @@ class Transaction extends CI_Controller
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
-        $this->session->set_userdata('active_menu', 'pay');
+        $this->session->set_userdata('active_menu', 'receive');
 
         // SELECT ALL home cost transaction info
         $condition  = array("child_account_id"=>6);
@@ -1201,7 +1201,9 @@ class Transaction extends CI_Controller
 									</script>';
 
         if (isset($_POST['OkSaveData'])) {
-
+            $transaction_id = $_POST['data']['id'];
+            unset($_POST['data']['id']);
+            
             $this->form_validation->set_rules('data[payment_from_or_to]', 'Customer Name', 'trim|required');
             $this->form_validation->set_rules('data[amount]', 'Transaction Amount', 'trim|required');
 
@@ -1210,15 +1212,27 @@ class Transaction extends CI_Controller
                 $data['validation_error'] = $validation_error;
             } else {
                 //echo '<pre>';print_r($_POST['data']); exit;
+                
                 $_POST['data']['status'] = 1;
                 $_POST['data']['child_account_id'] = 6;
-                $_POST['data']['created'] =  date("Y-m-d");
                 $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
-                $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
-                $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
-                $save_data = $this->transaction_mod->add_transaction($_POST['data']);
+                 $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
+                if($transaction_id){
+                    $_POST['data']['updated'] = date("Y-m-d");
+                    $save_data = $this->transaction_mod->update_transaction($_POST['data'],$transaction_id);
+                    $msgs = 'Receive from customer transaction has been updated successfully.';
+                }else{
+                    $_POST['data']['created'] =  date("Y-m-d");
+                    $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
+                    $save_data = $this->transaction_mod->add_transaction($_POST['data']);
+                    $msgs = 'Add receive from customer has been added successfully';
+                }
+                
+                
+                
+                
 
-                $flash_msgs = array('flash_msgs' => 'Add receive from customer has been added successfully', 'alerts' => 'success');
+                $flash_msgs = array('flash_msgs' => $msgs, 'alerts' => 'success');
                 $this->session->set_userdata($flash_msgs);
                 redirect(base_url() . 'transaction/receive_from_customer', 'location', '301'); // 301 redirected
             }

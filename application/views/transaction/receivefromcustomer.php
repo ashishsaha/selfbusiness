@@ -259,11 +259,102 @@
             $("#ajaxShowDiv").children().remove();
         }
     }
-
+    
+    function edit_receive_from_customer(id) {
+        $("#id").val('');
+        $("#amount").val('');
+        $("#note").val('');
+        $("#trans_date").val('');
+        $('#trans_type').attr('disabled', false);
+        var selected_id = $("#selected_id").val();
+        $("#trans_"+selected_id).css("background","none");
+        $('select#trans_type option').removeAttr("selected");
+        $('select#payment_from_or_to option').removeAttr("selected");
+        
+        $("#ajaxShowDiv").html('');
+        
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo base_url() ?>transaction/getinfo',
+            dataType: 'json',
+            data: {'id': id},
+            success: function (data, textStatus, XMLHttpRequest) {
+                var bank_account_from_val = data.bank_account_from;
+                var bank_account_to_val = data.bank_account_to;
+                var checque_no_val = data.checque_no;
+                
+                $("#adding_form").show(400);
+                var payment_from_or_to = data.payment_from_or_to;
+                $("#payment_from_or_to option[value='" + payment_from_or_to + "']").prop('selected', true);
+                var trans_type_val = data.trans_type;
+                $("#trans_type option[value='" + trans_type_val + "']").prop('selected', true);
+                
+                if(bank_account_from_val || bank_account_to_val){
+                    var selected_val = '';
+                    if(bank_account_from_val){
+                        selected_val = 'selected="selected"';
+                    }
+                    var str = '<div class="col-md-6 col-sm-6">';
+                    str += '<div class="form-group">';
+                    str += '<label class="col-md-3 control-label">Customer Account</label>';
+                    str += '<div class="col-md-9">';
+                    str += '<select class="form-control" name="data[bank_account_from]" id="bank_account_from" data-parsley-id="6">';
+                    str += '<option value="">N/A</option>';
+                    str += '<option value="'+bank_account_from_val+'" '+selected_val+'>'+bank_account_from_val+'</option>';
+                    str += '</select>';
+                    str += '</div>';
+                    str += '</div>';
+                    str += '</div>';
+                    
+                    str += '<div class="col-md-6 col-sm-6">';
+                    str += '<div class="form-group">';
+                    
+                    if(parseInt(trans_type_val) == 2){
+                        str += '<label class="col-md-3 control-label">Check No</label>';
+                        str += '<div class="col-md-9">';
+                        str += '<input class="form-control" placeholder="Check Number" type="text" name="data[checque_no]" id="checque_no" parsley-trigger="change" value="'+checque_no_val+'" data-parsley-id="10">';;
+                        str += '</div>';
+                    }else{
+                        var selected_val = '';
+                        if(bank_account_to_val){
+                            selected_val = 'selected="selected"';
+                        }
+                        str += '<label class="col-md-3 control-label">Company Account</label>';
+                        str += '<div class="col-md-9">';
+                        str += '<select class="form-control" name="data[bank_account_to]" id="bank_account_to" data-parsley-id="6">';
+                        str += '<option value="">N/A</option>';
+                        str += '<option value="'+bank_account_to_val+'" '+selected_val+'>'+bank_account_to_val+'</option>';
+                        str += '</select>';
+                        str += '</div>';
+                          
+                    }
+                    str += '</div>';
+                    str += '</div>';
+                    
+                    $("#ajaxShowDiv").html(str);
+                }
+                
+                $("#id").val(data.id);
+                $("#amount").val(data.amount);
+                $("#note").val(data.note);
+                var trans_date= data.trans_date;
+                $("#trans_date").val(trans_date);
+                $('#form1').attr('action', '<?php echo base_url(); ?>transaction/receive_from_customer');
+                //$('#form1').append("<input type='hidden' name='edit' value='"+id+"'/>");
+                $("#submitButton").html('<i class="fa fa-save" aria-hidden="true"></i> Update');
+                $("#trans_"+id).addClass("rowBg").css("background","#EAF1FB");
+                $("#selected_id").val(id);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //$('#grid_12').removeBlockMessages().blockMessage('Error while contacting server, please try again', {type: 'error'});
+            }
+        });
+    }        
+    /*
     function edit_receive_from_customer(id) {
         window.location.href = '<?php echo base_url();?>transaction/edit_receive_from_customer/' + id;
     }
-
+    */
     function add_receive_from_customer_cancel() {
         $("#adding_form").hide(400);
     }
