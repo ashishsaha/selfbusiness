@@ -49,37 +49,44 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-layers"></i> <span> Buy / Sell</span>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-layers"></i> <span> Invoice</span>
                         <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="<?php echo base_url() ?>buys" <?php if ($active_menu == 'buys') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Purchase Info</a></li>
+                            <a href="<?php echo base_url() ?>sells" <?php if ($active_menu == 'sells') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Sales Invoice</a></li>
                         <li>
-                            <a href="<?php echo base_url() ?>sells" <?php if ($active_menu == 'sells') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Sell Info</a></li>
+                            <a href="<?php echo base_url() ?>buys" <?php if ($active_menu == 'buys') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Purchase Invoice</a></li>
                     </ul>
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-item"></i> <span> Payment </span>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-item"></i> <span> Transaction </span>
                         <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="<?php echo base_url() ?>transaction/pay" <?php if ($active_menu == 'pay') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Account Pay</a>
+                            <a href="<?php echo base_url() ?>transaction/pay" <?php if ($active_menu == 'pay') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Expense Transaction</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url() ?>transaction/receive" <?php if ($active_menu == 'receive') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Account Receive</a>
+                            <a href="<?php echo base_url() ?>transaction/receive" <?php if ($active_menu == 'receive') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Income Transaction</a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-layers"></i> <span> Store Settings </span>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-view-list"></i> <span> Store Management </span>
                         <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li>
                             <a href="<?php echo base_url() ?>products" <?php if ($active_menu == 'products') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Products/Items</a></li>
                         <li>
                             <a href="<?php echo base_url() ?>brands" <?php if ($active_menu == 'brands') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Brands</a></li>
+                    </ul>
+                </li>
+
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-invert-colors"></i> <span> Customer Management</span>
+                        <span class="menu-arrow"></span></a>
+                    <ul class="list-unstyled">
                         <li>
                             <a href="<?php echo base_url() ?>customers" <?php if ($active_menu == 'customers') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Customers/Suppliers</a></li>
                         <li>
@@ -89,7 +96,7 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-invert-colors"></i> <span> Access Management </span>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-format-underlined"></i> <span> User Management </span>
                         <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li>
@@ -103,7 +110,7 @@
                     </ul>
                 </li>
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-invert-colors"></i> <span> Settings </span>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-settings"></i> <span> Settings </span>
                         <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li>

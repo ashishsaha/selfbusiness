@@ -44,9 +44,9 @@ class Sells extends CI_Controller
 
         // Define Data array
         $data = array(
-            'page_title' => 'bsSelfBusiness System - All Sells Invoice List',
+            'page_title' => 'bsSelfBusiness System - All Sales Invoice List',
             'sidebar_menu_title' => 'Purchase/Sell Management',
-            'sidebar_menu' => 'Sells Invoice List',
+            'sidebar_menu' => 'Sales Invoice List',
             'buy_invoice_data' => $buy_invoice_data
         );
 
