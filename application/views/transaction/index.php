@@ -3,26 +3,26 @@
         <div class="card-box">
             <div class="row">
                 <div class="col-md-6 col-sm-6">
-                    <button onclick="pay_to_supplier()" title="Please click here for paying to your supplier" class="btn btn-block btn-primary waves-effect waves-light btn-lg m-b-5">Pay to supplier</button>
+                    <button onclick="pay_to_supplier()" title="Please click here for paying to your supplier" class="btn btn-block btn-success waves-effect waves-light btn-lg m-b-5"><i class="zmdi zmdi-local-atm"></i>&nbsp;Supplier payment</button>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                    <button onclick="pay_to_labour()" title="Please click here for paying to your labour" class="btn btn-block btn-info waves-effect waves-light btn-lg m-b-5">Labor Bill</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-6">
-                    <button onclick="pay_to_employee()" title="Please click here for paying to your employee" class="btn btn-block btn-warning waves-effect waves-light btn-lg m-b-5">Employee Bill</button>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <button onclick="daily_cost()" title="Please click here for daily cost" class="btn btn-block btn-success waves-effect waves-light btn-lg m-b-5">Other/Daily Cost</button>
+                    <button onclick="pay_to_labour()" title="Please click here for paying to your labour" class="btn btn-block btn-success waves-effect waves-light btn-lg m-b-5"><i class="zmdi zmdi-local-atm"></i>&nbsp;Labor bill</button>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6">
-                    <button onclick="mill_cost()" title="Please click here for mill cost" class="btn btn-block btn-purple waves-effect waves-light btn-lg m-b-5">Mill Cost</button>
+                    <button onclick="pay_to_employee()" title="Please click here for paying to your employee" class="btn btn-block btn-success waves-effect waves-light btn-lg m-b-5"><i class="zmdi zmdi-local-atm"></i>&nbsp;Employee salary</button>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                    <button onclick="home_cost()" title="Please click here for home cost" class="btn btn-block btn-inverse waves-effect waves-light btn-lg m-b-5">Home Cost</button>
+                    <button onclick="daily_cost()" title="Please click here for daily (ex: tea bill) cost" class="btn btn-block btn-success waves-effect waves-light btn-lg m-b-5"><i class="zmdi zmdi-local-atm"></i>&nbsp;Daily cost</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <button onclick="mill_cost()" title="Please click here for shop related cost" class="btn btn-block btn-success waves-effect waves-light btn-lg m-b-5"><i class="zmdi zmdi-local-atm"></i>&nbsp;Shop related cost</button>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <button onclick="home_cost()" title="Please click here for home cost" class="btn btn-block btn-success waves-effect waves-light btn-lg m-b-5"><i class="zmdi zmdi-local-atm"></i>&nbsp;Home cost</button>
                 </div>
             </div>
         </div>
