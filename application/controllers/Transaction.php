@@ -177,6 +177,7 @@ class Transaction extends CI_Controller
                 'bank_account_from' => $transaction_arr->bank_account_from,
                 'bank_account_to' => $transaction_arr->bank_account_to,
                 'checque_no' => $transaction_arr->checque_no,
+                'salary_month' => $transaction_arr->salary_month,
                 'amount' => $transaction_arr->amount,
                 'note' => $transaction_arr->note
             ));
@@ -789,161 +790,6 @@ class Transaction extends CI_Controller
         $this->load->view('layout/admin_layout', $data);
     }
 
-    /*
-     * Add pay to supplier
-     * */
-    public function add_pay_to_supplier(){
-
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
-            redirect('users/login');
-        }
-        $this->session->unset_userdata('active_menu');
-        $this->session->set_userdata('active_menu', 'pay');
-
-        // Define Data array
-        $data = array(
-            'page_title' => 'bsSelfBusiness System - Add Pay to Supplier',
-            'sidebar_menu_title' => 'Transaction Management',
-            'sidebar_menu' => 'Add Pay to Supplier Expense'
-        );
-
-        $data['js'] = array(
-            'assets/plugins/parsleyjs/dist/parsley.min.js',
-            'assets/plugins/fileuploads/js/dropify.min.js',
-            'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'
-        );
-
-        $data['css'] = array(
-            'assets/plugins/fileuploads/css/dropify.min.css',
-            'assets/plugins/custombox/dist/custombox.min.css',
-            'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'
-        );
-
-        $data['form_validation'] = '<script type="text/javascript">
-										$(document).ready(function() {
-											$("#form1").parsley();
-										});
-									</script>';
-
-        if (isset($_POST['OkSaveData'])) {
-
-            $this->form_validation->set_rules('data[payment_from_or_to]', 'Supplier Name', 'trim|required');
-            $this->form_validation->set_rules('data[amount]', 'Transaction Amount', 'trim|required');
-
-            if ($this->form_validation->run() == FALSE) {
-                $validation_error = validation_errors();
-                $data['validation_error'] = $validation_error;
-            } else {
-                //echo '<pre>';print_r($_POST['data']); exit;
-                $_POST['data']['status'] = 1;
-                $_POST['data']['child_account_id'] = 3;
-                $_POST['data']['created'] =  date("Y-m-d");
-                $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
-                $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
-                $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
-                $save_data = $this->transaction_mod->add_transaction($_POST['data']);
-
-                $flash_msgs = array('flash_msgs' => 'Daily cost has been added successfully', 'alerts' => 'success');
-                $this->session->set_userdata($flash_msgs);
-                redirect(base_url() . 'transaction/pay_to_supplier', 'location', '301'); // 301 redirected
-            }
-        }
-
-        // SELECT ALL supplier list
-        $condition = array('is_supplier' => 1);
-        $data['supplier_data'] = $this->customer_mod->get_all_customers($condition);
-
-        // Send $data array() to index page
-        $data['content'] = $this->load->view('transaction/addpaytosupplier', $data, true);
-        // Use Layout
-        $this->load->view('layout/admin_layout', $data);
-    }
-
-    /*
-     * Update pay to supplier
-     * */
-    public function edit_pay_to_supplier()
-    {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
-            redirect('users/login');
-        }
-        $this->session->unset_userdata('active_menu');
-        $this->session->set_userdata('active_menu', 'pay');
-
-        // Define Data array
-        $data = array(
-            'page_title' => 'Update Pay to Supplier Transaction',
-            'sidebar_menu_title' => 'Payment Management',
-            'sidebar_menu' => 'Update Pay to Supplier Transaction'
-        );
-
-        $data['js'] = array(
-            'assets/plugins/parsleyjs/dist/parsley.min.js',
-            'assets/plugins/fileuploads/js/dropify.min.js',
-            'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'
-        );
-        $data['css'] = array(
-            'assets/plugins/fileuploads/css/dropify.min.css',
-            'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'
-        );
-
-        $data['form_validation'] = '<script type="text/javascript">
-										$(document).ready(function() {
-											$("#form1").parsley();
-										});
-									</script>';
-
-
-        $transaction_id = $this->uri->segment(3);
-
-        if (!empty($transaction_id)) {
-            $transaction_data = $this->transaction_mod->get_transaction_info_by_id($transaction_id);
-        }
-
-        if (isset($_POST['OkSaveData'])) {
-            $data['transaction_id'] = $transaction_id;
-
-            $this->form_validation->set_rules('data[payment_from_or_to]', 'Supplier Name', 'trim|required');
-            $this->form_validation->set_rules('data[amount]', 'Transaction Amount', 'trim|required');
-
-            if ($this->form_validation->run() == FALSE) {
-                $validation_error = validation_errors();
-                $data['validation_error'] = $validation_error;
-            } else {
-                //echo '<pre>';print_r($_POST['data']); exit;
-                $_POST['data']['status'] = 1;
-                $_POST['data']['child_account_id'] = 3;
-                $_POST['data']['updated'] = date("Y-m-d");
-                $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
-                $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
-                $save_data = $this->transaction_mod->update_transaction($_POST['data'],$transaction_id);
-
-                $flash_msgs = array('flash_msgs' => 'Pay to supplier has been updated successfully.', 'alerts' => 'success');
-                $this->session->set_userdata($flash_msgs);
-                redirect(base_url() . 'transaction/pay_to_supplier', 'location', '301'); // 301 redirected
-            }
-        }
-
-        $data['transaction_data'] = $transaction_data;
-        $data['transaction_id'] = $transaction_id;
-
-        // SELECT ALL supplier list
-        $condition = array('is_supplier' => 1);
-        $data['supplier_list_data'] = $this->customer_mod->get_all_customers($condition);
-
-        // Get Company Info
-        $setting_id = 1;
-        $data['setting_data'] = $this->setting_mod->get_setting_by_id($setting_id);
-
-        // Get Supplier Info
-        $data['supplier_data'] = $this->customer_mod->get_customer_by_id($transaction_data->payment_from_or_to);
-
-        // Send $data array() to index page
-        $data['content'] = $this->load->view('transaction/editpaytosupplier', $data, true);
-        // Use Layout
-        $this->load->view('layout/admin_layout', $data);
-    }
-
     public function supplierbankinfo(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -1077,43 +923,7 @@ class Transaction extends CI_Controller
             'assets/plugins/datatables/scroller.bootstrap.min.css',
             'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'
         );
-
-        // Send $data array() to index page
-        $data['content'] = $this->load->view('transaction/paytoemployee', $data, true);
-        // Use Layout
-        $this->load->view('layout/admin_layout', $data);
-    }
-
-    /*
-     * Add pay to supplier
-     * */
-    public function add_pay_to_employee(){
-
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
-            redirect('users/login');
-        }
-        $this->session->unset_userdata('active_menu');
-        $this->session->set_userdata('active_menu', 'pay');
-
-        // Define Data array
-        $data = array(
-            'page_title' => 'bsSelfBusiness System - Add Pay to Employee',
-            'sidebar_menu_title' => 'Transaction Management',
-            'sidebar_menu' => 'Add Pay to Employee Expense'
-        );
-
-        $data['js'] = array(
-            'assets/plugins/parsleyjs/dist/parsley.min.js',
-            'assets/plugins/fileuploads/js/dropify.min.js',
-            'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'
-        );
-
-        $data['css'] = array(
-            'assets/plugins/fileuploads/css/dropify.min.css',
-            'assets/plugins/custombox/dist/custombox.min.css',
-            'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'
-        );
-
+        
         $data['form_validation'] = '<script type="text/javascript">
 										$(document).ready(function() {
 											$("#form1").parsley();
@@ -1121,6 +931,8 @@ class Transaction extends CI_Controller
 									</script>';
 
         if (isset($_POST['OkSaveData'])) {
+            $transaction_id = $_POST['data']['id'];
+            unset($_POST['data']['id']);
 
             $this->form_validation->set_rules('data[payment_from_or_to]', 'Supplier Name', 'trim|required');
             $this->form_validation->set_rules('data[amount]', 'Transaction Amount', 'trim|required');
@@ -1132,107 +944,31 @@ class Transaction extends CI_Controller
                 //echo '<pre>';print_r($_POST['data']); exit;
                 $_POST['data']['status'] = 1;
                 $_POST['data']['child_account_id'] = 5;
-                $_POST['data']['created'] =  date("Y-m-d");
                 $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
-                $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
                 $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
-                $save_data = $this->transaction_mod->add_transaction($_POST['data']);
+                if($transaction_id){
+                    $_POST['data']['updated'] = date("Y-m-d");
+                    $save_data = $this->transaction_mod->update_transaction($_POST['data'],$transaction_id);
+                    $msgs = 'Employee payment has been updated successfully.';
+                }else{
+                    $_POST['data']['created'] =  date("Y-m-d");
+                    $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
+                    $save_data = $this->transaction_mod->add_transaction($_POST['data']);
+                    $msgs = 'Employee payment has been added successfully';
+                }
 
-                $flash_msgs = array('flash_msgs' => 'Employee payment has been added successfully', 'alerts' => 'success');
+                $flash_msgs = array('flash_msgs' => $msgs, 'alerts' => 'success');
                 $this->session->set_userdata($flash_msgs);
                 redirect(base_url() . 'transaction/pay_to_employee', 'location', '301'); // 301 redirected
             }
         }
-
+        
         // SELECT ALL Customer list
         $condition = array('employee_type' => 3);
         $data['employee_data'] = $this->customer_mod->get_all_customers($condition);
 
         // Send $data array() to index page
-        $data['content'] = $this->load->view('transaction/addpaytoemployee', $data, true);
-        // Use Layout
-        $this->load->view('layout/admin_layout', $data);
-    }
-
-    /*
-     * Update pay to supplier
-     * */
-    public function edit_pay_to_employee()
-    {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
-            redirect('users/login');
-        }
-        $this->session->unset_userdata('active_menu');
-        $this->session->set_userdata('active_menu', 'pay');
-
-        // Define Data array
-        $data = array(
-            'page_title' => 'Update Pay to Employee Transaction',
-            'sidebar_menu_title' => 'Payment Management',
-            'sidebar_menu' => 'Update Pay to Employee Transaction'
-        );
-
-        $data['js'] = array(
-            'assets/plugins/parsleyjs/dist/parsley.min.js',
-            'assets/plugins/fileuploads/js/dropify.min.js',
-            'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'
-        );
-        $data['css'] = array(
-            'assets/plugins/fileuploads/css/dropify.min.css',
-            'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'
-        );
-
-        $data['form_validation'] = '<script type="text/javascript">
-										$(document).ready(function() {
-											$("#form1").parsley();
-										});
-									</script>';
-
-        $transaction_id = $this->uri->segment(3);
-
-        if (!empty($transaction_id)) {
-            $transaction_data = $this->transaction_mod->get_transaction_info_by_id($transaction_id);
-        }
-
-        if (isset($_POST['OkSaveData'])) {
-            $data['transaction_id'] = $transaction_id;
-
-            $this->form_validation->set_rules('data[payment_from_or_to]', 'Supplier Name', 'trim|required');
-            $this->form_validation->set_rules('data[amount]', 'Transaction Amount', 'trim|required');
-
-            if ($this->form_validation->run() == FALSE) {
-                $validation_error = validation_errors();
-                $data['validation_error'] = $validation_error;
-            } else {
-                $_POST['data']['status'] = 1;
-                $_POST['data']['child_account_id'] = 5;
-                $_POST['data']['updated'] = date("Y-m-d");
-                $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
-                $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
-                $save_data = $this->transaction_mod->update_transaction($_POST['data'],$transaction_id);
-
-                $flash_msgs = array('flash_msgs' => 'Pay to supplier has been updated successfully.', 'alerts' => 'success');
-                $this->session->set_userdata($flash_msgs);
-                redirect(base_url() . 'transaction/pay_to_employee', 'location', '301'); // 301 redirected
-            }
-        }
-
-        $data['transaction_data'] = $transaction_data;
-        $data['transaction_id'] = $transaction_id;
-
-        // SELECT ALL Customer list
-        $condition = array('employee_type' => 3);
-        $data['employee_list_data'] = $this->customer_mod->get_all_customers($condition);
-
-        // Get Company Info
-        $setting_id = 1;
-        $data['setting_data'] = $this->setting_mod->get_setting_by_id($setting_id);
-
-        // Get Supplier Info
-        $data['supplier_data'] = $this->customer_mod->get_customer_by_id($transaction_data->payment_from_or_to);
-
-        // Send $data array() to index page
-        $data['content'] = $this->load->view('transaction/editpaytoemployee', $data, true);
+        $data['content'] = $this->load->view('transaction/paytoemployee', $data, true);
         // Use Layout
         $this->load->view('layout/admin_layout', $data);
     }
@@ -1457,6 +1193,40 @@ class Transaction extends CI_Controller
             'assets/plugins/datatables/scroller.bootstrap.min.css',
             'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'
         );
+        
+        $data['form_validation'] = '<script type="text/javascript">
+										$(document).ready(function() {
+											$("#form1").parsley();
+										});
+									</script>';
+
+        if (isset($_POST['OkSaveData'])) {
+
+            $this->form_validation->set_rules('data[payment_from_or_to]', 'Customer Name', 'trim|required');
+            $this->form_validation->set_rules('data[amount]', 'Transaction Amount', 'trim|required');
+
+            if ($this->form_validation->run() == FALSE) {
+                $validation_error = validation_errors();
+                $data['validation_error'] = $validation_error;
+            } else {
+                //echo '<pre>';print_r($_POST['data']); exit;
+                $_POST['data']['status'] = 1;
+                $_POST['data']['child_account_id'] = 6;
+                $_POST['data']['created'] =  date("Y-m-d");
+                $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
+                $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
+                $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
+                $save_data = $this->transaction_mod->add_transaction($_POST['data']);
+
+                $flash_msgs = array('flash_msgs' => 'Add receive from customer has been added successfully', 'alerts' => 'success');
+                $this->session->set_userdata($flash_msgs);
+                redirect(base_url() . 'transaction/receive_from_customer', 'location', '301'); // 301 redirected
+            }
+        }
+
+        // SELECT ALL Customer list
+        $condition = array('is_customer' => 1);
+        $data['customer_data'] = $this->customer_mod->get_all_customers($condition);
 
         // Send $data array() to index page
         $data['content'] = $this->load->view('transaction/receivefromcustomer', $data, true);

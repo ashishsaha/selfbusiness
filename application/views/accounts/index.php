@@ -74,7 +74,7 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">&nbsp;</label>
                                         <div class="col-md-9">
-                                            <button type="button" class="btn" onclick="javascript:parent_account_cancel();">Cancel
+                                            <button type="button" class="btn" onclick="javascript:parent_account_cancel();"><i class="fa fa-ban" aria-hidden="true"></i> Cancel
                                             </button>
                                             <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save Info
                                             </button>
@@ -199,7 +199,7 @@
                 
                 $('#form1').attr('action', '<?php echo base_url(); ?>accounts/index');
                 //$('#form1').append("<input type='hidden' name='edit' value='"+id+"'/>");
-                $("#submitButton").text("Update Info");
+                $("#submitButton").html('<i class="fa fa-save" aria-hidden="true"></i> Update');
                 $("#parent_account_"+id).addClass("rowBg").css("background","#EAF1FB");
                 $("#selected_id").val(id);
             },
@@ -216,7 +216,7 @@
         $("#description").val('');
         $("#status").prop('checked', false);
         $('#form1').attr('action', '<?php echo base_url(); ?>accounts/index');
-        $("#submitButton").text("Save Info");
+        $("#submitButton").html('<i class="fa fa-save" aria-hidden="true"></i> Save');
     }
 
     function parent_account_cancel() {

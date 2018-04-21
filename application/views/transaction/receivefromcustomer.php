@@ -15,6 +15,9 @@
                     <!--<li><i class="fa fa-check-circle text-success"></i> Active</li>
                     <li><i class="fa fa-check-circle text-unsuccess"></i> Inactive</li>-->
                     <li>
+                        <button type="button" class="btn" onclick="javascript:receivefromcustomer_cancel();"><i
+                                class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Back
+                        </button>
                         <button title="Add Receive from Customer" data-tooltip="true" type="button"
                                 class="btn btn-success waves-effect waves-light"
                                 onclick="javascript:add_receive_from_customer();"><i
@@ -23,6 +26,106 @@
                     </li>
                 </ul>
             </h4>
+            
+            <div id="adding_form" class="row">
+                <div class="col-sm-12">
+                    <form action="<?php echo base_url(); ?>transaction/receive_from_customer" class="form-horizontal row-border" method="post" name="form1" id="form1" enctype="multipart/form-data" novalidate="">
+                        <input type="hidden" name="action" id="action" value="">
+                        <input type="hidden" name="OkSaveData" id="OkSaveData" value="TRUE">
+                        <input type="hidden" name="option_upload" id="option_upload" value="0">
+                        <input id="selected_id" value="1" type="hidden" />
+                        <input type="hidden" name="data[id]" id="id" value="">
+                        <div class="card-box">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Customer</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control required" name="data[payment_from_or_to]" id="payment_from_or_to" onchange="select_customer()" data-parsley-id="6">
+                                                <option value="">Select Customer</option>
+                                                <?php
+                                                foreach($customer_data as $customer){?>
+                                                    <option value="<?php echo  $customer->id; ?>"><?php echo  $customer->full_name; ?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Trans Type</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control required" name="data[trans_type]" id="trans_type" onchange="select_trans_type()"  data-parsley-id="6" disabled>
+                                                <option value="0">Hand Cash</option>
+                                                <option value="1">Bank Transaction</option>
+                                                <option value="2">Cheque</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" title="Child Account Description">Trans Date</label>
+                                        <div class="col-md-9">
+            
+                                            <div class="input-group">
+                                                <input type="text" class="form-control required" name="data[trans_date]"  value="<?php echo date("m/d/Y");?>" placeholder="mm/dd/yyyy" id="trans_date">
+                                                <span class="input-group-addon bg-primary b-0 text-white"><i class="ti-calendar"></i></span>
+                                            </div><!-- input-group -->
+                                            <!--<input class="form-control required" placeholder="Child Account Description" type="text" name="data[trans_date]" id="trans_date" parsley-trigger="change" value="" data-parsley-id="8">-->
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Amount</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control required" placeholder="Transaction Amount" type="text" name="data[amount]" id="amount" parsley-trigger="change" value="" data-parsley-id="8">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row" id="ajaxShowDiv">
+
+                            </div>
+            
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" title="Receive Description">Note</label>
+                                        <div class="col-md-9">
+                                            <textarea name="data[note]" id="note" class="form-control" style="min-height: 40px" cols="60" rows="1"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-6" style="text-align: right">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">&nbsp;</label>
+                                        <div class="col-md-9">
+                                            <button type="button" class="btn" onclick="javascript:add_receive_from_customer_cancel();"><i class="fa fa-ban" aria-hidden="true"></i> Cancel
+                                            </button>
+                                            <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
             <?php
             //print_r($home_cost_transaction_data);
             ?>
@@ -114,15 +217,59 @@
 <script type="text/javascript">
 
     function add_receive_from_customer() {
-        window.location.href = '<?php echo base_url();?>transaction/add_receive_from_customer/';
+        $("#adding_form").show(400);
+        $("#ajaxShowDiv").html('');
+        $("#id").val('');
+        $("#note").val('');
+        $("#amount").val('');
+        $('select#trans_type option').removeAttr("selected");
+        $('#trans_type').attr('disabled', true);
+        $('select#payment_from_or_to option').removeAttr("selected");
+        var d = new Date();
+        var trans_date = ("0" + (d.getMonth() + 1)).slice(-2) + "/" + ("0" + d.getDate()).slice(-2) + "/" + d.getFullYear();
+        $("#trans_date").val(trans_date);
+        $('#form1').attr('action', '<?php echo base_url(); ?>transaction/receive_from_customer');
+        $("#submitButton").html('<i class="fa fa-save" aria-hidden="true"></i> Save');
+    }
+    
+    function select_customer() {
+        var customer_id = $('#payment_from_or_to').val();
+        if (customer_id != '') {
+            $('#trans_type').attr('disabled', false);
+        }
+        else {
+            $('#trans_type').attr('disabled', true);
+        }
+    }
+
+    function select_trans_type() {
+        var customer_id = $('#payment_from_or_to').val();
+        var trans_type = $('#trans_type').val();
+        if (trans_type == 1 || trans_type == 2) {
+            $.ajax({
+                type: "post",
+                url: "<?php echo base_url() ?>transaction/customerbankinfo",
+                data: {customer_id: customer_id, trans_type: trans_type},
+                success: function (data) {
+                    $("#ajaxShowDiv").html(data);
+                }
+            });
+        }
+        else{
+            $("#ajaxShowDiv").children().remove();
+        }
     }
 
     function edit_receive_from_customer(id) {
         window.location.href = '<?php echo base_url();?>transaction/edit_receive_from_customer/' + id;
     }
 
-    function home_cost_cancel() {
+    function add_receive_from_customer_cancel() {
         $("#adding_form").hide(400);
+    }
+    
+    function receivefromcustomer_cancel(){
+        window.location.href = '<?php echo base_url();?>transaction/receive';
     }
 
     function delete_transaction(id) {

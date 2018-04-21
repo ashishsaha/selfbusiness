@@ -111,7 +111,7 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">&nbsp;</label>
                                         <div class="col-md-9">
-                                            <button type="button" class="btn" onclick="javascript:add_pay_to_supplier_cancel();">Cancel
+                                            <button type="button" class="btn" onclick="javascript:add_pay_to_supplier_cancel();"><i class="fa fa-ban" aria-hidden="true"></i> Cancel
                                             </button>
                                             <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save Info
                                             </button>
@@ -228,7 +228,7 @@
         var trans_date = ("0" + (d.getMonth() + 1)).slice(-2) + "/" + ("0" + d.getDate()).slice(-2) + "/" + d.getFullYear();
         $("#trans_date").val(trans_date);
         $('#form1').attr('action', '<?php echo base_url(); ?>transaction/pay_to_supplier');
-        $("#submitButton").text("Save Info");
+        $("#submitButton").html('<i class="fa fa-save" aria-hidden="true"></i> Save');
     }
 
     function add_pay_to_supplier_cancel() {
@@ -345,7 +345,7 @@
                 $("#trans_date").val(trans_date);
                 $('#form1').attr('action', '<?php echo base_url(); ?>transaction/pay_to_supplier');
                 //$('#form1').append("<input type='hidden' name='edit' value='"+id+"'/>");
-                $("#submitButton").text("Update Info");
+                $("#submitButton").html('<i class="fa fa-save" aria-hidden="true"></i> Update');
                 $("#trans_"+id).addClass("rowBg").css("background","#EAF1FB");
                 $("#selected_id").val(id);
             },
@@ -354,15 +354,7 @@
             }
         });
     }    
-    /*
-    function add_pay_to_supplier() {
-        window.location.href = '<?php echo base_url();?>transaction/add_pay_to_supplier/';
-    }
     
-    function edit_pay_to_supplier(id) {
-        window.location.href = '<?php echo base_url();?>transaction/edit_pay_to_supplier/' + id;
-    }
-    */
     function paytosupplier_cancel(){
         window.location.href = '<?php echo base_url();?>transaction/pay';
     }

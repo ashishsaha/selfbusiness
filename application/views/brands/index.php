@@ -48,9 +48,9 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">&nbsp;</label>
                                         <div class="col-md-9">
-                                            <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save Info
+                                            <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save
                                             </button>
-                                            <button type="button" class="btn" onclick="javascript:add_brand_cancel();">Cancel
+                                            <button type="button" class="btn" onclick="javascript:add_brand_cancel();"><i class="fa fa-ban" aria-hidden="true"></i> Cancel
                                             </button>
                                         </div>
                                     </div>
@@ -167,7 +167,7 @@
                 
                 $('#form1').attr('action', '<?php echo base_url(); ?>brands');
                 //$('#form1').append("<input type='hidden' name='edit' value='"+id+"'/>");
-                $("#submitButton").text("Update Info");
+                $("#submitButton").html('<i class="fa fa-save" aria-hidden="true"></i> Update');
                 $("#brand_"+id).addClass("rowBg").css("background","#EAF1FB");
                 $("#selected_id").val(id);
             },
@@ -183,7 +183,7 @@
         $("#name").val('');
         
         $('#form1').attr('action', '<?php echo base_url(); ?>brands');
-        $("#submitButton").text("Save Info");
+        $("#submitButton").html('<i class="fa fa-save" aria-hidden="true"></i> Save');
     }
 
     function add_brand_cancel() {
