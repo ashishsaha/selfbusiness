@@ -246,7 +246,6 @@
             dataType: 'json',
             data: {'id': id},
             success: function (data, textStatus, XMLHttpRequest) {
-                console.log(data);
                 $("#adding_form").show(400);
                 var payment_from_or_to = data.payment_from_or_to;
                 var ref_invoice_no = data.ref_invoice_no;
