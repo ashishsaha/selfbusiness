@@ -374,15 +374,14 @@ class Sells extends CI_Controller
     }
 
     /*
-     * Delete sell invoice
+     * Delete Invoice
      * */
     public function delete(){
         if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
             redirect('users/login');
         }
         $invoice_id = $this->uri->segment(3);
-        $_POST['data']['status'] = '-1';
-        $add_buy_invoice = $this->invoice_mod->update_invoice($_POST['data'], $invoice_id);
+        $this->invoice_mod->delete_invoice($invoice_id);
 
         $flash_msgs = array('flash_msgs' => 'The selected invoice has been deleted successfully', 'alerts' => 'success');
         $this->session->set_userdata($flash_msgs);

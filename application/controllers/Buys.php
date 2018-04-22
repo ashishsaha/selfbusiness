@@ -378,18 +378,18 @@ class Buys extends CI_Controller
     }
 
     /*
-     * Delete Product
+     * Delete Invoice
      * */
     public function delete(){
         if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
             redirect('users/login');
         }
-        $product_id = $this->uri->segment(3);
-        $this->product_mod->delete_product($product_id);
+        $invoice_id = $this->uri->segment(3);
+        $this->invoice_mod->delete_invoice($invoice_id);
 
-        $flash_msgs = array('flash_msgs' => 'The selected product has been deleted successfully', 'alerts' => 'success');
+        $flash_msgs = array('flash_msgs' => 'The selected invoice has been deleted successfully', 'alerts' => 'success');
         $this->session->set_userdata($flash_msgs);
-        redirect(base_url() . 'products', 'location', '301'); // 301 redirected
+        redirect(base_url() . 'buys', 'location', '301'); // 301 redirected
     }
 
 }

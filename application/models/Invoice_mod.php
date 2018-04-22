@@ -103,11 +103,10 @@ class Invoice_mod extends CI_Model
     /*
      * Delete buy invoices info
      * */
-    function delete_product($product_id)
+    function delete_invoice($invoice_id)
     {
-        $data=array('status'=>'-1');
-        $this->db->where('id',$product_id);
-        $this->db->update('invoices',$data);
+        $sql = "DELETE inv, invd FROM invoices as inv INNER JOIN invoice_details as invd ON inv.id = invd.invoice_id WHERE inv.id = ?";
+        $this->db->query($sql, array($invoice_id));
     }
 
     /*
