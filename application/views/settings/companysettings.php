@@ -128,7 +128,7 @@
                                                     <th class="text-center" style="text-align: left; width: 19%">
                                                         &nbsp;Bank Location
                                                     </th>
-                                                    <th></th>
+                                                    <th style="width: 3%;"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>

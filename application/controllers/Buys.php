@@ -376,6 +376,28 @@ class Buys extends CI_Controller
         // Use Layout
         $this->load->view('layout/admin_layout', $data);
     }
+    
+    public function print_invoice(){
+        $invoice_id = $this->uri->segment(3);
+
+        if (!empty($invoice_id)) {
+            $invoice_data = $this->invoice_mod->get_invoice($invoice_id);
+            $invoice_details_data = $this->invoice_mod->get_invoice_details($invoice_id);
+            //echo '<pre>'; print_r($invoice_details_data);die();
+        }
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        //echo '<pre>'; print_r($company_info[0]);die();
+
+        $data['invoice_data'] = $invoice_data;
+        $data['invoice_details_data'] = $invoice_details_data;
+        $data['invoice_id'] = $invoice_id;
+        $data['company_info'] = $company_info[0];
+        $html = $this->load->view('buys/invoice', $data, true);
+        $pdfFilePath = "buy_invoice.pdf";
+        $this->load->library('m_pdf');
+        $this->m_pdf->pdf->WriteHTML($html);
+        $this->m_pdf->pdf->Output($pdfFilePath, "D");
+    }
 
     /*
      * Delete Invoice

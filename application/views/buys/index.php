@@ -125,6 +125,10 @@
 </div>
 
 <script type="text/javascript">
+    
+    function print_buy_invoice(id) {
+        window.location.href = '<?php echo base_url();?>buys/print_invoice/' + id;
+    }
     function details_buy_invoice(id) {
         window.location.href = '<?php echo base_url();?>buys/details/' + id;
     }
