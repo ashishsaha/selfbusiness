@@ -113,8 +113,8 @@ background-clip: padding-box;">
         </tr>
         
         <tr>
-            <td>
-                <h3 style="text-align: right;">Thank You!</h3>
+            <td style="text-align: right; width: 100%;">
+                <h3>Thank You!</h3>
             </td>
         </tr>
 
