@@ -3,7 +3,18 @@
 
         <div class="card-box">
             <div class="row">
-                <h4 class="header-title m-t-0 m-b-30"><i class="fa fa-arrows"></i> Sells Invoice Details
+                <h4 class="header-title m-t-0 m-b-30"><i class="fa fa-arrows"></i> Sells Invoice Details&nbsp;
+                &nbsp;<span id="status_msg" class="text-success"></span>
+                <ul class="list-status" style="margin-right: 5px;">
+                    <!--<li><i class="fa fa-check-circle text-success"></i> Active</li>
+                    <li><i class="fa fa-check-circle text-unsuccess"></i> Inactive</li>-->
+                    <li>
+                        <button title="Print Invoice" data-tooltip="true" type="button"
+                                class="btn btn-success waves-effect waves-light"
+                                onclick="javascript:print_invoice(<?php echo $invoice_id; ?>);"><i class="fa fa-print"></i>&nbsp;Print Invoice
+                        </button>
+                    </li>
+                </ul>
                 </h4>
             </div>
             
@@ -75,7 +86,7 @@
             								<td class="thick-line"></td>
                                             <td class="thick-line"></td>
             								<td class="thick-line"></td>
-            								<td class="thick-line text-center"><strong>Subtotal</strong></td>
+            								<td class="thick-line text-right"><strong>Total</strong></td>
             								<td class="thick-line text-right"><?php echo $invoice_data->total_cost;?></td>
             							</tr>
             							<?php /*<tr>
@@ -84,13 +95,19 @@
             								<td class="no-line text-center"><strong>Shipping</strong></td>
             								<td class="no-line text-right">$15</td>
             							</tr>*/?>
+                                        <?php 
+                                        $paid_amount = "0.00";
+                                        if($paid_amount_data){
+                                            $paid_amount = $paid_amount_data->amount;
+                                        }
+                                        ?>
             							<tr>
             								<td class="no-line"></td>
             								<td class="no-line"></td>
                                             <td class="no-line"></td>
             								<td class="no-line"></td>
-            								<td class="no-line text-center"><strong>Total</strong></td>
-            								<td class="no-line text-right"><?php echo $invoice_data->total_cost;?></td>
+            								<td class="no-line text-right"><strong>Paid Amount</strong></td>
+            								<td class="no-line text-right"><?php echo $paid_amount;?></td>
             							</tr>
                                         <?php }?>
             						</tbody>
@@ -110,6 +127,13 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    
+    function print_invoice(id) {
+        window.location.href = '<?php echo base_url();?>sells/print_invoice/' + id;
+    }
+</script>
 
 <style>
 .invoice-title h2, .invoice-title h3 {

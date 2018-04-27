@@ -123,18 +123,39 @@
                                     <tbody class="tbody-style">
                                     <input type="hidden" name="total_purchase_cost" id="total_purchase_cost" value="0" />
                                     <tr class="font-bold font-black tr-style" style="text-align: right">
-                                        <td align="right"> <b>Grand Total :</b></td>
+                                        <td style="width: 50%;" align="right"> <b>Total :</b></td>
+                                        <td style="width: 20%;">&nbsp;</td>
                                         <td ><b>$<span id="total_purchase_cost_text">0.00</span></b></td>
                                     </tr>
                                     <tr class="font-bold font-black tr-style">
-                                        <td colspan="5" align="right"> </td>
+                                        <td colspan="3" align="right"> </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-md-6"></div>
+                            <div class="col-sm-6">
+                                <table class=" table mrg20T table-hover table-style" style="margin-top: -27px">
+                                    <tbody class="tbody-style">
+                                        <tr class="font-bold font-black tr-style" style="text-align: right">
+                                            <td style="width: 50%;" align="right"> <b>Paid Amount :</b></td>
+                                            <td style="width: 20%;">&nbsp;</td>
+                                            <td><input type="number" id='paid_amount' name='paid_amount' placeholder='Paid Amount' min="0.00" value="0.00" class="form-control num_val" /></td>
+                                        </tr>
+                                        <tr class="font-bold font-black tr-style">
+                                            <td colspan="3" align="right"> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-6"></div>

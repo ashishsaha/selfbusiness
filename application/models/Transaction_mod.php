@@ -69,6 +69,19 @@ class Transaction_mod extends CI_Model
         $str = $this->db->update_string($this->db->dbprefix('transaction'), $data, $where);
         $query = $this->db->query($str);
     }
+    
+    /*
+     * Get paid amount by invoice id
+     * */
+    function get_paid_amount_by_invoice_id($id)
+    {
+        $this->db->select("id, ref_invoice_no, amount");
+        $this->db->from("transaction");
+        $this->db->where('ref_invoice_no',$id);
+        $query1 = $this->db->get();
+        
+        return $query1->row();
+    }
 
 
     /*

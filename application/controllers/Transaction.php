@@ -1216,7 +1216,7 @@ class Transaction extends CI_Controller
                 $_POST['data']['status'] = 1;
                 $_POST['data']['child_account_id'] = 6;
                 $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
-                 $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
+                $_POST['data']['updated_by'] = $this->session->userdata['userData']['session_user_id'];
                 if($transaction_id){
                     $_POST['data']['updated'] = date("Y-m-d");
                     $save_data = $this->transaction_mod->update_transaction($_POST['data'],$transaction_id);

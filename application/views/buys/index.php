@@ -70,7 +70,7 @@
                                 
                                 <button title="Print Invoice" data-tooltip="true" type="button"
                                         class="on-default print-row"
-                                        onclick="javascript:print_buy_invoice(<?php echo $buy_invoice->id; ?>);">
+                                        onclick="javascript:print_invoice(<?php echo $buy_invoice->id; ?>);">
                                     <i class="fa fa-print"></i></button>
                                 &nbsp;
 
@@ -126,7 +126,7 @@
 
 <script type="text/javascript">
     
-    function print_buy_invoice(id) {
+    function print_invoice(id) {
         window.location.href = '<?php echo base_url();?>buys/print_invoice/' + id;
     }
     function details_buy_invoice(id) {

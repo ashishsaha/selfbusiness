@@ -16,7 +16,7 @@ background-clip: padding-box;">
                     <tr>
                         <td style="width: 50%;">	
                             <address style="margin-bottom: 20px;font-style: normal;line-height: 1.42857143;">
-            				<strong>Billed To:</strong><br>
+            				<strong>Billed From:</strong><br>
             					<?php echo $invoice_data->full_name; ?><br>
             					Phone : <?php echo $invoice_data->contact_number; ?><br>
             					<?php echo $invoice_data->address; ?>

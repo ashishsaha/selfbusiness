@@ -134,12 +134,42 @@
                                     <tbody class="tbody-style">
                                     <input type="hidden" name="total_cost" id="total_cost" value="<?php echo $invoice_data->total_cost;?>" />
                                     <tr class="font-bold font-black tr-style" style="text-align: right">
-                                        <td align="right"> <b>Grand Total :</b></td>
+                                        <td style="width: 50%;" align="right"> <b>Grand Total :</b></td>
+                                        <td style="width: 20%;">&nbsp;</td>
                                         <td ><b>$<span id="total_cost_text"><?php echo number_format($invoice_data->total_cost,2);?></span></b></td>
                                     </tr>
                                     <tr class="font-bold font-black tr-style">
-                                        <td colspan="5" align="right"> </td>
+                                        <td colspan="3" align="right"> </td>
                                     </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-md-6"></div>
+                            <div class="col-sm-6">
+                                <table class=" table mrg20T table-hover table-style" style="margin-top: -27px">
+                                    <tbody class="tbody-style">
+                                        <tr class="font-bold font-black tr-style" style="text-align: right">
+                                            <td style="width: 50%;" align="right"> <b>Paid Amount :</b></td>
+                                            <td style="width: 20%;">&nbsp;</td>
+                                            <?php 
+                                            $paid_amount = "0.00";
+                                            $transaction_id = null;
+                                            if($paid_amount_data){
+                                                $transaction_id = $paid_amount_data->id;
+                                                $paid_amount = $paid_amount_data->amount;
+                                            }
+                                             ?>
+                                             <input type="hidden" name="transaction_id" id="transaction_id" value="<?php echo $transaction_id;?>" />
+                                            <td><input type="number" id='paid_amount' name='paid_amount' placeholder='Paid Amount' min="0.00" value="<?php echo $paid_amount; ?>" class="form-control num_val" /></td>
+                                        </tr>
+                                        <tr class="font-bold font-black tr-style">
+                                            <td colspan="5" align="right"> </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

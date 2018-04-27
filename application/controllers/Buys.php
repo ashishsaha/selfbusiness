@@ -29,6 +29,7 @@ class Buys extends CI_Controller
         $this->load->model('customer_mod');
         $this->load->model('invoice_mod');
         $this->load->model('setting_mod');
+        $this->load->model('transaction_mod');
     }
 
     public function index()
@@ -157,6 +158,21 @@ class Buys extends CI_Controller
                         $this->invoice_mod->add_invoice_detail($detail_data_arr);
                     }
                 }
+                // Transaction
+                if($_POST['paid_amount']){
+                    $transaction_data['trans_type'] = 0;
+                    $transaction_data['ref_invoice_no'] = $last_insert_id;
+                    $transaction_data['child_account_id'] = 3;
+                    $transaction_data['payment_from_or_to'] = $_POST['data']['customer_id'];
+                    $transaction_data['amount'] = $_POST['paid_amount']; 
+                    $transaction_data['status'] = 1;
+                    $transaction_data['trans_date'] = date("Y-m-d");
+                    $transaction_data['created'] =  date("Y-m-d");
+                    $transaction_data['created_by'] = $this->session->userdata['userData']['session_user_id'];
+                    $transaction_data['updated_by'] = $this->session->userdata['userData']['session_user_id'];
+                    $this->transaction_mod->add_transaction($transaction_data);
+                }
+                
                 // Redirect
                 $flash_msgs = array('flash_msgs' => 'Purchase invoice has been saved successfully', 'alerts' => 'success');
                 $this->session->set_userdata($flash_msgs);
@@ -250,6 +266,7 @@ class Buys extends CI_Controller
         if (!empty($invoice_id)) {
             $invoice_data = $this->invoice_mod->get_invoice_by_id($invoice_id);
             $invoice_details_data = $this->invoice_mod->get_invoice_details_by_invoice_id($invoice_id);
+            $paid_amount_data = $this->transaction_mod->get_paid_amount_by_invoice_id($invoice_id);
         }
 
         if (isset($_POST['OkSaveData'])) {
@@ -301,6 +318,29 @@ class Buys extends CI_Controller
                         $this->invoice_mod->add_invoice_detail($detail_data_arr);
                     }
                 }
+                
+                // Transaction
+                if($_POST['paid_amount']){
+                    $transaction_id = $_POST['transaction_id'];
+                    
+                    $transaction_data['payment_from_or_to'] = $_POST['data']['customer_id'];
+                    $transaction_data['amount'] = $_POST['paid_amount']; 
+                    $transaction_data['updated_by'] = $this->session->userdata['userData']['session_user_id'];
+                    
+                    if($transaction_id){
+                        $transaction_data['updated'] =  date("Y-m-d");
+                        $this->transaction_mod->update_transaction($transaction_data,$transaction_id);
+                    }else{
+                        $transaction_data['trans_type'] = 0;
+                        $transaction_data['ref_invoice_no'] = $invoice_id;
+                        $transaction_data['child_account_id'] = 3;
+                        $transaction_data['status'] = 1;
+                        $transaction_data['trans_date'] = date("Y-m-d");
+                        $transaction_data['created'] =  date("Y-m-d");
+                        $transaction_data['created_by'] = $this->session->userdata['userData']['session_user_id'];
+                        $this->transaction_mod->add_transaction($transaction_data);
+                    }
+                }
 
                 $flash_msgs = array('flash_msgs' => 'Purchase invoice has been updated successfully', 'alerts' => 'success');
                 $this->session->set_userdata($flash_msgs);
@@ -310,6 +350,7 @@ class Buys extends CI_Controller
 
         $data['invoice_data'] = $invoice_data;
         $data['invoice_details_data'] = $invoice_details_data;
+        $data['paid_amount_data'] = $paid_amount_data;
         $data['invoice_id'] = $invoice_id;
 
         // get all supplier name
@@ -360,6 +401,7 @@ class Buys extends CI_Controller
         if (!empty($invoice_id)) {
             $invoice_data = $this->invoice_mod->get_invoice($invoice_id);
             $invoice_details_data = $this->invoice_mod->get_invoice_details($invoice_id);
+            $paid_amount_data = $this->transaction_mod->get_paid_amount_by_invoice_id($invoice_id);
             //echo '<pre>'; print_r($invoice_details_data);die();
         }
         $company_info = $this->setting_mod->get_setting_by_id(1);
@@ -367,6 +409,7 @@ class Buys extends CI_Controller
 
         $data['invoice_data'] = $invoice_data;
         $data['invoice_details_data'] = $invoice_details_data;
+        $data['paid_amount_data'] = $paid_amount_data;
         $data['invoice_id'] = $invoice_id;
         $data['company_info'] = $company_info[0];
 
@@ -383,6 +426,7 @@ class Buys extends CI_Controller
         if (!empty($invoice_id)) {
             $invoice_data = $this->invoice_mod->get_invoice($invoice_id);
             $invoice_details_data = $this->invoice_mod->get_invoice_details($invoice_id);
+            $paid_amount_data = $this->transaction_mod->get_paid_amount_by_invoice_id($invoice_id);
             //echo '<pre>'; print_r($invoice_details_data);die();
         }
         $company_info = $this->setting_mod->get_setting_by_id(1);
@@ -390,10 +434,11 @@ class Buys extends CI_Controller
 
         $data['invoice_data'] = $invoice_data;
         $data['invoice_details_data'] = $invoice_details_data;
+        $data['paid_amount_data'] = $paid_amount_data;
         $data['invoice_id'] = $invoice_id;
         $data['company_info'] = $company_info[0];
         $html = $this->load->view('buys/invoice', $data, true);
-        $pdfFilePath = "buy_invoice.pdf";
+        $pdfFilePath = "buy_invoice_".$invoice_id.".pdf";
         $this->load->library('m_pdf');
         $this->m_pdf->pdf->WriteHTML($html);
         $this->m_pdf->pdf->Output($pdfFilePath, "D");
