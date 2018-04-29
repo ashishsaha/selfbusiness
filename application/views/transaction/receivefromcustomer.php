@@ -163,6 +163,11 @@
                                         class="on-default edit-row" onclick="javascript:edit_receive_from_customer(<?php echo $transaction_data->id; ?>);">
                                     <i class="fa fa-edit"></i></button>
                                 &nbsp;
+                                <button title="Print" data-tooltip="true" type="button"
+                                        class="on-default print-row"
+                                        onclick="javascript:print_transaction(<?php echo $transaction_data->id; ?>);">
+                                    <i class="fa fa-print"></i></button>
+                                &nbsp;
 
                                 <button title="Delete Product" data-tooltip="true" type="button"
                                         class="on-default remove-row" data-toggle="modal"
@@ -361,6 +366,10 @@
     
     function receivefromcustomer_cancel(){
         window.location.href = '<?php echo base_url();?>transaction/receive';
+    }
+    
+    function print_transaction(id) {
+        window.location.href = '<?php echo base_url();?>transaction/print_receive_transaction/' + id;
     }
 
     function delete_transaction(id) {

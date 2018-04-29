@@ -109,6 +109,23 @@
                         */ ?>
                     </ul>
                 </li>
+                
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-settings"></i> <span> Report </span>
+                        <span class="menu-arrow"></span></a>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="<?php echo base_url() ?>sells/customer_wise_sales" <?php if ($active_menu == 'customerwisesales') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Customer Wise Sales</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>accounts/index" <?php if ($active_menu == 'parentaccounts') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Supplier Wise Purchase</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>accounts/child_accounts" <?php if ($active_menu == 'childaccounts') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Sale Transaction</a>
+                        </li>
+                    </ul>
+                </li>
+                
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-settings"></i> <span> Settings </span>
                         <span class="menu-arrow"></span></a>

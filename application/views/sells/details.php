@@ -96,20 +96,22 @@
             								<td class="no-line text-right">$15</td>
             							</tr>*/?>
                                         <?php 
-                                        $paid_amount = "0.00";
-                                        if($paid_amount_data){
-                                            $paid_amount = $paid_amount_data->amount;
+                                        $received_amount = null;
+                                        if($received_amount_data){
+                                            $received_amount = $received_amount_data->amount;
                                         }
+                                        if($received_amount){
                                         ?>
-            							<tr>
-            								<td class="no-line"></td>
-            								<td class="no-line"></td>
-                                            <td class="no-line"></td>
-            								<td class="no-line"></td>
-            								<td class="no-line text-right"><strong>Paid Amount</strong></td>
-            								<td class="no-line text-right"><?php echo $paid_amount;?></td>
-            							</tr>
-                                        <?php }?>
+                                            <tr>
+                								<td class="no-line"></td>
+                								<td class="no-line"></td>
+                                                <td class="no-line"></td>
+                								<td class="no-line"></td>
+                								<td class="no-line text-right"><strong>Received Amount</strong></td>
+                								<td class="no-line text-right"><?php echo $received_amount;?></td>
+                							</tr>
+                                        <?php } ?>
+                                        <?php } ?>
             						</tbody>
             					</table>
             				</div>

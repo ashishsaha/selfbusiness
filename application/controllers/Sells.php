@@ -399,7 +399,7 @@ class Sells extends CI_Controller
         if (!empty($invoice_id)) {
             $invoice_data = $this->invoice_mod->get_invoice($invoice_id);
             $invoice_details_data = $this->invoice_mod->get_invoice_details($invoice_id);
-            $paid_amount_data = $this->transaction_mod->get_paid_amount_by_invoice_id($invoice_id);
+            $received_amount_data = $this->transaction_mod->get_paid_amount_by_invoice_id($invoice_id);
             //echo '<pre>'; print_r($invoice_details_data);die();
         }
         $company_info = $this->setting_mod->get_setting_by_id(1);
@@ -407,7 +407,7 @@ class Sells extends CI_Controller
 
         $data['invoice_data'] = $invoice_data;
         $data['invoice_details_data'] = $invoice_details_data;
-        $data['paid_amount_data'] = $paid_amount_data;
+        $data['received_amount_data'] = $received_amount_data;
         $data['invoice_id'] = $invoice_id;
         $data['company_info'] = $company_info[0];
 
@@ -424,7 +424,7 @@ class Sells extends CI_Controller
         if (!empty($invoice_id)) {
             $invoice_data = $this->invoice_mod->get_invoice($invoice_id);
             $invoice_details_data = $this->invoice_mod->get_invoice_details($invoice_id);
-            $paid_amount_data = $this->transaction_mod->get_paid_amount_by_invoice_id($invoice_id);
+            $received_amount_data = $this->transaction_mod->get_paid_amount_by_invoice_id($invoice_id);
             //echo '<pre>'; print_r($invoice_details_data);die();
         }
         $company_info = $this->setting_mod->get_setting_by_id(1);
@@ -432,10 +432,10 @@ class Sells extends CI_Controller
 
         $data['invoice_data'] = $invoice_data;
         $data['invoice_details_data'] = $invoice_details_data;
-        $data['paid_amount_data'] = $paid_amount_data;
+        $data['received_amount_data'] = $received_amount_data;
         $data['invoice_id'] = $invoice_id;
         $data['company_info'] = $company_info[0];
-        $html = $this->load->view('sells/invoice', $data, true);
+        $html = $this->load->view('sells/printinvoice', $data, true);
         $pdfFilePath = "sell_invoice_".$invoice_id.".pdf";
         $this->load->library('m_pdf');
         $this->m_pdf->pdf->WriteHTML($html);
@@ -455,6 +455,66 @@ class Sells extends CI_Controller
         $flash_msgs = array('flash_msgs' => 'The selected invoice has been deleted successfully', 'alerts' => 'success');
         $this->session->set_userdata($flash_msgs);
         redirect(base_url() . 'sells', 'location', '301'); // 301 redirected
+    }
+    
+    /*
+     * Report
+     * Customer wise sales
+     **/
+    public function customer_wise_sales(){
+        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+            redirect('users/login');
+        }
+        
+        $this->session->unset_userdata('active_menu');
+        $this->session->set_userdata('active_menu', 'customerwisesales');
+
+        // Define Data array
+        $data = array(
+            'page_title' => 'bsSelfBusiness System - All Sales Invoice List',
+            'sidebar_menu_title' => 'Report',
+            'sidebar_menu' => 'Customer Wise Sales'
+        );
+
+        $data['js'] = array(
+            'assets/plugins/datatables/jquery.dataTables.min.js',
+            'assets/plugins/datatables/dataTables.bootstrap.js',
+            'assets/plugins/datatables/dataTables.buttons.min.js',
+            'assets/plugins/datatables/buttons.bootstrap.min.js',
+            'assets/plugins/datatables/jszip.min.js',
+            'assets/plugins/datatables/pdfmake.min.js',
+            'assets/plugins/datatables/vfs_fonts.js',
+            'assets/plugins/datatables/buttons.html5.min.js',
+            'assets/plugins/datatables/buttons.print.min.js',
+            'assets/plugins/datatables/dataTables.fixedHeader.min.js',
+            'assets/plugins/datatables/dataTables.keyTable.min.js',
+            'assets/pages/datatables.init.js'
+        );
+
+        $data['css'] = array(
+            'assets/plugins/datatables/jquery.dataTables.min.css',
+            'assets/plugins/datatables/buttons.bootstrap.min.css',
+            'assets/plugins/datatables/fixedHeader.bootstrap.min.css',
+            'assets/plugins/datatables/responsive.bootstrap.min.css',
+            'assets/plugins/datatables/scroller.bootstrap.min.css'
+        );
+        
+        $sales_invoice_data = null;
+        
+        if (isset($_POST['OkSaveData'])) {
+            // SELECT ALL Sales Invoice list
+            $sales_invoice_data = $this->invoice_mod->get_customer_wise_sales();
+        }
+        $data['sales_invoice_data'] = $sales_invoice_data;
+        
+        // SELECT ALL Customer list
+        $condition = array('is_customer' => 1);
+        $data['customer_data'] = $this->customer_mod->get_all_customers($condition);
+        
+        // Send $data array() to index page
+        $data['content'] = $this->load->view('sells/customerwisesales', $data, true);
+        // Use Layout
+        $this->load->view('layout/admin_layout', $data);
     }
 
 }

@@ -3,9 +3,9 @@ background-clip: padding-box;">
         <tr>
             <td style="text-align: center;">
                 <header style="line-height: .52857143;">
-                	<h2><?php echo $company_info->company_name; ?></h2>
-                    <h4>Phone : <?php echo $company_info->contact_no; ?></h4>
-                    <h5><?php echo $company_info->address; ?></h5>
+                	<h2><?php echo $company_data->company_name; ?></h2>
+                    <h4>Phone : <?php echo $company_data->contact_no; ?></h4>
+                    <h5><?php echo $company_data->address; ?></h5>
                 </header>
                 <hr />
             </td>
@@ -17,31 +17,87 @@ background-clip: padding-box;">
                         <td style="width: 50%;">	
                             <address style="margin-bottom: 20px;font-style: normal;line-height: 1.42857143;">
             				<strong>Billed From:</strong><br>
-            					<?php echo $invoice_data->full_name; ?><br>
-            					Phone : <?php echo $invoice_data->contact_number; ?><br>
-            					<?php echo $invoice_data->address; ?>
+            					<?php echo $customer_data->full_name; ?><br>
+            					Phone : <?php echo $customer_data->contact_number; ?><br>
+            					<?php echo $customer_data->address; ?>
             				</address>			            				
                         </td>
                         <td style="width: 50%; text-align: right;">
                             <address style="text-align: right; margin-bottom: 20px;font-style: normal;line-height: 1.42857143;">
-                			<strong>Invoice:</strong><br>
-            					Number : <?php echo $invoice_data->invoice_no; ?><br>
-            					Date : <?php echo date("Y-m-d", strtotime($invoice_data->created)); ?>
+                			<strong>Transaction Information:</strong><br>
+            					<?php 
+                                $trans_type = null;
+                                if($transaction_data->trans_type == 1){
+                                    $trans_type = 'Bank Transaction';
+                                }else if($transaction_data->trans_type == 2){
+                                    $trans_type = 'Cheque';
+                                }else{
+                                    $trans_type = 'Hand Cash';
+                                }
+                                ?>
+                                Transaction Type : <?php echo $trans_type; ?><br>
+                                <?php if($transaction_data->ref_invoice_no){?>
+                                Invoice No : <?php echo $invoice_data->invoice_no; ?><br>
+                                <?php } ?>
+            					Date : <?php echo date("Y-m-d", strtotime($transaction_data->trans_date)); ?>
             				</address>
                         </td>
                     </tr>
+                    <?php 
+                    $bank_account_from = explode(',', $transaction_data->bank_account_from);
+                    $bank_account_to = explode(',', $transaction_data->bank_account_to);
+                    $checque_no = $transaction_data->checque_no;
+                    if($transaction_data->trans_type != 0){
+                    ?>
+                    
+                    <tr>
+                        <td style="width: 50%;">	
+                            <address style="margin-bottom: 20px;font-style: normal;line-height: 1.42857143;">
+            				<strong>Bank Account From:</strong><br>
+            					Account Name: <?php echo $bank_account_from[0]; ?><br>
+           					    Account Number: <?php echo $bank_account_from[1]; ?><br>
+            					Bank Name: <?php echo $bank_account_from[2]; ?><br>
+                                Branch Name: <?php echo $bank_account_from[3]; ?><br>
+                                Bank Location: <?php echo $bank_account_from[4]; ?>
+                                <?php if($transaction_data->trans_type == 2){ ?>
+                                <br>
+                                Checque No: <?php echo $checque_no; ?>
+                                <?php } ?>
+            				</address>			            				
+                        </td>
+                        <td style="width: 50%; text-align: right;">
+                            <address style="text-align: right; margin-bottom: 20px;font-style: normal;line-height: 1.42857143;">
+                			<?php if($transaction_data->trans_type == 1){ ?>
+                            <strong>Bank Account To:</strong><br>
+            					Account Name: <?php echo $bank_account_to[0]; ?><br>
+           					    Account Number: <?php echo $bank_account_to[1]; ?><br>
+            					Bank Name: <?php echo $bank_account_to[2]; ?><br>
+                                Branch Name: <?php echo $bank_account_to[3]; ?><br>
+                                Bank Location: <?php echo $bank_account_to[4]; ?>
+                            <?php } ?>
+            				</address>
+                        </td>
+                    </tr>
+                    <?php }?>
                 </table>
             </td>
         </tr>
         
-        
+        <?php 
+        if(!empty($invoice_data)){ 
+            $head_title = "Order summary";
+        }else{
+            $head_title = "Receive Information";
+        }
+            
+        ?>
         <tr>
             <td style="height: 40px; background-color: #f5f5f5; color: #797979; border: none !important; padding: 10px 20px; border-top-left-radius: 3px; border-top-right-radius: 3px; outline: none !important; box-sizing: border-box;">
                 <h3 style="font-weight: 600;
     margin-bottom: 0;
     margin-top: 0;font-size: 16px;
     color: inherit; line-height: 30px;">
-                <strong>Order summary</strong>
+                <strong><?php echo $head_title; ?></strong>
                 </h3>
             </td>
         </tr>
@@ -53,7 +109,8 @@ background-clip: padding-box;">
                     <tr>
                         <td>
                             <table style="width: 1000px; margin-bottom: 10px; padding: 120px; background-color: transparent;border-spacing: 0;border-collapse: collapse; box-sizing: border-box;">
-                            	<thead>
+                            	<?php if(!empty($invoice_data)){ ?>
+                                <thead>
                                     <tr>
                             			<td style="border-top: 0; padding: 5px 5px 5px 20px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"><strong>Product Name</strong></td>
                             			<td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align:center;"><strong>Brand Name</strong></td>
@@ -95,29 +152,36 @@ background-clip: padding-box;">
                             			<td style="border-top: 2px solid; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Total: </strong></td>
                             			<td style="border-top: 2px solid; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo $invoice_data->total_cost;?></td>
                             		</tr>
-                                    <?php 
-                                    $paid_amount = "0.00";
-                                    if($paid_amount_data){
-                                        
-                                        $paid_amount = $paid_amount_data->amount;
-                                    }
-                                    ?>
+                                    
          							<tr>
                             			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"></td>
                             			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"></td>
                                         <td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"></td>
                             			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"></td>
-                            			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Paid Amount: </strong></td>
-                            			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo $paid_amount;?></td>
+                            			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Received Amount: </strong></td>
+                            			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo $transaction_data->amount;?></td>
                             		</tr>
-                                    <?php }?>
+                                    <?php } ?>
                             	</tbody>
+                                <?php }else{ ?>
+                                <tbody>
+                                    <tr>
+                            			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"></td>
+                            			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"></td>
+                                        <td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"></td>
+                            			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"></td>
+                            			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Received Amount: </strong></td>
+                            			<td style="padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo $transaction_data->amount;?></td>
+                            		</tr>
+                                </tbody>
+                                <?php } ?>
                             </table>
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
+        
         
         <tr>
             <td style="text-align: right; width: 100%;">

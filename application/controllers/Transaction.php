@@ -119,6 +119,39 @@ class Transaction extends CI_Controller
         // Use Layout
         $this->load->view('layout/admin_layout', $data);
     }
+    
+    /*
+     * Print receive_from_customer transtion
+     * */
+    public function print_receive_transaction(){
+        $transaction_id = $this->uri->segment(3);
+
+        if (!empty($transaction_id)) {
+            $transaction_data = $this->transaction_mod->get_transaction_info_by_id($transaction_id);
+            //echo '<pre>'; print_r($transaction_data);die();
+            $invoice_id = $transaction_data->ref_invoice_no;
+            $invoice_data = null;
+            $invoice_details_data = null;
+            if($invoice_id){
+                $invoice_data = $this->invoice_mod->get_invoice($invoice_id);
+                $invoice_details_data = $this->invoice_mod->get_invoice_details($invoice_id);
+            }
+        }
+        $company_data = $this->setting_mod->get_setting_by_id(1);
+        $customer_data = $this->customer_mod->get_customer_by_id($transaction_data->payment_from_or_to);
+        //echo '<pre>'; print_r($company_info[0]);die();
+
+        $data['transaction_data'] = $transaction_data;
+        $data['invoice_data'] = $invoice_data;
+        $data['invoice_details_data'] = $invoice_details_data;
+        $data['company_data'] = $company_data[0];
+        $data['customer_data'] = $customer_data;
+        $html = $this->load->view('transaction/printreceivetransaction', $data, true);
+        $pdfFilePath = "income_transaction_".$transaction_id.".pdf";
+        $this->load->library('m_pdf');
+        $this->m_pdf->pdf->WriteHTML($html);
+        $this->m_pdf->pdf->Output($pdfFilePath, "D");
+    }
 
     /*
      * Delete Product
