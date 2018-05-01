@@ -946,6 +946,7 @@ class Transaction extends CI_Controller
             'assets/pages/datatables.init.js',
             'assets/plugins/parsleyjs/dist/parsley.min.js',
             'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'
+
         );
 
         $data['css'] = array(
