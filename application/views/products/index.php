@@ -52,11 +52,11 @@
                                         <label class="col-md-2 control-label">Brands </label>
                                         <div class="col-md-10">
                                             <?php foreach($brands as $brand){ ?>
-                                               <div class="col-md-3 col-sm-3">
+                                               <div class="col-md-3 col-sm-3" style="padding-left: 0!important">
                                                <div class="checkbox checkbox-success checkbox-single">
                                                 <input id="brand_id<?php echo $brand->id; ?>" title="Brand" name="data[brand_id][]" aria-label="Single checkbox Two" type="checkbox" class="brand-id" value="<?php echo $brand->id; ?>">
-                                                <label><?php echo $brand->name; ?></label>
-                                            </div>
+                                                <label for="brand_id<?php echo $brand->id; ?>"><?php echo $brand->name; ?></label>
+                                                </div>
                                                 <?php /*<div class="checkbox">
                                                     <label><input type="checkbox" name="data[brand]" value="<?php echo $brand->id; ?>"><?php echo $brand->name; ?></label>
                                                 </div>*/?>
