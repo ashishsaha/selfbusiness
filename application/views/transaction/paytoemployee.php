@@ -160,6 +160,7 @@
                     <th title="Transaction Amount">Amount</th>
                     <th title="Salary Month">Month</th>
                     <th title="Transaction Date">Transaction Date</th>
+                    <th title="Created">Created</th>
                     <th style="width: 10%">Action</th>
                 </tr>
                 </thead>
@@ -182,6 +183,7 @@
                             <td><?php echo number_format($transaction_data->amount,2); ?></td>
                             <td><?php echo $transaction_data->salary_month; ?> </td>
                             <td><span class="label label-info"><?php echo date("Y-m-d", strtotime($transaction_data->trans_date)); ?></span></td>
+                            <td><span class="label label-info"><?php echo date("Y-m-d H:i:s", strtotime($transaction_data->created)); ?></span></td>
                             <td class="actions">
                                 <button title="Update" data-tooltip="true" type="button"
                                         class="on-default edit-row" onclick="javascript:edit_pay_to_employee(<?php echo $transaction_data->id; ?>);">
@@ -401,7 +403,7 @@
         $(document).ready(function () {
             $('#datatable-buttons').DataTable({
                 "order": [
-                    [ 1, "desc" ]
+                    [ 5, "desc" ]
                 ]
             });
         });
