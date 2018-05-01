@@ -34,7 +34,54 @@
                         <input id="selected_id" value="1" type="hidden" />
                         <div class="card-box">
                             <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Product Name</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control required" placeholder="Product Name" type="text"
+                                       name="data[name]" id="name" parsley-trigger="change"
+                                       value=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Brands </label>
+                                        <div class="col-md-10">
+                                            <?php foreach($brands as $brand){ ?>
+                                               <div class="col-md-3 col-sm-3">
+                                               <div class="checkbox checkbox-success checkbox-single">
+                                                <input id="brand_id<?php echo $brand->id; ?>" title="Brand" name="data[brand_id][]" aria-label="Single checkbox Two" type="checkbox" class="brand-id" value="<?php echo $brand->id; ?>">
+                                                <label><?php echo $brand->name; ?></label>
+                                            </div>
+                                                <?php /*<div class="checkbox">
+                                                    <label><input type="checkbox" name="data[brand]" value="<?php echo $brand->id; ?>"><?php echo $brand->name; ?></label>
+                                                </div>*/?>
+                                               </div>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-6" style="text-align: right">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">&nbsp;</label>
+                                        <div class="col-md-9">
+                                            <button type="button" class="btn" onclick="javascript:add_product_cancel();"><i class="fa fa-ban" aria-hidden="true"></i> Cancel </button>
+                                            <button class="btn btn-success waves-effect waves-light" id="submitButton" type="submit"> Save </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php /*
+                            <div class="row">
                                 <div class="col-md-6 col-sm-6">
+                                    
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Product Name</label>
                                         <div class="col-md-9">
@@ -43,6 +90,7 @@
                                        value=""/>
                                         </div>
                                     </div>
+                                    
                                 </div>
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
@@ -53,7 +101,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*/?>
 
                         </div>
                     </form>
@@ -151,6 +199,7 @@
     function edit_product(id) {
         $("#id").val('');
         $("#name").val('');
+        $(".brand-id").prop('checked', false);
         var selected_id = $("#selected_id").val();
         $("#product_"+selected_id).css("background","none");
         $.ajax({
@@ -163,6 +212,12 @@
                 
                 $("#id").val(data.id);
                 $("#name").val(data.name);
+                var brand_id = data.brand_id;
+                
+                $.each( brand_id, function( key, value ) {
+                  //alert( key + ": " + value );
+                  $("#brand_id"+value).prop('checked', true);
+                });
                 
                 
                 $('#form1').attr('action', '<?php echo base_url(); ?>products');
@@ -181,7 +236,7 @@
         $("#adding_form").show(400);
         $("#id").val('');
         $("#name").val('');
-        
+        $(".brand-id").prop('checked', false);
         $('#form1').attr('action', '<?php echo base_url(); ?>products');
         $("#submitButton").html('<i class="fa fa-save" aria-hidden="true"></i> Save');
     }

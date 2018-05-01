@@ -25,6 +25,7 @@ class Products extends CI_Controller
         parent::__construct();
         //$this->load->library('email');
         $this->load->model('product_mod');
+        $this->load->model('brand_mod');
     }
 
     public function index()
@@ -76,7 +77,7 @@ class Products extends CI_Controller
 										});
 									</script>';
         
-        if (isset($_POST['OkSaveData'])) {
+        if (isset($_POST['OkSaveData'])) { 
             $product_id = $_POST['data']['id'];
             unset($_POST['data']['id']);
             
@@ -87,6 +88,9 @@ class Products extends CI_Controller
                 $data['validation_error'] = $validation_error;
             } else {
                 $_POST['data']['status'] = 1;
+                $brands = json_encode($_POST['data']['brand_id']);
+                $_POST['data']['brand_id'] = $brands;
+                //echo '<pre>';print_r($_POST);die();
                 if($product_id){
                     $this->product_mod->update_product($_POST['data'], $product_id);
                     $msgs = 'Product has been updated successfully';
@@ -101,7 +105,10 @@ class Products extends CI_Controller
                 redirect(base_url() . 'products', 'location', '301'); // 301 redirected
             }
         }
-
+        
+        $data['brands']  = $this->brand_mod->get_all_brands();
+        //echo '<pre>'; print_r($data['brands']); die();
+        
         // Send $data array() to index page
         $data['content'] = $this->load->view('products/index', $data, true);
         // Use Layout
@@ -179,6 +186,7 @@ class Products extends CI_Controller
             echo json_encode(array(
                 'id' => $product_arr->id,
                 'name' => $product_arr->name,
+                'brand_id' => json_decode($product_arr->brand_id),
                 'status' => $product_arr->status
             ));
             exit();

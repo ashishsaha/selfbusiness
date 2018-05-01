@@ -131,10 +131,8 @@ class Transaction extends CI_Controller
             //echo '<pre>'; print_r($transaction_data);die();
             $invoice_id = $transaction_data->ref_invoice_no;
             $invoice_data = null;
-            $invoice_details_data = null;
             if($invoice_id){
                 $invoice_data = $this->invoice_mod->get_invoice($invoice_id);
-                $invoice_details_data = $this->invoice_mod->get_invoice_details($invoice_id);
             }
         }
         $company_data = $this->setting_mod->get_setting_by_id(1);
@@ -143,7 +141,6 @@ class Transaction extends CI_Controller
 
         $data['transaction_data'] = $transaction_data;
         $data['invoice_data'] = $invoice_data;
-        $data['invoice_details_data'] = $invoice_details_data;
         $data['company_data'] = $company_data[0];
         $data['customer_data'] = $customer_data;
         $html = $this->load->view('transaction/printreceivetransaction', $data, true);
@@ -286,6 +283,7 @@ class Transaction extends CI_Controller
                 $_POST['data']['status'] = 1;
                 $_POST['data']['child_account_id'] = 7;
                 $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
+                $_POST['data']['created'] =  date("Y-m-d H:i:s");
                 $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
                 //$add_rate = $this->employee_mod->add_employee($_POST['data']);
                 $save_data = $this->transaction_mod->add_transaction($_POST['data']);
@@ -454,6 +452,7 @@ class Transaction extends CI_Controller
                 $_POST['data']['status'] = 1;
                 $_POST['data']['child_account_id'] = 2;
                 $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
+                $_POST['data']['created'] =  date("Y-m-d H:i:s");
                 $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
                 //$add_rate = $this->employee_mod->add_employee($_POST['data']);
                 $save_data = $this->transaction_mod->add_transaction($_POST['data']);
@@ -622,6 +621,7 @@ class Transaction extends CI_Controller
                 $_POST['data']['status'] = 1;
                 $_POST['data']['child_account_id'] = 8;
                 $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
+                $_POST['data']['created'] =  date("Y-m-d H:i:s");
                 $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
                 //$add_rate = $this->employee_mod->add_employee($_POST['data']);
                 $save_data = $this->transaction_mod->add_transaction($_POST['data']);
@@ -800,7 +800,7 @@ class Transaction extends CI_Controller
                     $save_data = $this->transaction_mod->update_transaction($_POST['data'],$transaction_id);
                     $msgs = 'Pay to supplier has been updated successfully.';
                 }else{
-                    $_POST['data']['created'] =  date("Y-m-d");
+                    $_POST['data']['created'] =  date("Y-m-d H:i:s");
                     $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
                     $save_data = $this->transaction_mod->add_transaction($_POST['data']);
                     $msgs = 'Pay to supplier has been added successfully.';
@@ -984,7 +984,7 @@ class Transaction extends CI_Controller
                     $save_data = $this->transaction_mod->update_transaction($_POST['data'],$transaction_id);
                     $msgs = 'Employee payment has been updated successfully.';
                 }else{
-                    $_POST['data']['created'] =  date("Y-m-d");
+                    $_POST['data']['created'] =  date("Y-m-d H:i:s");
                     $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
                     $save_data = $this->transaction_mod->add_transaction($_POST['data']);
                     $msgs = 'Employee payment has been added successfully';
@@ -1074,6 +1074,7 @@ class Transaction extends CI_Controller
                 $_POST['data']['status'] = 1;
                 $_POST['data']['child_account_id'] = 2;
                 $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
+                $_POST['data']['created'] =  date("Y-m-d H:i:s");
                 $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
                 //$add_rate = $this->employee_mod->add_employee($_POST['data']);
                 $save_data = $this->transaction_mod->add_transaction($_POST['data']);
@@ -1255,7 +1256,7 @@ class Transaction extends CI_Controller
                     $save_data = $this->transaction_mod->update_transaction($_POST['data'],$transaction_id);
                     $msgs = 'Receive from customer transaction has been updated successfully.';
                 }else{
-                    $_POST['data']['created'] =  date("Y-m-d");
+                    $_POST['data']['created'] =  date("Y-m-d H:i:s");
                     $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
                     $save_data = $this->transaction_mod->add_transaction($_POST['data']);
                     $msgs = 'Add receive from customer has been added successfully';
