@@ -61,7 +61,10 @@ class Reports extends CI_Controller
             'assets/plugins/datatables/dataTables.fixedHeader.min.js',
             'assets/plugins/datatables/dataTables.keyTable.min.js',
             'assets/plugins/datatables/dataTables.keyTable.min.js',
+            'assets/plugins/parsleyjs/dist/parsley.min.js',
             'assets/pages/datatables.init.js',
+            'assets/plugins/moment/moment.js',
+            'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
             'assets/plugins/bootstrap-daterangepicker/daterangepicker.js'
         );
 
@@ -71,16 +74,32 @@ class Reports extends CI_Controller
             'assets/plugins/datatables/fixedHeader.bootstrap.min.css',
             'assets/plugins/datatables/responsive.bootstrap.min.css',
             'assets/plugins/datatables/scroller.bootstrap.min.css',
+            'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
             'assets/plugins/bootstrap-daterangepicker/daterangepicker.css'
         );
 
-        $sales_invoice_data = null;
-
+        $data['form_validation'] = '<script type="text/javascript">
+										$(document).ready(function() {
+											$("#form1").parsley();
+										});
+									</script>';
+        $data['customer_id'] ='';
+        $data['start'] = date("m/d/Y");
+        $data['end'] = date("m/d/Y", strtotime(' +1 day'));
         if (isset($_POST['OkSaveData'])) {
             // SELECT ALL Sales Invoice list
-            $sales_invoice_data = $this->invoice_mod->get_customer_wise_sales();
+            $customer_id = $_POST['payment_from_or_to'];
+            $star_date = $_POST['start'];
+            $end_date = $_POST['end'];
+            $buy_invoice_data = $this->report_mod->get_all_sell_invoices($customer_id, $star_date, $end_date);
+
+            $data['customer_id'] =$customer_id;
+            $data['start'] = $star_date;
+            $data['end'] = $end_date;
+        }else{
+            $buy_invoice_data = array();
         }
-        $data['sales_invoice_data'] = $sales_invoice_data;
+        $data['buy_invoice_data'] = $buy_invoice_data;
 
         // SELECT ALL Customer list
         $condition = array('is_customer' => 1);
