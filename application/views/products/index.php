@@ -26,7 +26,7 @@
             
             <div id="adding_form" class="row">
                 <div class="col-sm-12">
-                    <form action="<?php echo base_url(); ?>products/add" class="form-horizontal row-border" method="post" name="form1" id="form1" enctype="multipart/form-data" novalidate="">
+                    <form action="<?php echo base_url(); ?>products" class="form-horizontal row-border" method="post" name="form1" id="form1" enctype="multipart/form-data" novalidate="">
                         <input type="hidden" name="action" id="action" value="">
                         <input type="hidden" name="OkSaveData" id="OkSaveData" value="TRUE">
                         <input type="hidden" name="option_upload" id="option_upload" value="0">

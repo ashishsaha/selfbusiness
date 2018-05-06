@@ -165,7 +165,7 @@
                                             }
                                              ?>
                                              <input type="hidden" name="transaction_id" id="transaction_id" value="<?php echo $transaction_id;?>" />
-                                            <td><input type="number" id='paid_amount' name='paid_amount' placeholder='Paid Amount' min="0.00" value="<?php echo $paid_amount; ?>" class="form-control num_val" /></td>
+                                            <td><input type="number" id='paid_amount' name='paid_amount' placeholder='Paid Amount' min="0.00" step="0.01" value="<?php echo $paid_amount; ?>" class="form-control num_val" /></td>
                                         </tr>
                                         <tr class="font-bold font-black tr-style">
                                             <td colspan="3" align="right"> </td>

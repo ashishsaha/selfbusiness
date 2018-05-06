@@ -144,7 +144,7 @@
                                     <tr class="font-bold font-black tr-style" style="text-align: right">
                                         <td style="width: 50%;" align="right"> <b>Paid Amount :</b></td>
                                         <td style="width: 20%;">&nbsp;</td>
-                                        <td><input type="number" id='paid_amount' name='paid_amount' placeholder='Paid Amount' min="0.00" value="0.00" class="form-control num_val" /></td>
+                                        <td><input type="number" id='paid_amount' name='paid_amount' placeholder='Paid Amount' min="0.00" value="0.00" step="0.01" class="form-control num_val" /></td>
                                     </tr>
                                     <tr class="font-bold font-black tr-style">
                                         <td colspan="3" align="right"> </td>
