@@ -54,7 +54,9 @@
                                             <?php foreach($brands as $brand){ ?>
                                                <div class="col-md-3 col-sm-3" style="padding-left: 0!important">
                                                <div class="checkbox checkbox-success checkbox-single">
-                                                <input id="brand_id<?php echo $brand->id; ?>" title="Brand" name="data[brand_id][]" aria-label="Single checkbox Two" type="checkbox" class="brand-id" value="<?php echo $brand->id; ?>">
+                                                <input id="brand_id<?php echo $brand->id; ?>" title="Brand" name="data[brand_id][]"
+                                                       data-parsley-mincheck="1"
+                                                       aria-label="Single checkbox Two" type="checkbox" class="brand-id" value="<?php echo $brand->id; ?>" required>
                                                 <label for="brand_id<?php echo $brand->id; ?>"><?php echo $brand->name; ?></label>
                                                 </div>
                                                 <?php /*<div class="checkbox">
