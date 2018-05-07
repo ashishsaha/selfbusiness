@@ -12,10 +12,10 @@
 
         <div class="card-box">
             <div class="row">
-                <h4 class="header-title m-t-0 m-b-30"><i class="fa fa-tree"></i> Supplier Wise Purchase Report
+                <h4 class="header-title m-t-0 m-b-30"><i class="fa fa-tree"></i> Customer Wise Sales Transaction Report
                 </h4>
             </div>
-            <form action="<?php echo base_url(); ?>reports/supplier_wise_purchase" class="form-horizontal row-border" method="post"
+            <form action="<?php echo base_url(); ?>reports/sale_transaction" class="form-horizontal row-border" method="post"
                   name="form1" id="form1" enctype="multipart/form-data">
                 <input type="hidden" name="action" id="action" value="">
                 <input type="hidden" name="OkSaveData" id="OkSaveData" value="TRUE">
@@ -23,16 +23,15 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Supplier</label>
+                            <label class="col-md-3 control-label">Customer</label>
 
                             <div class="col-md-9">
                                 <select class="form-control required" name="payment_from_or_to" id="payment_from_or_to" data-parsley-id="6">
-                                    <option value="" <?php if($supplier_id == ''){?>selected="selected" <?php } ?>>Select Supplier</option>
+                                    <option value="" <?php if($customer_id == ''){?>selected="selected" <?php } ?>>Select Customer</option>
                                     <?php
-                                    foreach ($supplier_data as $supplier) {
+                                    foreach ($customer_data as $customer) {
                                         ?>
-                                        <option
-                                            value="<?php echo $supplier->id; ?>" <?php if($supplier_id == $supplier->id){?>selected="selected" <?php } ?>><?php echo $supplier->full_name; ?></option>
+                                        <option value="<?php echo $customer->id; ?>" <?php if($customer_id == $customer->id){?>selected="selected" <?php } ?>><?php echo $customer->full_name; ?></option>
                                     <?php
                                     }
                                     ?>
@@ -76,50 +75,50 @@
 
 
 
-            <table <?php if (count($buy_invoice_data) > 0){ ?>id="datatable-buttons" <?php } ?>
+            <table <?php if (count($sell_transaction_data) > 0){ ?>id="datatable-buttons" <?php } ?>
                    class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th style="width: 11%">Invoice No</th>
-                    <th style="width: 30%" title="Supplier Name">Supplier Name</th>
-                    <th style="width: 12%" title="Purchase Date">Purchase Date</th>
-                    <th style="width: 16%" title="Total Cost">Total Cost</th>
+                    <th style="width: 30%" title="Customer Name">Customer Name</th>
+                    <th style="width: 12%" title="Transaction Type">Transaction Type</th>
+                    <th style="width: 12%" title="Transaction Date">Transaction Date</th>
+                    <th style="width: 12%" title="Created">Created</th>
+                    <th style="width: 16%" title="Amount">Amount</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php if (count($buy_invoice_data) > 0) {
+                <?php if (count($sell_transaction_data) > 0) {
                     $count = 1;
-                    $total_sell = 0;
-                    foreach ($buy_invoice_data as $buy_invoice) {
-                        if ($buy_invoice->status == '1') {
-                            $status = '<div class="active-invoice">
-														<a  onclick="invoice_status(' . $buy_invoice->id . ',' . $buy_invoice->status . ')" id="' . $buy_invoice->id . '" title="Click to set inactive" data-tooltip="true" href="javascript:void(0)"> <span class="label label-success">Active</span> </a>
-													 </div>';
-                        } elseif ($buy_invoice->status == '0') {
-                            $status = '<div class="deactive-invoice">
-														<a  onclick="invoice_status(' . $buy_invoice->id . ',' . $buy_invoice->status . ')" id="' . $buy_invoice->id . '" title="Click to set active" data-tooltip="true" href="javascript:void(0)"> <span class="label label-inverse">Inactive</span> </a>
-													 </div>';
+                    $total_amount = 0;
+                    foreach ($sell_transaction_data as $transaction_data) {
+                        if($transaction_data->trans_type == 0){
+                            $trans_type = '<span class="label label-success">Hand Cash</span>';
+                        }elseif($transaction_data->trans_type == 1){
+                            $trans_type = '<span class="label label-info">Bank Transaction</span>';
+                        }else{
+                            $trans_type = '<span class="label label-info">Cheque</span>';
                         }
-                        $total_sell += $buy_invoice->total_cost;
+                        $total_amount += $transaction_data->amount;
                         ?>
                         <tr>
-                            <td><?php echo $buy_invoice->invoice_no; ?> </td>
-                            <td><?php echo $buy_invoice->full_name; ?> </td>
-                            <td><?php echo date("Y-m-d", strtotime($buy_invoice->created)); ?> </td>
-                            <td><?php echo $buy_invoice->total_cost; ?> </td>
+                            <td><?php echo $transaction_data->full_name; ?> </td>
+                            <td><?php echo $trans_type; ?> </td>
+                            <td><span class="label label-info"><?php echo date("Y-m-d", strtotime($transaction_data->trans_date)); ?></span></td>
+                            <td><span class="label label-info"><?php echo date("Y-m-d H:i:s", strtotime($transaction_data->created)); ?></span></td>
+                            <td><?php echo number_format($transaction_data->amount,2); ?></td>
                         </tr>
                         <?php $count++;
                     }
                     ?>
 
                     <tr>
-                        <td colspan="3" style="text-align:right; margin-right: 80px"><b>Accumulated Sales</b></td>
-                        <td><b><?php echo number_format($total_sell,2);?></b></td>
+                        <td colspan="4" style="text-align:right; margin-right: 80px"><b>Accumulated Sales</b></td>
+                        <td><b><?php echo number_format($total_amount,2);?></b></td>
                     </tr>
                     <?php
                 } else { ?>
                     <tr>
-                        <td colspan="4" style="text-align:center;">Sorry! there is no invoice transaction for this selected customer.</td>
+                        <td colspan="5" style="text-align:center;">Sorry! there is no transaction for this selected customer.</td>
                     </tr>
                 <?php } ?>
                 </tbody>

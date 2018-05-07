@@ -118,10 +118,19 @@
                             <a href="<?php echo base_url() ?>reports/customer_wise_sales" <?php if ($active_menu == 'customerwisesales') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Customer Sales</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url() ?>accounts/index" <?php if ($active_menu == 'parentaccounts') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Supplier Purchase</a>
+                            <a href="<?php echo base_url() ?>reports/supplier_wise_purchase" <?php if ($active_menu == 'supplierwisepurchase') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Supplier Purchase</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url() ?>accounts/child_accounts" <?php if ($active_menu == 'childaccounts') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Sale Transaction</a>
+                            <a href="<?php echo base_url() ?>reports/sale_transaction" <?php if ($active_menu == 'saletransaction') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Sale Transaction</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>reports/purchase_transaction" <?php if ($active_menu == 'purchasetransaction') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Purchase Transaction</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>reports/product_wise_purchase" <?php if ($active_menu == 'productwisepurchase') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Product Purchase</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>reports/product_wise_sale" <?php if ($active_menu == 'productwisesale') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Product Sale</a>
                         </li>
                     </ul>
                 </li>
