@@ -132,6 +132,22 @@
                         <li>
                             <a href="<?php echo base_url() ?>reports/product_wise_sale" <?php if ($active_menu == 'productwisesale') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Product Sale</a>
                         </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>reports/expense" <?php if ($active_menu == 'expense') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Expense</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>reports/income" <?php if ($active_menu == 'income') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Income</a>
+                        </li>
+                        
+                        <li>
+                            <a href="<?php echo base_url() ?>reports/customer_collection" <?php if ($active_menu == 'customercollection') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Customer Collection</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>reports/supplier_payment" <?php if ($active_menu == 'supplierpayment') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Supplier Payment</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>reports/profit" <?php if ($active_menu == 'profit') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Profit</a>
+                        </li>
                     </ul>
                 </li>
                 

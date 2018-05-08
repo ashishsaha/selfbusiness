@@ -133,5 +133,18 @@ class Account_mod extends CI_Model
         $this->db->where('id',$child_account_id);
         $this->db->update('child_accounts',$data);
     }
+    
+    /*
+     * Get all child account by parent account id
+     * */
+    function get_all_child_by_parent_id($parent_account_id){
+        $where = '(c.status="1" OR c.status="0")AND c.parent_account_id='.$parent_account_id;
+        $this->db->select("c.*, p.id as parent_id, p.name as parent_name");
+        $this->db->from("child_accounts as c");
+        $this->db->join('parent_accounts as p', 'p.id = c.parent_account_id', 'left');
+        $this->db->where($where);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }
