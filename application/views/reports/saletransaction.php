@@ -82,7 +82,7 @@
                     <th style="width: 30%" title="Customer Name">Customer Name</th>
                     <th style="width: 12%" title="Transaction Type">Transaction Type</th>
                     <th style="width: 12%" title="Transaction Date">Transaction Date</th>
-                    <th style="width: 12%" title="Created">Created</th>
+                    <th style="width: 12%" title="Date">Date</th>
                     <th style="width: 16%" title="Amount">Amount</th>
                 </tr>
                 </thead>
@@ -104,7 +104,7 @@
                             <td><?php echo $transaction_data->full_name; ?> </td>
                             <td><?php echo $trans_type; ?> </td>
                             <td><span class="label label-info"><?php echo date("Y-m-d", strtotime($transaction_data->trans_date)); ?></span></td>
-                            <td><span class="label label-info"><?php echo date("Y-m-d H:i:s", strtotime($transaction_data->created)); ?></span></td>
+                            <td><span class="label label-info"><?php echo date("Y-m-d", strtotime($transaction_data->created)); ?></span></td>
                             <td><?php echo number_format($transaction_data->amount,2); ?></td>
                         </tr>
                         <?php $count++;

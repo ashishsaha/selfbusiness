@@ -80,7 +80,7 @@
                 <thead>
                 <tr>
                     <th style="width: 30%" title="Supplier Name">Invoice No.</th>
-                    <th style="width: 12%" title="Created">Created</th>
+                    <th style="width: 12%" title="Date">Date</th>
                     <th style="width: 12%" title="Total Bosta">Total Bosta</th>
                     <th style="width: 12%" title="Bosta/KG">Bosta/KG</th>
                     <th style="width: 12%" title="Price/Bosta">Price/Bosta</th>
@@ -97,7 +97,7 @@
                         ?>
                         <tr>
                             <td><?php echo $data->invoice_no; ?> </td>
-                            <td><span class="label label-info"><?php echo date("Y-m-d H:i:s", strtotime($data->created)); ?></span></td>
+                            <td><span class="label label-info"><?php echo date("Y-m-d", strtotime($data->created)); ?></span></td>
                             <td><?php echo $data->total_bosta; ?> </td>
                             <td><?php echo $data->bosta_per_kg; ?></td>
                             <td><?php echo $data->price_per_bosta; ?></td>
