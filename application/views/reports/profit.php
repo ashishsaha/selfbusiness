@@ -132,12 +132,12 @@
                     <tr>
                         <td colspan="4" style="text-align:right; margin-right: 80px"><b>Total Profit</b></td>
                         <?php $profit = $total_received_amount - $total_paid_amount; ?>
-                        <td><b><?php echo number_format($profit,2);?></b></td>
+                        <td style="text-align:right;"><b><?php echo number_format($profit,2);?></b></td>
                     </tr>
                     <?php
                 } else { ?>
                     <tr>
-                        <td colspan="4" style="text-align:center;">Sorry! there is no invoice transaction for this selected customer.</td>
+                        <td colspan="5" style="text-align:center;">Sorry! there is no available records.</td>
                     </tr>
                 <?php } ?>
                 </tbody>

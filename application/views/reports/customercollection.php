@@ -125,9 +125,9 @@
                         <td><b><?php echo number_format($total_received,2);?></b></td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="text-align:left; margin-right: 80px"><b>Total Due</b></td>
+                        <td colspan="3" style="text-align:right; margin-right: 80px"><b>Total Due</b></td>
                         <?php $total_due = $total_sale - $total_received; ?>
-                        <td><b><?php echo number_format($total_due,2);?></b></td>
+                        <td class="align-right"><b><?php echo number_format($total_due,2);?></b></td>
                     </tr>
                     <?php
                 } else { ?>
