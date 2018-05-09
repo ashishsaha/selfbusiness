@@ -122,8 +122,9 @@
 
                     <tr>
                         <td colspan="2" style="text-align:right; margin-right: 80px"><b></b></td>
-                        <td><b><?php echo number_format($total_given,2);?></b></td>
                         <td><b><?php echo number_format($total_purchase,2);?></b></td>
+                        <td><b><?php echo number_format($total_given,2);?></b></td>
+                        
                     </tr>
                     <tr>
                         <td colspan="3" style="text-align:right; margin-right: 80px"><b>Total Due</b></td>

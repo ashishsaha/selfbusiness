@@ -84,8 +84,8 @@
                     <th style="width: 11%">Transaction Type</th>
                     <th style="width: 11%" title="Customer Name">Date</th>
                     
-                    <th style="width: 12%" title="Total Cost">Paid Amount</th>
-                    <th style="width: 12%" title="Selling Date">Received Amount</th>
+                    <th style="width: 12%; text-align:right;" title="Total Cost">Paid Amount</th>
+                    <th style="width: 12%; text-align:right;" title="Selling Date">Received Amount</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -117,8 +117,8 @@
                             <td><?php echo $data->name; ?> </td>
                             <td><?php echo $trans_type; ?> </td>
                             <td><?php echo date("Y-m-d", strtotime($data->created)); ?> </td>
-                            <td><?php echo ($data->parent_account_id == 3)?$data->amount:"" ?> </td>
-                            <td><?php echo ($data->parent_account_id == 1)?$data->amount:"" ?> </td>
+                            <td style="text-align:right;"><?php echo ($data->parent_account_id == 3)?number_format($data->amount,2):"" ?> </td>
+                            <td style="text-align:right;"><?php echo ($data->parent_account_id == 1)?number_format($data->amount,2):"" ?> </td>
                         </tr>
                         <?php $count++;
                     }
@@ -126,11 +126,11 @@
 
                     <tr>
                         <td colspan="3" style="text-align:right; margin-right: 80px"><b></b></td>
-                        <td><b><?php echo number_format($total_paid_amount,2);?></b></td>
-                        <td><b><?php echo number_format($total_received_amount,2);?></b></td>
+                        <td style="text-align:right;"><b><?php echo number_format($total_paid_amount,2);?></b></td>
+                        <td style="text-align:right;"><b><?php echo number_format($total_received_amount,2);?></b></td>
                     </tr>
                     <tr>
-                        <td colspan="4" style="text-align:right; margin-right: 80px"><b>Profit</b></td>
+                        <td colspan="4" style="text-align:right; margin-right: 80px"><b>Total Profit</b></td>
                         <?php $profit = $total_received_amount - $total_paid_amount; ?>
                         <td><b><?php echo number_format($profit,2);?></b></td>
                     </tr>
