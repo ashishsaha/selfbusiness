@@ -898,5 +898,89 @@ class Reports extends CI_Controller
         // Use Layout
         $this->load->view('layout/admin_layout', $data);
     }
+    
+    /*
+     * This report is using for generating
+     * Profit Calculation
+     *
+     **/
+    public function profit(){
+        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+            redirect('users/login');
+        }
+
+        $this->session->unset_userdata('active_menu');
+        $this->session->set_userdata('active_menu', 'profit');
+
+        // Define Data array
+        $data = array(
+            'page_title' => 'bsSelfBusiness System - All Sales Invoice List',
+            'sidebar_menu_title' => 'Report Management',
+            'sidebar_menu' => 'Profit Report'
+        );
+
+        $data['js'] = array(
+            'assets/plugins/datatables/jquery.dataTables.min.js',
+            'assets/plugins/datatables/dataTables.bootstrap.js',
+            'assets/plugins/datatables/dataTables.buttons.min.js',
+            'assets/plugins/datatables/buttons.bootstrap.min.js',
+            'assets/plugins/datatables/jszip.min.js',
+            'assets/plugins/datatables/pdfmake.min.js',
+            'assets/plugins/datatables/vfs_fonts.js',
+            'assets/plugins/datatables/buttons.html5.min.js',
+            'assets/plugins/datatables/buttons.print.min.js',
+            'assets/plugins/datatables/dataTables.fixedHeader.min.js',
+            'assets/plugins/datatables/dataTables.keyTable.min.js',
+            'assets/plugins/datatables/dataTables.keyTable.min.js',
+            'assets/plugins/parsleyjs/dist/parsley.min.js',
+            'assets/pages/datatables.init.js',
+            'assets/plugins/moment/moment.js',
+            'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+            'assets/plugins/bootstrap-daterangepicker/daterangepicker.js'
+        );
+
+        $data['css'] = array(
+            'assets/plugins/datatables/jquery.dataTables.min.css',
+            'assets/plugins/datatables/buttons.bootstrap.min.css',
+            'assets/plugins/datatables/fixedHeader.bootstrap.min.css',
+            'assets/plugins/datatables/responsive.bootstrap.min.css',
+            'assets/plugins/datatables/scroller.bootstrap.min.css',
+            'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
+            'assets/plugins/bootstrap-daterangepicker/daterangepicker.css'
+        );
+
+        $data['form_validation'] = '<script type="text/javascript">
+										$(document).ready(function() {
+											$("#form1").parsley();
+										});
+									</script>';
+        //$data['supplier_id'] ='';
+        $data['start'] = date("m/d/Y");
+        $data['end'] = date("m/d/Y", strtotime(' +1 day'));
+        if (isset($_POST['OkSaveData'])) {
+            // SELECT ALL Transaction list
+            //$supplier_id = $_POST['supplier_id'];
+            $star_date = $_POST['start'];
+            $end_date = $_POST['end'];
+            $transaction_data = $this->report_mod->get_profit($star_date, $end_date);
+            //echo '<pre>';print_r($transaction_data);die();
+            //$data['supplier_id'] = $supplier_id;
+            $data['start'] = $star_date;
+            $data['end'] = $end_date;
+        }else{
+            $transaction_data = array();
+        }
+        $data['transaction_data'] = $transaction_data;
+
+        // SELECT ALL Customer list
+        //$condition = array('is_supplier' => 1);
+        //$data['supplier_data'] = $this->customer_mod->get_all_supplier_customer($condition);
+        
+        //echo '<pre>';print_r($income_data);die();
+        // Send $data array() to index page
+        $data['content'] = $this->load->view('reports/profit', $data, true);
+        // Use Layout
+        $this->load->view('layout/admin_layout', $data);
+    }
 
 }

@@ -126,5 +126,23 @@ class Report_mod extends CI_Model
         //echo '<pre>'; print_r($result);die();
         return $result;
     }
+    
+    /*
+     * Get Customer Collection 
+     * */
+    function get_profit($star_date, $end_date){
+        
+        $where = '(t.status="1" OR t.status="0")';
+        $this->db->select("t.id, t.trans_type, t.child_account_id, t.payment_from_or_to, t.amount, t.status, t.trans_date, t.created, ca.parent_account_id, ca.name");
+        $this->db->from("transaction as t");
+       // $this->db->where("t.payment_from_or_to", $customer_id);
+        $this->db->join('child_accounts as ca', 'ca.id = t.child_account_id', 'left');
+       // $this->db->join('customers as c', 'c.id = t.payment_from_or_to', 'left');
+        //$this->db->where("t.status",1);
+        $this->db->where('t.created BETWEEN "'. date('Y-m-d', strtotime($star_date)). '" and "'. date('Y-m-d', strtotime($end_date)).'"');
+        $this->db->where($where);
+        $query = $this->db->get();
+        return $query->result();
+    }
 
 }

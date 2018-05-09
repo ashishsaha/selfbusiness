@@ -89,7 +89,6 @@
                 </thead>
                 <tbody>
                 <?php if (count($invoice_product_data) > 0) {
-                    $count = 1;
                     $total_amount = 0;
                     foreach ($invoice_product_data as $data) {
                         
@@ -103,7 +102,7 @@
                             <td><?php echo $data->price_per_bosta; ?></td>
                             <td><?php echo number_format($data->sub_total_price,2); ?></td>
                         </tr>
-                        <?php $count++;
+                        <?php
                     }
                     ?>
 
