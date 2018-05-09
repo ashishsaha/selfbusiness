@@ -83,7 +83,7 @@
                     <th style="width: 30%" title="Transaction Type">Transaction Type</th>
                     <th title="Transaction Date">Transaction Date</th>
                     <th title="Created">Date</th>
-                    <th style="width: 16%" title="Transaction Amount">Amount</th>
+                    <th style="width: 16%; text-align:right;" title="Transaction Amount">Amount</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -106,7 +106,7 @@
                             <td><?php echo $trans_type; ?> </td>
                             <td><span class="label label-info"><?php echo date("Y-m-d", strtotime($data->trans_date)); ?></span></td>
                             <td><span class="label label-info"><?php echo date("Y-m-d", strtotime($data->created)); ?></span></td>
-                            <td><?php echo number_format($data->amount,2); ?></td>
+                            <td style="text-align:right;"><?php echo number_format($data->amount,2); ?></td>
                         </tr>
                         <?php $count++;
                     }
@@ -114,12 +114,12 @@
 
                     <tr>
                         <td colspan="3" style="text-align:right; margin-right: 80px"><b>Total Amount</b></td>
-                        <td><b><?php echo number_format($total_amount,2);?></b></td>
+                        <td style="text-align:right;"><b><?php echo number_format($total_amount,2);?></b></td>
                     </tr>
                     <?php
                 } else { ?>
                     <tr>
-                        <td colspan="4" style="text-align:center;">Sorry! there is no transaction for this selected Expense Type.</td>
+                        <td colspan="4" style="text-align:center;">Sorry! there is no available records.</td>
                     </tr>
                 <?php } ?>
                 </tbody>

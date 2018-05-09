@@ -83,8 +83,8 @@
                     <th style="width: 30%">Transaction Type/Invoice No.</th>
                     <th style="width: 11%" title="Customer Name">Date</th>
                     
-                    <th style="width: 16%" title="Total Cost">Purchase Amount</th>
-                    <th style="width: 12%" title="Selling Date">Paid Amount</th>
+                    <th style="width: 12%; text-align:right;" title="Total Cost">Purchase Amount</th>
+                    <th style="width: 12%; text-align:right;" title="Selling Date">Paid Amount</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -112,8 +112,8 @@
                         <tr>
                             <td><?php if(isset($data->invoice_no)){echo $data->invoice_no; }else{ echo $trans_type; }?> </td>
                             <td><?php echo date("Y-m-d", strtotime($data->created)); ?> </td>
-                            <td><?php if(isset($data->total_cost)){ echo number_format($data->total_cost,2); } ?> </td>
-                            <td><?php if(isset($data->amount)){ echo number_format($data->amount,2); } ?> </td>
+                            <td style="text-align:right;"><?php if(isset($data->total_cost)){ echo number_format($data->total_cost,2); } ?> </td>
+                            <td style="text-align:right;"><?php if(isset($data->amount)){ echo number_format($data->amount,2); } ?> </td>
                             
                         </tr>
                         <?php $count++;
@@ -122,19 +122,19 @@
 
                     <tr>
                         <td colspan="2" style="text-align:right; margin-right: 80px"><b></b></td>
-                        <td><b><?php echo number_format($total_purchase,2);?></b></td>
-                        <td><b><?php echo number_format($total_given,2);?></b></td>
+                        <td style="text-align:right;"><b><?php echo number_format($total_purchase,2);?></b></td>
+                        <td style="text-align:right;"><b><?php echo number_format($total_given,2);?></b></td>
                         
                     </tr>
                     <tr>
                         <td colspan="3" style="text-align:right; margin-right: 80px"><b>Total Due</b></td>
                         <?php $total_due = $total_purchase - $total_given; ?>
-                        <td><b><?php echo number_format($total_due,2);?></b></td>
+                        <td style="text-align:right;"><b><?php echo number_format($total_due,2);?></b></td>
                     </tr>
                     <?php
                 } else { ?>
                     <tr>
-                        <td colspan="4" style="text-align:center;">Sorry! there is no invoice transaction for this selected customer.</td>
+                        <td colspan="4" style="text-align:center;">Sorry! there is no available records.</td>
                     </tr>
                 <?php } ?>
                 </tbody>
