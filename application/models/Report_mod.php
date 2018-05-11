@@ -144,5 +144,77 @@ class Report_mod extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    
+    /*
+     * Get all brands of product by product_id
+     * */
+    function get_all_brands($product_id){
+        // Get brand ids from product table
+        $where = '(id="'.$product_id.'")';
+        $this->db->select("id, brand_id");
+        $this->db->from("products");
+        $this->db->where($where);
+        $query1 = $this->db->get();
+        $num_rows1 = $query1->num_rows();
+
+        if($num_rows1 === 1) {
+            $product = $query1->row();
+        } else {
+            return false;
+        }
+        $brand_ids = json_decode($product->brand_id);
+        
+        // Get brand list of a product
+        $where = '(status="1" OR status="0")';
+        $this->db->select("*");
+        $this->db->from("brands");
+        $this->db->where_in('id', $brand_ids);
+        $this->db->where($where);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    /*
+     * Get Stock Information
+     * */
+    function get_stock_info($product_id, $brand_id, $star_date, $end_date){
+
+        $where = '(inv.status="1" OR inv.status="0")';
+        $this->db->select("invd.*, inv.invoice_type, inv.status, inv.created, p.name as product_name, b.name, SUM(total_bosta) as total_qty");
+        $this->db->from("invoice_details as invd");
+        if($product_id != 'all'){
+            $this->db->where("invd.product_id", $product_id);
+        }
+        if($brand_id != 'all'){
+            $this->db->where("invd.brand_id", $brand_id);
+        }
+        $this->db->join('invoices as inv', 'inv.id = invd.invoice_id', 'left');
+        $this->db->join('products as p', 'p.id = invd.product_id', 'left');
+        $this->db->join('brands as b', 'b.id = invd.brand_id', 'left');
+        $this->db->where('inv.created BETWEEN "'. date('Y-m-d', strtotime($star_date)). '" and "'. date('Y-m-d', strtotime($end_date)).'"');
+        $this->db->where($where);
+        $this->db->group_by('invd.product_id, invd.brand_id, invd.bosta_per_kg, inv.invoice_type');
+        $query = $this->db->get();
+        $result =  $query->result();
+        //echo '<pre>'; print_r($result);die();
+        
+        $data = array();
+        $i = 0;
+        foreach($result as $val){
+            $data[$val->product_id]['product_name'] = $val->product_name;
+            $data[$val->product_id]['brands'][$val->brand_id]['brand_name'] = $val->name;
+            $data[$val->product_id]['brands'][$val->brand_id]['bosta'][$val->bosta_per_kg]['bosta_per_kg'] = $val->bosta_per_kg;
+            if($val->invoice_type == 1){
+                $data[$val->product_id]['brands'][$val->brand_id]['bosta'][$val->bosta_per_kg]['total_sold'] = $val->total_qty;
+            }else{
+                $data[$val->product_id]['brands'][$val->brand_id]['bosta'][$val->bosta_per_kg]['total_purchased'] = $val->total_qty;
+            }
+            $i++;
+        }//echo $i;echo '<pre>'; print_r($data);die();
+        return $data;
+
+    }
+    
+    
 
 }

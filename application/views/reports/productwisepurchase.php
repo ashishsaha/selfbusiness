@@ -81,10 +81,10 @@
                 <tr>
                     <th style="width: 30%" title="Supplier Name">Invoice No.</th>
                     <th style="width: 12%" title="Date">Date</th>
-                    <th style="width: 12%" title="Total Bosta">Total Bosta</th>
-                    <th style="width: 12%" title="Bosta/KG">Bosta/KG</th>
-                    <th style="width: 12%" title="Price/Bosta">Price/Bosta</th>
-                    <th style="width: 16%" title="Sub total">Sub total</th>
+                    <th style="width: 12%; text-align: right;" title="Total Bosta">Total Bosta</th>
+                    <th style="width: 12%; text-align: right;" title="Bosta/KG">Bosta/KG</th>
+                    <th style="width: 12%; text-align: right;" title="Price/Bosta">Price/Bosta</th>
+                    <th style="width: 16%; text-align: right;" title="Sub total">Sub total</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -98,10 +98,10 @@
                         <tr>
                             <td><?php echo $data->invoice_no; ?> </td>
                             <td><span class="label label-info"><?php echo date("Y-m-d", strtotime($data->created)); ?></span></td>
-                            <td><?php echo $data->total_bosta; ?> </td>
-                            <td><?php echo $data->bosta_per_kg; ?></td>
-                            <td><?php echo $data->price_per_bosta; ?></td>
-                            <td><?php echo number_format($data->sub_total_price,2); ?></td>
+                            <td style="text-align:right;"><?php echo $data->total_bosta; ?> </td>
+                            <td style="text-align:right;"><?php echo $data->bosta_per_kg; ?></td>
+                            <td style="text-align:right;"><?php echo $data->price_per_bosta; ?></td>
+                            <td style="text-align:right;"><?php echo number_format($data->sub_total_price,2); ?></td>
                         </tr>
                         <?php $count++;
                     }
@@ -109,12 +109,12 @@
 
                     <tr>
                         <td colspan="5" style="text-align:right; margin-right: 80px"><b>Accumulated Purchase</b></td>
-                        <td><b><?php echo number_format($total_amount,2);?></b></td>
+                        <td style="text-align:right;"><b><?php echo number_format($total_amount,2);?></b></td>
                     </tr>
                     <?php
                 } else { ?>
                     <tr>
-                        <td colspan="6" style="text-align:center;">Sorry! there is no invoice for this selected Product.</td>
+                        <td colspan="6" style="text-align:center;">Sorry! there is no available records.</td>
                     </tr>
                 <?php } ?>
                 </tbody>

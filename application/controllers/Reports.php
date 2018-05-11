@@ -982,5 +982,130 @@ class Reports extends CI_Controller
         // Use Layout
         $this->load->view('layout/admin_layout', $data);
     }
+    
+    /*
+     * This report is using for generating
+     * Stock Report
+     *
+     **/
+    public function stock(){
+        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+            redirect('users/login');
+        }
+
+        $this->session->unset_userdata('active_menu');
+        $this->session->set_userdata('active_menu', 'stock');
+
+        // Define Data array
+        $data = array(
+            'page_title' => 'bsSelfBusiness System - All Sales Invoice List',
+            'sidebar_menu_title' => 'Report Management',
+            'sidebar_menu' => 'Stock Report'
+        );
+
+        $data['js'] = array(
+            'assets/plugins/datatables/jquery.dataTables.min.js',
+            'assets/plugins/datatables/dataTables.bootstrap.js',
+            'assets/plugins/datatables/dataTables.buttons.min.js',
+            'assets/plugins/datatables/buttons.bootstrap.min.js',
+            'assets/plugins/datatables/jszip.min.js',
+            'assets/plugins/datatables/pdfmake.min.js',
+            'assets/plugins/datatables/vfs_fonts.js',
+            'assets/plugins/datatables/buttons.html5.min.js',
+            'assets/plugins/datatables/buttons.print.min.js',
+            'assets/plugins/datatables/dataTables.fixedHeader.min.js',
+            'assets/plugins/datatables/dataTables.keyTable.min.js',
+            'assets/plugins/datatables/dataTables.keyTable.min.js',
+            'assets/plugins/parsleyjs/dist/parsley.min.js',
+            'assets/pages/datatables.init.js',
+            'assets/plugins/moment/moment.js',
+            'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+            'assets/plugins/bootstrap-daterangepicker/daterangepicker.js'
+        );
+
+        $data['css'] = array(
+            'assets/plugins/datatables/jquery.dataTables.min.css',
+            'assets/plugins/datatables/buttons.bootstrap.min.css',
+            'assets/plugins/datatables/fixedHeader.bootstrap.min.css',
+            'assets/plugins/datatables/responsive.bootstrap.min.css',
+            'assets/plugins/datatables/scroller.bootstrap.min.css',
+            'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
+            'assets/plugins/bootstrap-daterangepicker/daterangepicker.css'
+        );
+
+        $data['form_validation'] = '<script type="text/javascript">
+										$(document).ready(function() {
+											$("#form1").parsley();
+										});
+									</script>';
+        $data['product_id'] ='';
+        $data['brand_id'] ='';
+        $data['start'] = date("m/d/Y");
+        $data['end'] = date("m/d/Y", strtotime(' +1 day'));
+        if (isset($_POST['OkSaveData'])) {
+            // SELECT ALL Sales Invoice list
+            $product_id = $_POST['product_id'];
+            $brand_id = $_POST['brand_id'];
+            $star_date = $_POST['start'];
+            $end_date = $_POST['end'];
+            $stock_data = $this->report_mod->get_stock_info($product_id, $brand_id, $star_date, $end_date);
+            //echo '<pre>'; print_r($stock_data);die();
+            $data['product_id'] =$product_id;
+            $data['brand_id'] =$brand_id;
+            $data['start'] = $star_date;
+            $data['end'] = $end_date;
+        }else{
+            $stock_data = array();
+        }
+        $data['stock_data'] = $stock_data;
+
+        // get all product name
+        $data['product_data']  = $this->product_mod->get_all_products();
+
+        // Send $data array() to index page
+        $data['content'] = $this->load->view('reports/stock', $data, true);
+        // Use Layout
+        $this->load->view('layout/admin_layout', $data);
+    }
+    
+    /*
+     * 
+     * Get Band List For a Product by Product_id
+     *
+     **/
+    public function get_band_list_product(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $product_id    = $this->input->post('product_id');
+            $brand_id = $this->input->post('brand_id');
+            
+            $brands = array();
+            if($product_id != 'all' && $product_id != ''){
+                $brands = $this->report_mod->get_all_brands($product_id);
+            }
+            
+            
+            $str = '<select class="form-control required" name="brand_id" id="brand_id" data-parsley-id="6">';
+            $str .= '<option value="all"';
+            if($brand_id == "all"){
+                $str .= ' selected="selected" ';
+            }
+            $str .= '>All</option>';
+            if(count($brands)>0){
+                foreach($brands as $brand){
+                    $str .= '<option value="'.$brand->id.'" ';
+                    if($brand_id == $brand->id)
+                    {
+                        $str .= 'selected="selected" ';
+                    }
+                    $str .= '>'.$brand->name.'</option>';
+                }
+            }
+            $str .= '</select>';
+
+            echo $str;
+            exit();
+        }
+    }
 
 }

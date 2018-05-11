@@ -82,8 +82,7 @@
                     <th style="width: 30%" title="Supplier Name">Supplier Name</th>
                     <th style="width: 12%" title="Transaction Type">Transaction Type</th>
                     <th style="width: 12%" title="Transaction Date">Transaction Date</th>
-                    <th style="width: 12%" title="Date">Date</th>
-                    <th style="width: 16%" title="Amount">Amount</th>
+                    <th style="width: 12%; text-align:right;" title="Amount">Amount</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -104,21 +103,20 @@
                             <td><?php echo $transaction_data->full_name; ?> </td>
                             <td><?php echo $trans_type; ?> </td>
                             <td><span class="label label-info"><?php echo date("Y-m-d", strtotime($transaction_data->trans_date)); ?></span></td>
-                            <td><span class="label label-info"><?php echo date("Y-m-d", strtotime($transaction_data->created)); ?></span></td>
-                            <td><?php echo number_format($transaction_data->amount,2); ?></td>
+                            <td style="text-align:right;"><?php echo number_format($transaction_data->amount,2); ?></td>
                         </tr>
                         <?php $count++;
                     }
                     ?>
 
                     <tr>
-                        <td colspan="4" style="text-align:right; margin-right: 80px"><b>Accumulated Sales</b></td>
-                        <td><b><?php echo number_format($total_amount,2);?></b></td>
+                        <td colspan="3" style="text-align:right; margin-right: 80px"><b>Accumulated Purchase</b></td>
+                        <td style="text-align:right;"><b><?php echo number_format($total_amount,2);?></b></td>
                     </tr>
                     <?php
                 } else { ?>
                     <tr>
-                        <td colspan="5" style="text-align:center;">Sorry! there is no transaction for this selected Supplier.</td>
+                        <td colspan="4" style="text-align:center;">Sorry! there is no available records.</td>
                     </tr>
                 <?php } ?>
                 </tbody>

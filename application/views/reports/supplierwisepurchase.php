@@ -76,14 +76,13 @@
 
 
 
-            <table <?php if (count($buy_invoice_data) > 0){ ?>id="datatable-buttons" <?php } ?>
-                   class="table table-striped table-bordered">
+            <table <?php if (count($buy_invoice_data) > 0){ ?>id="datatable-buttons" <?php } ?> class="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th style="width: 11%">Invoice No</th>
                     <th style="width: 30%" title="Supplier Name">Supplier Name</th>
                     <th style="width: 12%" title="Purchase Date">Purchase Date</th>
-                    <th style="width: 16%" title="Total Cost">Total Cost</th>
+                    <th style="width: 16%; text-align: right;" title="Total Cost">Total Cost</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -106,20 +105,20 @@
                             <td><?php echo $buy_invoice->invoice_no; ?> </td>
                             <td><?php echo $buy_invoice->full_name; ?> </td>
                             <td><?php echo date("Y-m-d", strtotime($buy_invoice->created)); ?> </td>
-                            <td><?php echo $buy_invoice->total_cost; ?> </td>
+                            <td style="text-align: right;"><?php echo $buy_invoice->total_cost; ?> </td>
                         </tr>
                         <?php $count++;
                     }
                     ?>
 
                     <tr>
-                        <td colspan="3" style="text-align:right; margin-right: 80px"><b>Accumulated Sales</b></td>
-                        <td><b><?php echo number_format($total_sell,2);?></b></td>
+                        <td colspan="3" style="text-align:right; margin-right: 80px"><b>Accumulated Purchase</b></td>
+                        <td style="text-align: right;"><b><?php echo number_format($total_sell,2);?></b></td>
                     </tr>
                     <?php
                 } else { ?>
                     <tr>
-                        <td colspan="4" style="text-align:center;">Sorry! there is no invoice transaction for this selected customer.</td>
+                        <td colspan="4" style="text-align:center;">Sorry! there is no available records.</td>
                     </tr>
                 <?php } ?>
                 </tbody>

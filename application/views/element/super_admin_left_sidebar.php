@@ -148,6 +148,9 @@
                         <li>
                             <a href="<?php echo base_url() ?>reports/profit" <?php if ($active_menu == 'profit') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Profit</a>
                         </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>reports/stock" <?php if ($active_menu == 'stock') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Stock</a>
+                        </li>
                     </ul>
                 </li>
                 

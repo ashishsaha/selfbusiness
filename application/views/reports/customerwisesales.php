@@ -84,7 +84,7 @@
                     <th style="width: 11%">Invoice No</th>
                     <th style="width: 30%" title="Customer Name">Customer Name</th>
                     <th style="width: 12%" title="Selling Date">Selling Date</th>
-                    <th style="width: 16%" title="Total Cost">Total Cost</th>
+                    <th style="width: 16%; text-align: right;" title="Total Cost">Total Cost</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -107,7 +107,7 @@
                             <td><?php echo $buy_invoice->invoice_no; ?> </td>
                             <td><?php echo $buy_invoice->full_name; ?> </td>
                             <td><?php echo date("Y-m-d", strtotime($buy_invoice->created)); ?> </td>
-                            <td><?php echo $buy_invoice->total_cost; ?> </td>
+                            <td style="text-align: right;"><?php echo $buy_invoice->total_cost; ?> </td>
                         </tr>
                         <?php $count++;
                     }
@@ -115,12 +115,12 @@
 
                     <tr>
                         <td colspan="3" style="text-align:right; margin-right: 80px"><b>Accumulated Sales</b></td>
-                        <td><b><?php echo number_format($total_sell,2);?></b></td>
+                        <td style="text-align: right;"><b><?php echo number_format($total_sell,2);?></b></td>
                     </tr>
                     <?php
                 } else { ?>
                     <tr>
-                        <td colspan="4" style="text-align:center;">Sorry! there is no invoice transaction for this selected customer.</td>
+                        <td colspan="4" style="text-align:center;">Sorry! there is no available records.</td>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -140,12 +140,6 @@
         top: 247px!important;
     }
 </style>
-
-<script type="text/javascript">
-    function users_cancel() {
-        window.location.href = '<?php echo base_url();?>users';
-    }
-</script>
 
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
