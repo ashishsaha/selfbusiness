@@ -28,6 +28,7 @@ class Reports extends CI_Controller
         $this->load->model('report_mod');
         $this->load->model('product_mod');
         $this->load->model('account_mod');
+        $this->load->model('setting_mod');
     }
 
     /*
@@ -103,10 +104,14 @@ class Reports extends CI_Controller
             $buy_invoice_data = array();
         }
         $data['buy_invoice_data'] = $buy_invoice_data;
-
+        //echo '<pre>';print_r($buy_invoice_data);die();
         // SELECT ALL Customer list
         $condition = array('is_customer' => 1);
         $data['customer_data'] = $this->customer_mod->get_all_customers($condition);
+        
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
 
         // Send $data array() to index page
         $data['content'] = $this->load->view('reports/customerwisesales', $data, true);
@@ -192,7 +197,11 @@ class Reports extends CI_Controller
         // SELECT ALL supplier list
         $condition = array('is_supplier' => 1);
         $data['supplier_data'] = $this->customer_mod->get_all_supplier_customer($condition);
-//echo '<pre>';print_r($data['supplier_data']);die();
+        
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
+        
         // Send $data array() to index page
         $data['content'] = $this->load->view('reports/supplierwisepurchase', $data, true);
         // Use Layout
@@ -273,10 +282,14 @@ class Reports extends CI_Controller
             $sell_transaction_data = array();
         }
         $data['sell_transaction_data'] = $sell_transaction_data;
-
+        //echo '<pre>';print_r($sell_transaction_data);die();
         // SELECT ALL Customer list
         $condition = array('is_customer' => 1);
         $data['customer_data'] = $this->customer_mod->get_all_supplier_customer($condition);
+        
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
 
         // Send $data array() to index page
         $data['content'] = $this->load->view('reports/saletransaction', $data, true);
