@@ -194,13 +194,25 @@ class Report_mod extends CI_Model
         $this->db->where('inv.created BETWEEN "'. date('Y-m-d', strtotime($star_date)). '" and "'. date('Y-m-d', strtotime($end_date)).'"');
         $this->db->where($where);
         $this->db->group_by('invd.product_id, invd.brand_id, invd.bosta_per_kg, inv.invoice_type');
+        $this->db->order_by('invd.product_id', 'asc');
         $query = $this->db->get();
         $result =  $query->result();
-        //echo '<pre>'; print_r($result);die();
+        //echo '<pre>'; print_r($result);//die();
         
         $data = array();
-        $i = 0;
+        $i = 1;
+        $product = '';
+        $bosta_per_kg = '';
         foreach($result as $val){
+            
+            if($product != $val->product_id){
+                $product = $val->product_id;
+                $bosta_per_kg = '';
+                $i = 1;
+                
+            }
+            
+            $data[$val->product_id]['product_rowspan'] = $i;
             $data[$val->product_id]['product_name'] = $val->product_name;
             $data[$val->product_id]['brands'][$val->brand_id]['brand_name'] = $val->name;
             $data[$val->product_id]['brands'][$val->brand_id]['bosta'][$val->bosta_per_kg]['bosta_per_kg'] = $val->bosta_per_kg;
@@ -209,7 +221,10 @@ class Report_mod extends CI_Model
             }else{
                 $data[$val->product_id]['brands'][$val->brand_id]['bosta'][$val->bosta_per_kg]['total_purchased'] = $val->total_qty;
             }
-            $i++;
+            if(($product == $val->product_id) && ($bosta_per_kg != $val->bosta_per_kg)){
+                $i++;
+            }
+            $bosta_per_kg = $val->bosta_per_kg;
         }//echo $i;echo '<pre>'; print_r($data);die();
         return $data;
 

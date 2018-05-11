@@ -105,9 +105,16 @@
                 <tbody>
                 <?php if (count($stock_data) > 0) {
                     
-                    foreach ($stock_data as $data) {
+                    $product_name = '';
+                    $i = 0;
+                    foreach ($stock_data as $key=>$data) {
                         //echo '<pre>';print_r($data);die();
+                        $product_id = $key;
+                        $product_rowspan =  $data['product_rowspan'];
                         $brand_count = count($data['brands']);
+                        
+                        
+                        
                         
                         foreach($data['brands'] as $val){ 
                             
@@ -116,6 +123,13 @@
                             $bosta_type_count = count($val['bosta']);
                             $n = 0;
                             foreach($val['bosta'] as $row){
+                                
+                                if($product_name != $data['product_name']){
+                                    $product_name = $data['product_name'];
+                                    $i = 0;
+                                }else{
+                                    $i++;
+                                }
                                 
                                 if(isset($row['total_purchased'])){
                                     $total_purchased = $row['total_purchased'];
@@ -129,7 +143,9 @@
                                 ?>
                                 <tr>
                                 
-                                    <td><?php echo $data['product_name']; ?></td>
+                                    <?php if($i == 0){ ?>
+                                    <td <?php echo ($product_rowspan>1)?'rowspan="'.$product_rowspan.'"':''; ?>><?php echo $product_name; ?></td>
+                                    <?php } ?>
                                     <?php if($n==0){ ?>    
                                         <td <?php echo ($bosta_type_count>1)?'rowspan="'.$bosta_type_count.'"':''; ?> ><?php echo $val['brand_name']; ?></td>
                                     <?php } ?>
