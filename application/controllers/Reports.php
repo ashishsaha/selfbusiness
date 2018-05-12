@@ -29,6 +29,7 @@ class Reports extends CI_Controller
         $this->load->model('product_mod');
         $this->load->model('account_mod');
         $this->load->model('setting_mod');
+        $this->load->model('brand_mod');
     }
 
     /*
@@ -1085,6 +1086,7 @@ class Reports extends CI_Controller
         $data['brand_id'] ='';
         $data['start'] = date("m/d/Y");
         $data['end'] = date("m/d/Y", strtotime(' +1 day'));
+        $data['product_info'] = '';
         if (isset($_POST['OkSaveData'])) {
             // SELECT ALL Sales Invoice list
             $product_id = $_POST['product_id'];
@@ -1097,18 +1099,26 @@ class Reports extends CI_Controller
             $data['brand_id'] =$brand_id;
             $data['start'] = $star_date;
             $data['end'] = $end_date;
+            // Get Select Product name
+            if($product_id != 'all'){
+                $data['product_info'] = $this->product_mod->get_product_by_id($product_id);
+            }
+            // Get Select Brand name
+            if($brand_id != 'all'){
+                $data['brand_info'] = $this->brand_mod->get_brand_by_id($brand_id);
+            }
         }else{
             $stock_data = array();
         }
         $data['stock_data'] = $stock_data;
-
+        
         // get all product name
         $data['product_data']  = $this->product_mod->get_all_products();
         
         // SELECT Company Information
         $company_info = $this->setting_mod->get_setting_by_id(1);
         $data['company_info'] = $company_info[0];
-
+        //echo '<pre>'; print_r($data);die();
         // Send $data array() to index page
         $data['content'] = $this->load->view('reports/stock', $data, true);
         // Use Layout

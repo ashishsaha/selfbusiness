@@ -116,7 +116,7 @@
                     $i = 0;
                     foreach ($stock_data as $key=>$data) {
                         //echo '<pre>';print_r($data);die();
-                        $product_id = $key;
+                        
                         $product_rowspan =  $data['product_rowspan'];
                         $brand_count = count($data['brands']);
                         
@@ -176,7 +176,7 @@
                     <?php
                 } else { ?>
                     <tr>
-                        <td colspan="5" style="text-align:center;">Sorry! there is no available records.</td>
+                        <td colspan="6" style="text-align:center;">Sorry! there is no available records.</td>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -188,12 +188,184 @@
     </div>
 </div>
 
+
+<!--
+*
+*** Print Area Start
+*
+-->
+<?php if(count($stock_data) > 0){ ?>
+<div id="print_area" style="display: none;">
+    <table style="">
+        <tr>
+            <td style="text-align: center;">
+                <header style="line-height: .52857143;">
+                	<h1><?php echo $company_info->company_name; ?></h1>
+                    <h2>Phone : <?php echo $company_info->contact_no; ?></h2>
+                    <h3><?php echo $company_info->address; ?></h3>
+                </header>
+                <hr />
+            </td>
+        </tr>
+        
+        <tr>
+            <td style="width: 100%;">
+                <table style="width: 1000px; padding-top: 10px;">
+                    <tr>
+                        <td style="width: 50%;">	
+                            <address style="margin-bottom: 20px;font-style: normal;line-height: 1.42857143; font-size: 20px;">
+            				<strong>Product Name:</strong> 
+                            <?php 
+                            if($product_id == 'all'){
+                                echo "All";
+                            }else{
+                                if(isset($product_info->name)){
+                                    echo $product_info->name;
+                                }
+                            }
+                            ?><br />
+                            <strong>Brand Name:</strong>
+                            <?php 
+                            if($brand_id == 'all'){
+                                echo "All";
+                            }else{
+                                if(isset($brand_info->name)){
+                                    echo $brand_info->name;
+                                }
+                            }
+                            ?>
+            				</address>			            				
+                        </td>
+                        <td style="width: 50%; text-align: right;">
+                            <address style="text-align: right; margin-bottom: 20px;font-style: normal;line-height: 1.42857143; font-size: 20px;">
+                			<strong>Date: </strong> <?php echo date('d-m-Y', strtotime($start))." to ".date('d-m-Y', strtotime($end)); ?>
+            				</address>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td style="height: 40px; background-color: #f5f5f5; color: #797979; border: none !important; padding: 10px 20px; border-top-left-radius: 3px; border-top-right-radius: 3px; outline: none !important; box-sizing: border-box;">
+                <h2 style="font-weight: 600; margin-bottom: 0; margin-top: 0; line-height: 30px;">
+                    <strong>Stock Report</strong>
+                </h2>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <table style="width: 1000px; border: none; margin-bottom: 20px;box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);">
+                    
+                    <tr>
+                        <td>
+                            <table style="width: 1000px; margin-bottom: 10px; padding: 120px; background-color: transparent;border-spacing: 0;border-collapse: collapse; box-sizing: border-box; font-size: 20px;">
+                            	<thead>
+                                    <tr>
+                            			<td style="border-top: 0; padding: 5px 5px 5px 20px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"><strong>Product Name</strong></td>
+                            			<td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"><strong>Brand Name</strong></td>
+                            			<td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Bosta Per Kg</strong></td>
+                            			<td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Total Sold</strong></td>
+                                        <td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Total Purchased</strong></td>
+                                        <td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Available Quantity</strong></td>
+                                    </tr>
+                            	</thead>
+                            	<tbody>
+                                    <?php
+                                    $product_name = '';
+                                    $i = 0; 
+                                    foreach ($stock_data as $key=>$data) {
+                                        //echo '<pre>';print_r($data);die();
+                                        $product_id = $key;
+                                        $product_rowspan =  $data['product_rowspan'];
+                                        $brand_count = count($data['brands']);
+                                        
+                                        foreach($data['brands'] as $val){ 
+                                            
+                                            $total_purchased = 0;
+                                            $total_sold = 0;
+                                            $bosta_type_count = count($val['bosta']);
+                                            $n = 0;
+                                            foreach($val['bosta'] as $row){
+                                                
+                                                if($product_name != $data['product_name']){
+                                                    $product_name = $data['product_name'];
+                                                    $i = 0;
+                                                }else{
+                                                    $i++;
+                                                }
+                                                
+                                                if(isset($row['total_purchased'])){
+                                                    $total_purchased = $row['total_purchased'];
+                                                }
+                                                if(isset($row['total_sold'])){
+                                                    $total_sold = $row['total_sold'];
+                                                }
+                                                $avaialbe_qty = $total_purchased - $total_sold;
+                                    ?>
+                				    <tr>
+                            			<?php if($i == 0){ ?>
+                                        <td <?php echo ($product_rowspan>1)?'rowspan="'.$product_rowspan.'"':''; ?> style="border-top: 1px solid #ebeff2; padding: 5px 5px 5px 20px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"><?php echo $product_name; ?></td>
+                            			<?php } ?>
+                                        <?php if($n==0){ ?>
+                                        <td <?php echo ($bosta_type_count>1)?'rowspan="'.$bosta_type_count.'"':''; ?> style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: center;"><?php echo $val['brand_name']; ?></td>
+                            			<?php } ?>
+                                        <td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo $row['bosta_per_kg']; ?></td>
+                                        <td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo number_format($total_sold, 2); ?></td>
+                                        <td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo number_format($total_purchased, 2); ?></td>
+                                        <td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo number_format($avaialbe_qty, 2); ?></td>
+                                    </tr>
+                                    <?php 
+                                            $n++; 
+                                        } 
+                                    }  
+                                }
+                                ?>
+                                     
+                            		
+                            	</tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <td style="text-align: right; width: 100%; padding-top: 100px;">
+                <h2>Thank You!</h2>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<script type="text/javascript">
+    
+    function print_report() {
+        var mywindow = window.open('', 'PRINT', 'height=600,width=800');
+        var printContents = document.getElementById('print_area').innerHTML;
+			//var originalContents = document.body.innerHTML;
+			//document.body.innerHTML = printContents;
+        mywindow.document.write(printContents);
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+    
+        mywindow.print();
+        mywindow.close();
+    
+        return true;
+    }
+</script>
+<?php }?>
+
 <style type="text/css">
     .form-horizontal .checkbox {
         padding-top: 0 !important;
     }
     .datepicker{
-        top: 247px!important;
+        top: 300px!important;
     }
 </style>
 
