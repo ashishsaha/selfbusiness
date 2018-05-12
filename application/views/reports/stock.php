@@ -81,6 +81,13 @@
                                 <button class="btn btn-success waves-effect waves-light" type="submit"><i
                                         class="fa fa-save" aria-hidden="true"></i> Report
                                 </button>
+                                <?php if(count($stock_data) > 0){ ?>
+                                &nbsp;
+                                <button title="Print Report" data-tooltip="true" type="button"
+                                        class="btn btn-success waves-effect waves-light"
+                                        onclick="javascript:print_report();"><i class="fa fa-print"></i>&nbsp;Print Report
+                                </button>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

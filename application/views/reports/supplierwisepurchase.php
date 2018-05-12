@@ -103,7 +103,7 @@
                         <tr>
                             <td><?php echo $buy_invoice->invoice_no; ?> </td>
                             <td><?php echo $buy_invoice->full_name; ?> </td>
-                            <td><?php echo date("Y-m-d", strtotime($buy_invoice->created)); ?> </td>
+                            <td><?php echo date("d-m-Y", strtotime($buy_invoice->created)); ?> </td>
                             <td style="text-align: right;"><?php echo number_format($buy_invoice->total_cost,2); ?> </td>
                         </tr>
                         <?php $count++;
@@ -159,7 +159,7 @@
                         </td>
                         <td style="width: 50%; text-align: right;">
                             <address style="text-align: right; margin-bottom: 20px;font-style: normal;line-height: 1.42857143; font-size: 20px;">
-                			<strong>Date: </strong> <?php echo $start." to ".$end; ?>
+                			<strong>Date: </strong> <?php echo date('d-m-Y', strtotime($start))." to ".date('d-m-Y', strtotime($end)); ?>
             				</address>
                         </td>
                     </tr>
@@ -193,7 +193,7 @@
                                     <?php foreach($buy_invoice_data as $buy_invoice){ ?>
                 				    <tr>
                             			<td style="border-top: 1px solid #ebeff2; padding: 5px 5px 5px 20px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"><?php echo $buy_invoice->invoice_no; ?></td>
-                            			<td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: center;"><?php echo date("Y-m-d", strtotime($buy_invoice->created)); ?></td>
+                            			<td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: center;"><?php echo date("d-m-Y", strtotime($buy_invoice->created)); ?></td>
                             			<td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo number_format($buy_invoice->total_cost, 2); ?></td>
                             		</tr>
                                     <?php } ?>

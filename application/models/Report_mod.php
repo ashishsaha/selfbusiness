@@ -53,10 +53,11 @@ class Report_mod extends CI_Model
     function get_product_wise_invoice($product_id, $invoice_type, $star_date, $end_date){
         
         $where = '(inv.status="1" OR inv.status="0") AND inv.invoice_type='.$invoice_type;
-        $this->db->select("invd.*, inv.invoice_no, inv.status, inv.invoice_type, inv.created");
+        $this->db->select("invd.*, inv.invoice_no, inv.status, inv.invoice_type, inv.created, p.name");
         $this->db->from("invoice_details as invd");
         $this->db->where("invd.product_id", $product_id);
         $this->db->join('invoices as inv', 'inv.id = invd.invoice_id', 'left');
+        $this->db->join('products as p', 'p.id = invd.product_id', 'left');
         //$this->db->where("t.status",1);
         $this->db->where('inv.created BETWEEN "'. date('Y-m-d', strtotime($star_date)). '" and "'. date('Y-m-d', strtotime($end_date)).'"');
         $this->db->where($where);
@@ -91,10 +92,10 @@ class Report_mod extends CI_Model
     function get_customer_collection($customer_id, $invoice_type, $star_date, $end_date){
 
         $where = '(bi.status="1" OR bi.status="0") AND bi.invoice_type='.$invoice_type;
-        $this->db->select("bi.id, bi.invoice_no, bi.customer_id, bi.total_cost, bi.invoice_type, bi.created");
+        $this->db->select("bi.id, bi.invoice_no, bi.customer_id, bi.total_cost, bi.invoice_type, bi.created, c.full_name");
         $this->db->from("invoices as bi");
         $this->db->where("bi.customer_id", $customer_id);
-        //$this->db->join('products as p', 'p.id = bi.product_id', 'left');
+        $this->db->join('customers as c', 'c.id = bi.customer_id', 'left');
         $this->db->where('bi.created BETWEEN "'. date('Y-m-d', strtotime($star_date)). '" and "'. date('Y-m-d', strtotime($end_date)).'"');
         $this->db->where($where);
         $query = $this->db->get();

@@ -109,7 +109,7 @@
                         <tr>
                             <td><?php echo $transaction_data->full_name; ?> </td>
                             <td><?php echo $trans_type; ?> </td>
-                            <td><span class="label label-info"><?php echo date("Y-m-d", strtotime($transaction_data->trans_date)); ?></span></td>
+                            <td><span class="label label-info"><?php echo date("d-m-Y", strtotime($transaction_data->trans_date)); ?></span></td>
                             <td style="text-align: right;"><?php echo number_format($transaction_data->amount,2); ?></td>
                         </tr>
                         <?php $count++;
@@ -165,7 +165,7 @@
                         </td>
                         <td style="width: 50%; text-align: right;">
                             <address style="text-align: right; margin-bottom: 20px;font-style: normal;line-height: 1.42857143; font-size: 20px;">
-                			<strong>Date: </strong> <?php echo $start." to ".$end; ?>
+                			<strong>Date: </strong> <?php echo date('d-m-Y', strtotime($start))." to ".date('d-m-Y', strtotime($end)); ?>
             				</address>
                         </td>
                     </tr>
@@ -209,7 +209,7 @@
                                     ?>
                 				    <tr>
                             			<td style="border-top: 1px solid #ebeff2; padding: 5px 5px 5px 20px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"><?php echo $trans_type; ?></td>
-                            			<td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: center;"><?php echo date("Y-m-d", strtotime($transaction_data->trans_date)); ?></td>
+                            			<td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: center;"><?php echo date("d-m-Y", strtotime($transaction_data->trans_date)); ?></td>
                             			<td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo number_format($transaction_data->amount,2); ?></td>
                             		</tr>
                                     <?php } ?>

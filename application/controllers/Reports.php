@@ -375,6 +375,10 @@ class Reports extends CI_Controller
         // SELECT ALL Customer list
         $condition = array('is_supplier' => 1);
         $data['supplier_data'] = $this->customer_mod->get_all_supplier_customer($condition);
+        
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
 
         // Send $data array() to index page
         $data['content'] = $this->load->view('reports/purchasetransaction', $data, true);
@@ -456,9 +460,14 @@ class Reports extends CI_Controller
             $invoice_product_data = array();
         }
         $data['invoice_product_data'] = $invoice_product_data;
-
+        //echo '<pre>';print_r($invoice_product_data);die();
+        
         // get all product name
         $data['product_data']  = $this->product_mod->get_all_products();
+        
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
 
         // Send $data array() to index page
         $data['content'] = $this->load->view('reports/productwisepurchase', $data, true);
@@ -542,6 +551,10 @@ class Reports extends CI_Controller
 
         // get all product name
         $data['product_data']  = $this->product_mod->get_all_products();
+        
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
 
         // Send $data array() to index page
         $data['content'] = $this->load->view('reports/productwisesale', $data, true);
@@ -635,8 +648,10 @@ class Reports extends CI_Controller
             $expense_data = array();
         }
         $data['expense_data'] = $expense_data;
-
         
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
         
         //echo '<pre>';print_r($expense_data);die();
         // Send $data array() to index page
@@ -733,7 +748,9 @@ class Reports extends CI_Controller
         }
         $data['income_data'] = $income_data;
 
-        
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
         
         //echo '<pre>';print_r($income_data);die();
         // Send $data array() to index page
@@ -815,10 +832,15 @@ class Reports extends CI_Controller
             $customer_collection_data = array();
         }
         $data['customer_collection_data'] = $customer_collection_data;
-
+        //echo '<pre>';print_r($customer_collection_data);die();
+        
         // SELECT ALL Customer list
         $condition = array('is_customer' => 1);
         $data['customer_data'] = $this->customer_mod->get_all_supplier_customer($condition);
+        
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
         
         //echo '<pre>';print_r($income_data);die();
         // Send $data array() to index page
@@ -905,6 +927,10 @@ class Reports extends CI_Controller
         $condition = array('is_supplier' => 1);
         $data['supplier_data'] = $this->customer_mod->get_all_supplier_customer($condition);
         
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
+        
         //echo '<pre>';print_r($income_data);die();
         // Send $data array() to index page
         $data['content'] = $this->load->view('reports/supplierpayment', $data, true);
@@ -988,6 +1014,10 @@ class Reports extends CI_Controller
         // SELECT ALL Customer list
         //$condition = array('is_supplier' => 1);
         //$data['supplier_data'] = $this->customer_mod->get_all_supplier_customer($condition);
+        
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
         
         //echo '<pre>';print_r($income_data);die();
         // Send $data array() to index page
@@ -1074,6 +1104,10 @@ class Reports extends CI_Controller
 
         // get all product name
         $data['product_data']  = $this->product_mod->get_all_products();
+        
+        // SELECT Company Information
+        $company_info = $this->setting_mod->get_setting_by_id(1);
+        $data['company_info'] = $company_info[0];
 
         // Send $data array() to index page
         $data['content'] = $this->load->view('reports/stock', $data, true);
