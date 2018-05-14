@@ -55,6 +55,20 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" title="Status">Is Current Stock</label>
+                            <div class="col-md-9">
+                                <div class="checkbox checkbox-success checkbox-single" style="top: 7px;">
+                                    <input id="is_current_stock" title="Is Current Stock" name="is_current_stock" aria-label="Single checkbox Two" type="checkbox" <?php echo ($is_current_stock == 'on')?'checked':''; ?>>
+                                    <label></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
@@ -63,9 +77,9 @@
 
                             <div class="col-md-9">
                                 <div class="input-daterange input-group" id="date-range">
-                                    <input style="position: relative; z-index: 100000;" type="text" class="form-control required" name="start" value="<?php echo $start;?>"/>
+                                    <input style="position: relative; z-index: 100000;" type="text" class="form-control required" name="start" id="start" value="<?php echo $start;?>"  <?php echo ($is_current_stock == 'on')?'disabled':''; ?>/>
                                     <span class="input-group-addon bg-primary b-0 text-white">to</span>
-                                    <input type="text" class="form-control required" name="end" value="<?php echo $end;?>"/>
+                                    <input type="text" class="form-control required" name="end" id="end" value="<?php echo $end;?>"  <?php echo ($is_current_stock == 'on')?'disabled':''; ?>/>
                                 </div>
                             </div>
                         </div>
@@ -365,7 +379,7 @@
         padding-top: 0 !important;
     }
     .datepicker{
-        top: 300px!important;
+        top: 342px!important;
     }
 </style>
 
@@ -389,6 +403,16 @@
         $('#date-range').datepicker({
             toggleActive: true,
             zIndexOffset: 999999
+        });
+        
+        $('#is_current_stock').change(function() {
+            if($(this).is(":checked")) {
+                $("#start").prop('disabled', true);
+                $("#end").prop('disabled', true);
+            }else{
+                $("#start").prop('disabled', false);
+                $("#end").prop('disabled', false);
+            }       
         });
     });
 </script>

@@ -1084,17 +1084,30 @@ class Reports extends CI_Controller
 									</script>';
         $data['product_id'] ='';
         $data['brand_id'] ='';
+        $data['is_current_stock'] ='';
         $data['start'] = date("m/d/Y");
         $data['end'] = date("m/d/Y", strtotime(' +1 day'));
         $data['product_info'] = '';
-        if (isset($_POST['OkSaveData'])) {
+        if (isset($_POST['OkSaveData'])) { //echo '<pre>';print_r($_POST);die();
             // SELECT ALL Sales Invoice list
             $product_id = $_POST['product_id'];
             $brand_id = $_POST['brand_id'];
-            $star_date = $_POST['start'];
-            $end_date = $_POST['end'];
+            if(isset($_POST['start'])){
+                $star_date = $_POST['start'];
+            }else{
+                $star_date = '01/01/2018';
+            }
+            if(isset($_POST['end'])){
+                $end_date = $_POST['end'];
+            }else{
+                $end_date = date("m/d/Y", strtotime(' +1 day'));
+            }
+            if(isset($_POST['is_current_stock'])){
+                $data['is_current_stock'] = $_POST['is_current_stock'];
+            }
+            //echo $end_date;exit;
             $stock_data = $this->report_mod->get_stock_info($product_id, $brand_id, $star_date, $end_date);
-            //echo '<pre>'; print_r($stock_data);die();
+            echo '<pre>'; print_r($stock_data);die();
             $data['product_id'] =$product_id;
             $data['brand_id'] =$brand_id;
             $data['start'] = $star_date;
