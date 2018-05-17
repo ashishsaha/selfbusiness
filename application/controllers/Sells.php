@@ -195,6 +195,29 @@ class Sells extends CI_Controller
         $this->load->view('layout/admin_layout', $data);
     }
 
+    public function getinfo(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $product_id         = $this->input->post('id');
+            $product_arr        = $this->product_mod->get_product_by_id($product_id);
+            $brand_data_arr     = json_decode($product_arr->brand_id);
+            $str = '';
+            $str .= '<option value="">Select brand</option>';
+            if(count($brand_data_arr)>0){
+                foreach($brand_data_arr as $brand_id){
+                    $str .= '<option value="'.$brand_id.'">'. get_brand_name($brand_id).'</option>';
+                }
+            }
+
+            header('Cache-Control: no-cache, must-revalidate');
+            header('Expires: ' . date('r', time() + (86400 * 365)));
+            header('Content-type: application/json');
+
+            echo json_encode(array(
+                'brand_ids' => $str
+            ));
+            exit();
+        }
+    }
     
 
     /* Product Status*/

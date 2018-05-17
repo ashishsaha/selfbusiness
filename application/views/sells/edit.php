@@ -97,6 +97,7 @@
                                 </td>
                                 <td>
                                     <select class="form-control required" name="brand_id[]" id="brand_id">
+                                        <option value="">Select</option>
                                         <?php foreach ($brands as $brand) { ?>
                                             <option value="<?php echo $brand->id; ?>" <?php if($data->brand_id == $brand->id){?> selected="selected" <?php } ?>><?php echo $brand->name; ?></option>
                                         <?php } ?>

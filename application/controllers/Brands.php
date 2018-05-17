@@ -185,4 +185,36 @@ class Brands extends CI_Controller
         }
     }
 
+    /*
+     * Select info by ajax
+     * */
+    public function getbrandinfo(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $product_id = $this->input->post('id');
+
+            $transaction_arr = $this->transaction_mod->get_transaction_info_by_id($product_id);
+            //print_r($transaction_arr); exit();
+
+            header('Cache-Control: no-cache, must-revalidate');
+            header('Expires: ' . date('r', time() + (86400 * 365)));
+            header('Content-type: application/json');
+
+            echo json_encode(array(
+                'id' => $transaction_arr->id,
+                'payment_from_or_to' => $transaction_arr->payment_from_or_to,
+                'ref_invoice_no' => $transaction_arr->ref_invoice_no,
+                'trans_type' => $transaction_arr->trans_type,
+                'trans_date' => date("m/d/Y", strtotime($transaction_arr->trans_date)),
+                'bank_account_from' => $transaction_arr->bank_account_from,
+                'bank_account_to' => $transaction_arr->bank_account_to,
+                'checque_no' => $transaction_arr->checque_no,
+                'salary_month' => $transaction_arr->salary_month,
+                'amount' => $transaction_arr->amount,
+                'note' => $transaction_arr->note
+            ));
+            exit();
+        }
+    }
+
 }
