@@ -89,14 +89,14 @@
                                     <tr id='row<?php echo $i;?>'>
                                 <td><?php echo ($i+1);?></td>
                                 <td>
-                                    <select class="form-control required" name="product_id[]" id="product_id">
+                                    <select class="form-control required" name="product_id[]" id="product_id<?php echo $i; ?>" onchange="product_info(<?php echo $i; ?>)">
                                         <?php foreach ($products as $product) { ?>
                                             <option value="<?php echo $product->id; ?>" <?php if($data->product_id == $product->id){?> selected="selected" <?php } ?>><?php echo $product->name; ?></option>
                                         <?php } ?>
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control required" name="brand_id[]" id="brand_id">
+                                    <select class="form-control required" name="brand_id[]" id="brand_id<?php echo $i; ?>">
                                         <option value="">Select</option>
                                         <?php foreach ($brands as $brand) { ?>
                                             <option value="<?php echo $brand->id; ?>" <?php if($data->brand_id == $brand->id){?> selected="selected" <?php } ?>><?php echo $brand->name; ?></option>
@@ -231,7 +231,7 @@ print_r($invoice_data);*/
         var current_total_row = $("#total_row").val();
         $('#row' + i).html("<td>" + (i + 1) + "</td>" +
             "<td>"+
-            "<select class='form-control required' name='product_id[]' id='product_id'>"+
+            "<select class='form-control required' name='product_id[]' id='product_id" + i + "'  onchange='product_info(" + i + ")'>"+
             <?php foreach ($products as $product) { ?>
             "<option value='<?php echo $product->id; ?>'><?php echo $product->name; ?></option>"+
             <?php } ?>
@@ -313,6 +313,25 @@ print_r($invoice_data);*/
         var total_cost_cal = sub_total + parseFloat(total_cost);
         $('#total_cost_text').text(total_cost_cal.toFixed(2)); // Write
         $('#total_cost').val(total_cost_cal.toFixed(2)); // Write
+    }
+    
+    /** Brand info **/
+    function product_info(i){ alert(i);
+        var product_id = $("#product_id"+i+" option:selected").val();
+        if(product_id>0){
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url() ?>sells/getinfo',
+                dataType: 'json',
+                data: {'id': product_id},
+                success: function (data, textStatus, XMLHttpRequest) {
+                    $("select#brand_id"+i).html(data.brand_ids);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                   alert(errorThrown);
+                }
+            });
+        }
     }
 
     function invoice_reset(id){
