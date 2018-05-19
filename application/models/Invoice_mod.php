@@ -208,5 +208,23 @@ class Invoice_mod extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    
+    /*
+     * get available quantity by product_id, brand_id & bosta_per_kg
+     * */
+    function get_available_quantity($product_id, $brand_id , $bosta_per_kg){
+        $where = '(inv.status="1" OR inv.status="0")';
+        $this->db->select("invd.*, inv.invoice_type, inv.status, SUM(invd.total_bosta) as total_qty");
+        $this->db->from("invoice_details as invd");
+        $this->db->where("invd.product_id", $product_id);
+        $this->db->where("invd.brand_id", $brand_id);
+        $this->db->where("invd.bosta_per_kg", $bosta_per_kg);
+        $this->db->join('invoices as inv', 'inv.id = invd.invoice_id', 'left');
+        $this->db->where($where);
+        $this->db->group_by('inv.invoice_type');
+        $this->db->order_by('inv.invoice_type', 'asc');
+        $query = $this->db->get();
+        return  $query->result();
+    }
 
 }

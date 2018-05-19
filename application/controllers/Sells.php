@@ -219,6 +219,36 @@ class Sells extends CI_Controller
         }
     }
     
+    public function check_available_quantity(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $product_id   = $this->input->post('product_id');
+            $brand_id     = $this->input->post('brand_id');
+            $bosta_per_kg = $this->input->post('bosta_per_kg');
+            $invoice_arr  = $this->invoice_mod->get_available_quantity($product_id, $brand_id, $bosta_per_kg);
+            
+            $buy_qty = 0;
+            $sale_qty = 0;
+            
+            foreach($invoice_arr as $data){
+                if($data->invoice_type == 0){
+                    $buy_qty = $data->total_qty;
+                }else{
+                    $sale_qty = $data->total_qty;
+                }
+            }
+            $avai_qty = $buy_qty - $sale_qty;
+            
+            header('Cache-Control: no-cache, must-revalidate');
+            header('Expires: ' . date('r', time() + (86400 * 365)));
+            header('Content-type: application/json');
+
+            echo json_encode(array(
+                'avai_qty' => $avai_qty
+            ));
+            exit();
+        }
+    }
+    
 
     /* Product Status*/
     public function status()

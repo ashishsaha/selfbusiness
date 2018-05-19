@@ -89,7 +89,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select class="form-control required brand_id" name="brand_id[]" id="brand_id0">
+                                <select class="form-control required brand_id" name="brand_id[]" id="brand_id0" onchange="check_available_quantity(0)">
                                     <option value="">Select brand</option>
                                     <?php foreach ($brands as $brand) { ?>
                                         <option value="<?php echo $brand->id; ?>"><?php echo $brand->name; ?></option>
@@ -100,7 +100,7 @@
                                 <input type="number" id='total_bosta0' name='total_bosta[]' placeholder='Total Bosta' value="0" min="0"  class="form-control num_val required" onkeyup="totalBosta(0)" />
                             </td>
                             <td>
-                                <input type="number" id='bosta_per_kg0' name='bosta_per_kg[]' placeholder='Bosta/KG' min="0.00" value="0.00" placeholder='0.00' step="0.01" class="form-control num_val required" />
+                                <input type="number" id='bosta_per_kg0' name='bosta_per_kg[]' placeholder='Bosta/KG' min="0.00" value="0.00" placeholder='0.00' step="0.01" class="form-control num_val required" onkeyup="check_available_quantity(0)" />
                             </td>
                             <td>
                                 <input type="number" id='price_per_bosta0' name='price_per_bosta[]' placeholder='0.00' value="0.00" step="0.01" class="form-control required" onkeyup="pricePerBosta(0)" />
@@ -209,7 +209,7 @@
                 "</select>"+
             "</td>"+
             "<td>"+
-                "<select class='form-control required brand_id' name='brand_id[]' id='brand_id" + i + "'>"+
+                "<select class='form-control required brand_id' name='brand_id[]' id='brand_id" + i + "' onchange='check_available_quantity(" + i + ")'>"+
                 "<option value=''>Select product</option>"+
                 <?php foreach ($brands as $brand) { ?>
                 "<option value='<?php echo $brand->id; ?>'><?php echo $brand->name; ?></option>"+
@@ -217,7 +217,7 @@
                 "</select>"+
             "</td>"+
             "<td><input type='number' id='total_bosta"+ i +"' name='total_bosta[]' placeholder='Total Bosta' value='0' min='0'  class='form-control num_val required' onkeyup='totalBosta(" + i + ")' /></td>" +
-            "<td><input type='number' id='bosta_per_kg"+i+"' name='bosta_per_kg[]' placeholder='Bosta/KG' min='0.00' value='0.00' placeholder='0.00' step='0.01' class='form-control required'  /></td>" +
+            "<td><input type='number' id='bosta_per_kg"+i+"' name='bosta_per_kg[]' placeholder='Bosta/KG' min='0.00' value='0.00' placeholder='0.00' step='0.01' class='form-control required' onkeyup='check_available_quantity(" + i + ")' /></td>" +
             "<td><input type='number' id='price_per_bosta"+i+"' name='price_per_bosta[]' placeholder='0.00' value='0.00' step='0.01' class='form-control required' onkeyup='pricePerBosta(" + i + ")' /></td>" +
             "<td><input type='number' readonly id='sub_total_price"+i+"' name='sub_total_price[]' placeholder='0.00' value='0.00' step='0.01' class='form-control' required/></td>" +
             "<td><a onClick='deleteRow(" + i + ")' id='delete_row" + i + "' class='pull-right btn btn-default cross_row' >X</a></td>");
@@ -305,6 +305,30 @@
             });
         }
     }
+    
+    /** Check Available Quantity **/
+    function check_available_quantity(i){
+        var product_id = $("#product_id"+i+" option:selected").val();
+        var brand_id = $("#brand_id"+i+" option:selected").val();
+        var bosta_per_kg = $("#bosta_per_kg"+i).val();
+        
+        if(product_id>0 && brand_id>0 && bosta_per_kg>0){
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url() ?>sells/check_available_quantity',
+                dataType: 'json',
+                data: {'product_id': product_id, 'brand_id': brand_id, 'bosta_per_kg': bosta_per_kg},
+                success: function (data, textStatus, XMLHttpRequest) {
+                    //$("select#brand_id"+i).html(data.brand_ids);
+                    $("input#total_bosta"+i).attr('max', data.avai_qty);
+                    
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                   alert(errorThrown);
+                }
+            });
+        }
+    } 
 
     function product_cancel(){
         window.location.href = '<?php echo base_url();?>sells';

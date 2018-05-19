@@ -96,7 +96,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control required" name="brand_id[]" id="brand_id<?php echo $i; ?>">
+                                    <select class="form-control required" name="brand_id[]" id="brand_id<?php echo $i; ?>" onchange="check_available_quantity(<?php echo $i; ?>)">
                                         <option value="">Select</option>
                                         <?php foreach ($brands as $brand) { ?>
                                             <option value="<?php echo $brand->id; ?>" <?php if($data->brand_id == $brand->id){?> selected="selected" <?php } ?>><?php echo $brand->name; ?></option>
@@ -107,7 +107,7 @@
                                     <input type="number" id='total_bosta<?php echo $i;?>' name='total_bosta[]' placeholder='Total Bosta' value="<?php echo intval($data->total_bosta);?>" min="0"  class="form-control num_val required" onkeyup="totalBosta(<?php echo $i;?>)" />
                                 </td>
                                 <td>
-                                    <input type="number" id='bosta_per_kg<?php echo $i;?>' name='bosta_per_kg[]' placeholder='Bosta/KG' min="0.00" value="<?php echo $data->bosta_per_kg;?>" placeholder='0.00' step="0.01" class="form-control num_val required" />
+                                    <input type="number" id='bosta_per_kg<?php echo $i;?>' name='bosta_per_kg[]' placeholder='Bosta/KG' min="0.00" value="<?php echo $data->bosta_per_kg;?>" placeholder='0.00' step="0.01" class="form-control num_val required" onkeyup="check_available_quantity(<?php echo $i;?>)" />
                                 </td>
                                 <td>
                                     <input type="number" id='price_per_bosta<?php echo $i;?>' name='price_per_bosta[]' placeholder='0.00' value="<?php echo $data->price_per_bosta;?>" step="0.01" class="form-control required" onkeyup="pricePerBosta(<?php echo $i;?>)" />
@@ -238,14 +238,14 @@ print_r($invoice_data);*/
             "</select>"+
             "</td>"+
             "<td>"+
-            "<select class='form-control required' name='brand_id[]' id='brand_id'>"+
+            "<select class='form-control required' name='brand_id[]' id='brand_id" + i +"' onchange='check_available_quantity(" + i + ")'>"+
             <?php foreach ($brands as $brand) { ?>
             "<option value='<?php echo $brand->id; ?>'><?php echo $brand->name; ?></option>"+
             <?php } ?>
             "</select>"+
             "</td>"+
             "<td><input type='number' id='total_bosta"+ i +"' name='total_bosta[]' placeholder='Total Bosta' value='0' min='0'  class='form-control num_val required' onkeyup='totalBosta(" + i + ")' /></td>" +
-            "<td><input type='number' id='bosta_per_kg"+i+"' name='bosta_per_kg[]' placeholder='Bosta/KG' min='0.00' value='0.00' placeholder='0.00' step='0.01' class='form-control required'  /></td>" +
+            "<td><input type='number' id='bosta_per_kg"+i+"' name='bosta_per_kg[]' placeholder='Bosta/KG' min='0.00' value='0.00' placeholder='0.00' step='0.01' class='form-control required' onkeyup='check_available_quantity(" + i + ")'  /></td>" +
             "<td><input type='number' id='price_per_bosta"+i+"' name='price_per_bosta[]' placeholder='0.00' value='0.00' step='0.01' class='form-control required' onkeyup='pricePerBosta(" + i + ")' /></td>" +
             "<td><input type='number' readonly id='sub_total_price"+i+"' name='sub_total_price[]' placeholder='0.00' value='0.00' step='0.01' class='form-control' required/></td>" +
             "<td><a onClick='deleteRow(" + i + ")' id='delete_row" + i + "' class='pull-right btn btn-default cross_row' >X</a></td>");
@@ -316,7 +316,7 @@ print_r($invoice_data);*/
     }
     
     /** Brand info **/
-    function product_info(i){ alert(i);
+    function product_info(i){
         var product_id = $("#product_id"+i+" option:selected").val();
         if(product_id>0){
             $.ajax({
@@ -333,6 +333,30 @@ print_r($invoice_data);*/
             });
         }
     }
+    
+    /** Check Available Quantity **/
+    function check_available_quantity(i){
+        var product_id = $("#product_id"+i+" option:selected").val();
+        var brand_id = $("#brand_id"+i+" option:selected").val();
+        var bosta_per_kg = $("#bosta_per_kg"+i).val();
+        
+        if(product_id>0 && brand_id>0 && bosta_per_kg>0){
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url() ?>sells/check_available_quantity',
+                dataType: 'json',
+                data: {'product_id': product_id, 'brand_id': brand_id, 'bosta_per_kg': bosta_per_kg},
+                success: function (data, textStatus, XMLHttpRequest) {
+                    //$("select#brand_id"+i).html(data.brand_ids);
+                    $("input#total_bosta"+i).attr('max', data.avai_qty);
+                    
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                   alert(errorThrown);
+                }
+            });
+        }
+    } 
 
     function invoice_reset(id){
         window.location.href = '<?php echo base_url();?>sells/edit/'+id;
