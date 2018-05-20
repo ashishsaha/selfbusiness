@@ -204,6 +204,7 @@ class Report_mod extends CI_Model
         $i = 1;
         $product = '';
         $bosta_per_kg = '';
+        $brand_id = '';
         foreach($result as $val){
             
             if($product != $val->product_id){
@@ -222,10 +223,11 @@ class Report_mod extends CI_Model
             }else{
                 $data[$val->product_id]['brands'][$val->brand_id]['bosta'][$val->bosta_per_kg]['total_purchased'] = $val->total_qty;
             }
-            if(($product == $val->product_id) && ($bosta_per_kg != $val->bosta_per_kg)){
+            if(($product == $val->product_id) && ($bosta_per_kg != $val->bosta_per_kg || ($bosta_per_kg == $val->bosta_per_kg && $brand_id != $val->brand_id))){
                 $i++;
             }
             $bosta_per_kg = $val->bosta_per_kg;
+            $brand_id = $val->brand_id;
         }//echo $i;echo '<pre>'; print_r($data);die();
         return $data;
 

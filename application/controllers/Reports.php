@@ -1107,7 +1107,7 @@ class Reports extends CI_Controller
             }
             //echo $end_date;exit;
             $stock_data = $this->report_mod->get_stock_info($product_id, $brand_id, $star_date, $end_date);
-            echo '<pre>'; print_r($stock_data);die();
+            //echo '<pre>'; print_r($stock_data);die();
             $data['product_id'] =$product_id;
             $data['brand_id'] =$brand_id;
             $data['start'] = $star_date;
