@@ -111,20 +111,14 @@
                 </li>
                 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-view-module"></i> <span> Reports </span>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-view-module"></i> <span>General Reports </span>
                         <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="<?php echo base_url() ?>reports/customer_wise_sales" <?php if ($active_menu == 'customerwisesales') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Customer Sales</a>
+                            <a href="<?php echo base_url() ?>reports/customer_wise_sales" <?php if ($active_menu == 'customerwisesales') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Sales history</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url() ?>reports/supplier_wise_purchase" <?php if ($active_menu == 'supplierwisepurchase') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Supplier Purchase</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url() ?>reports/sale_transaction" <?php if ($active_menu == 'saletransaction') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Sale Transaction</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url() ?>reports/purchase_transaction" <?php if ($active_menu == 'purchasetransaction') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Purchase Transaction</a>
+                            <a href="<?php echo base_url() ?>reports/supplier_wise_purchase" <?php if ($active_menu == 'supplierwisepurchase') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Purchase History</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url() ?>reports/product_wise_purchase" <?php if ($active_menu == 'productwisepurchase') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Product Purchase</a>
@@ -133,12 +127,18 @@
                             <a href="<?php echo base_url() ?>reports/product_wise_sale" <?php if ($active_menu == 'productwisesale') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Product Sale</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url() ?>reports/expense" <?php if ($active_menu == 'expense') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Expense</a>
+                            <a href="<?php echo base_url() ?>reports/stock" <?php if ($active_menu == 'stock') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Stock</a>
                         </li>
+                    </ul>
+                </li>
+
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-settings"></i> <span> Transaction Reports </span>
+                        <span class="menu-arrow"></span></a>
+                    <ul class="list-unstyled">
                         <li>
-                            <a href="<?php echo base_url() ?>reports/income" <?php if ($active_menu == 'income') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Income</a>
+                            <a href="<?php echo base_url() ?>reports/sale_transaction" <?php if ($active_menu == 'saletransaction') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Sale Transaction</a>
                         </li>
-                        
                         <li>
                             <a href="<?php echo base_url() ?>reports/customer_collection" <?php if ($active_menu == 'customercollection') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Customer Collection</a>
                         </li>
@@ -146,10 +146,16 @@
                             <a href="<?php echo base_url() ?>reports/supplier_payment" <?php if ($active_menu == 'supplierpayment') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Supplier Payment</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url() ?>reports/profit" <?php if ($active_menu == 'profit') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Profit</a>
+                            <a href="<?php echo base_url() ?>reports/purchase_transaction" <?php if ($active_menu == 'purchasetransaction') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Purchase Transaction</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url() ?>reports/stock" <?php if ($active_menu == 'stock') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Stock</a>
+                            <a href="<?php echo base_url() ?>reports/expense" <?php if ($active_menu == 'expense') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Expense</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>reports/income" <?php if ($active_menu == 'income') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Income</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url() ?>reports/profit" <?php if ($active_menu == 'profit') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Profit</a>
                         </li>
                     </ul>
                 </li>
