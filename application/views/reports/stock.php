@@ -117,9 +117,9 @@
                 <tr>
                     <th style="width: 30%" title="Product Name">Product Name</th>
                     <th style="width: 12%" title="Brand Name">Brand Name</th>
-                    <th style="width: 12%" title="Brand Name">Bosta Per Kg</th>
+                    <th style="width: 12%" title="Bosta Per Kg">Bosta Per Kg</th>
+                    <th style="width: 12%; text-align:right;" title="Total Purchased">Total Purchased</th>
                     <th style="width: 12%; text-align:right;" title="Total Sold">Total Sold</th>
-                    <th style="width: 12%; text-align:right;" title="Bosta/KG">Total Purchased</th>
                     <th style="width: 16%; text-align:right;" title="Available Quantity">Available Quantity</th>
                 </tr>
                 </thead>
@@ -171,8 +171,8 @@
                                         <td <?php echo ($bosta_type_count>1)?'rowspan="'.$bosta_type_count.'"':''; ?> ><?php echo $val['brand_name']; ?></td>
                                     <?php } ?>
                                     <td><?php echo $row['bosta_per_kg']; ?></td>
-                                    <td style="text-align:right;"><?php echo number_format($total_sold, 2); ?></td>
                                     <td style="text-align:right;"><?php echo number_format($total_purchased, 2); ?></td>
+                                    <td style="text-align:right;"><?php echo number_format($total_sold, 2); ?></td>
                                     <td style="text-align:right;"><?php echo number_format($avaialbe_qty, 2); ?></td>
                                 </tr>
                                 <?php 
@@ -280,8 +280,8 @@
                             			<td style="border-top: 0; padding: 5px 5px 5px 20px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"><strong>Product Name</strong></td>
                             			<td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box;"><strong>Brand Name</strong></td>
                             			<td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Bosta Per Kg</strong></td>
-                            			<td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Total Sold</strong></td>
                                         <td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Total Purchased</strong></td>
+                            			<td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Total Sold</strong></td>
                                         <td style="border-top: 0; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><strong>Available Quantity</strong></td>
                                     </tr>
                             	</thead>
@@ -326,8 +326,8 @@
                                         <td <?php echo ($bosta_type_count>1)?'rowspan="'.$bosta_type_count.'"':''; ?> style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: center;"><?php echo $val['brand_name']; ?></td>
                             			<?php } ?>
                                         <td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo $row['bosta_per_kg']; ?></td>
-                                        <td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo number_format($total_sold, 2); ?></td>
                                         <td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo number_format($total_purchased, 2); ?></td>
+                                        <td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo number_format($total_sold, 2); ?></td>
                                         <td style="border-top: 1px solid #ebeff2; padding: 5px; line-height: 1.42857143; vertical-align: top; outline: none !important; box-sizing: border-box; text-align: right;"><?php echo number_format($avaialbe_qty, 2); ?></td>
                                     </tr>
                                     <?php 

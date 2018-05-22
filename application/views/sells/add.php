@@ -210,7 +210,7 @@
             "</td>"+
             "<td>"+
                 "<select class='form-control required brand_id' name='brand_id[]' id='brand_id" + i + "' onchange='check_available_quantity(" + i + ")'>"+
-                "<option value=''>Select product</option>"+
+                "<option value=''>Select brand</option>"+
                 <?php foreach ($brands as $brand) { ?>
                 "<option value='<?php echo $brand->id; ?>'><?php echo $brand->name; ?></option>"+
                 <?php } ?>

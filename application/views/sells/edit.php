@@ -90,6 +90,7 @@
                                 <td><?php echo ($i+1);?></td>
                                 <td>
                                     <select class="form-control required" name="product_id[]" id="product_id<?php echo $i; ?>" onchange="product_info(<?php echo $i; ?>)">
+                                        <option value="">Select product</option>
                                         <?php foreach ($products as $product) { ?>
                                             <option value="<?php echo $product->id; ?>" <?php if($data->product_id == $product->id){?> selected="selected" <?php } ?>><?php echo $product->name; ?></option>
                                         <?php } ?>
@@ -97,7 +98,7 @@
                                 </td>
                                 <td>
                                     <select class="form-control required" name="brand_id[]" id="brand_id<?php echo $i; ?>" onchange="check_available_quantity(<?php echo $i; ?>)">
-                                        <option value="">Select</option>
+                                        <option value="">Select brand</option>
                                         <?php foreach ($brands as $brand) { ?>
                                             <option value="<?php echo $brand->id; ?>" <?php if($data->brand_id == $brand->id){?> selected="selected" <?php } ?>><?php echo $brand->name; ?></option>
                                         <?php } ?>
@@ -232,6 +233,7 @@ print_r($invoice_data);*/
         $('#row' + i).html("<td>" + (i + 1) + "</td>" +
             "<td>"+
             "<select class='form-control required' name='product_id[]' id='product_id" + i + "'  onchange='product_info(" + i + ")'>"+
+            "<option value=''>Select product</option>"+
             <?php foreach ($products as $product) { ?>
             "<option value='<?php echo $product->id; ?>'><?php echo $product->name; ?></option>"+
             <?php } ?>
@@ -239,6 +241,7 @@ print_r($invoice_data);*/
             "</td>"+
             "<td>"+
             "<select class='form-control required' name='brand_id[]' id='brand_id" + i +"' onchange='check_available_quantity(" + i + ")'>"+
+            "<option value=''>Select brand</option>"+
             <?php foreach ($brands as $brand) { ?>
             "<option value='<?php echo $brand->id; ?>'><?php echo $brand->name; ?></option>"+
             <?php } ?>
