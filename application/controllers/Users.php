@@ -1665,17 +1665,14 @@ class Users extends CI_Controller
     /*Change Staff Status*/
     function status()
     {
-        if (!$this->session->userdata['userData']['session_corporate_account_id']) {
-            redirect('users/login');
-        }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $user_id = $this->input->post('id');
 
             $icon_data = $this->user_mod->get_user_by_id($user_id);
-            $title = $icon_data->name;
 
-            if ($this->input->post('s') == 1) {
+
+            if ($this->input->post('status') == 1) {
                 $status = 0;
                 $_POST['data']['status'] = $status;
                 $status_result = 0;
@@ -1693,8 +1690,7 @@ class Users extends CI_Controller
 
             echo json_encode(array(
                 'valid' => true,
-                'success_message' => $status_result,
-                'title' => $title
+                'success_message' => $status_result
             ));
             exit();
         }
