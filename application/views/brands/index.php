@@ -226,14 +226,11 @@
                     }
                 }
                 else {
-                    //alert("333");
                     // Message
                     //$('#grid_12').removeBlockMessages().blockMessage(data.error || 'An unexpected error occured, please try again', {type: 'error'});
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //alert("444");
-                //alert("error"+textStatus);
                 // Message
                 //$('#grid_12').removeBlockMessages().blockMessage('Error while contacting server, please try again', {type: 'error'});
             }

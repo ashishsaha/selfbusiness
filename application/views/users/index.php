@@ -13,12 +13,10 @@
             <h4 class="header-title m-t-0 m-b-30"><i class="fa fa-tree"></i> <?php echo $sidebar_menu; ?>&nbsp;
                 &nbsp;<span id="status_msg" class="text-success"></span>
                 <ul class="list-status">
-                    <li><i class="fa fa-check-circle text-success"></i> Active</li>
-                    <li><i class="fa fa-check-circle text-unsuccess"></i> Inactive</li>
                     <li>
                         <button title="Add User" data-tooltip="true" type="button"
                                 class="btn btn-success waves-effect waves-light" onclick="javascript:add_user();"><i
-                                class="fa fa-plus-circle"></i>&nbsp;Add
+                                class="fa fa-plus-circle"></i>&nbsp;Add User
                         </button>
                     </li>
                 </ul>
@@ -43,12 +41,12 @@
                     $count = 1;
                     foreach ($user_data as $user) {
                         if ($user->status == '1') {
-                            $status = '<div class="active-user">
-														<a  onclick="user_status(' . $user->id . ',' . $user->status . ')" id="' . $user->id . '" title="Click to set inactive" data-tooltip="true" href="javascript:void(0)"> <i class="fa fa-check-circle text-success"></i> </a> 
+                            $status = '<div class="active-brand">
+														<a  onclick="user_status(' . $user->id . ',' . $user->status . ')" id="' . $user->id . '" title="Click to set inactive" data-tooltip="true" href="javascript:void(0)"> <span class="label label-success">Active</span> </a>
 													 </div>';
                         } elseif ($user->status == '0') {
-                            $status = '<div class="deactive-user">
-														<a  onclick="user_status(' . $user->id . ',' . $user->status . ')" id="' . $user->id . '" title="Click to set active" data-tooltip="true" href="javascript:void(0)"> <i class="fa fa-check-circle text-unsuccess"></i> </a> 
+                            $status = '<div class="deactive-brand">
+														<a  onclick="user_status(' . $user->id . ',' . $user->status . ')" id="' . $user->id . '" title="Click to set active" data-tooltip="true" href="javascript:void(0)"> <span class="label label-inverse">Inactive</span> </a>
 													 </div>';
                         }
                         ?>
@@ -139,43 +137,29 @@
         $('[data-tooltip="true"]').tooltip();
     });
 
-    function user_status(id, s) {
+    function user_status(id, status) {
         $.ajax({
             type: 'POST',
             url: '<?php echo base_url() ?>users/status',
             dataType: 'json',
-            data: {'id': id, 's': s},
+            data: {'id': id, 'status': status},
             success: function (data, textStatus, XMLHttpRequest) {
+                //console.log(data);
                 if (data.valid) {
-                    //alert("111");
                     if (data.success_message == 1) {
-                        var st = 1;
-                        $('#status_' + id).html('<div class="active-user"><a onclick="user_status(' + id + ',' + st + ')" id="' + id + '" title="Click to set inactive" data-tooltip="true" href="javascript:void(0)"> <i class="fa fa-circle text-success"></i> </a></div>');
-
-                        $('#status_msg').fadeIn('slow', function () {
-                            $('#status_msg').html(data.title + ' has been active');
-                            $(this).delay(3000).fadeOut('slow');
-                        });
+                        var status = 1;
+                        $('#status_' + id).html('<div class="active-user"><a onclick="user_status(' + id + ',' + status + ')" id="' + id + '" title="Click to set inactive" data-tooltip="true" href="javascript:void(0)"> <span class="label label-success">Active</span> </a></div>');
                     }
                     else {
-                        var st = 0;
-                        $('#status_' + id).html('<div class="deactive-user"><a onclick="user_status(' + id + ',' + st + ')" id="' + id + '" title="Click to set active" data-tooltip="true" href="javascript:void(0)"> <i class="fa fa-circle text-unsuccess"></i> </a></div>');
-
-                        $('#status_msg').fadeIn('slow', function () {
-                            $('#status_msg').html(data.title + ' has been inactive');
-                            $(this).delay(3000).fadeOut('slow');
-                        });
+                        var status = 0;
+                        $('#status_' + id).html('<div class="deactive-user"><a onclick="user_status(' + id + ',' + status + ')" id="' + id + '" title="Click to set active" data-tooltip="true" href="javascript:void(0)"> <span class="label label-inverse">Inactive</span> </a></div>');
                     }
                 }
                 else {
                     //alert("333");
-                    // Message
-                    //$('#grid_12').removeBlockMessages().blockMessage(data.error || 'An unexpected error occured, please try again', {type: 'error'});
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //alert("444");
-                //alert("error"+textStatus);
                 // Message
                 //$('#grid_12').removeBlockMessages().blockMessage('Error while contacting server, please try again', {type: 'error'});
             }
