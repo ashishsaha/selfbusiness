@@ -54,12 +54,10 @@
     <?php
     if ($this->session->userdata['userData']['session_role_id'] == 1) {  // This is for Super Admin
         $this->load->view('element/super_admin_left_sidebar');
-    } elseif ($this->session->userdata['userData']['session_role_id'] == 2) { // This is for Standard Admin
-        $this->load->view('element/standard_admin_left_sidebar');
-    }  elseif ($this->session->userdata['userData']['session_role_id'] == 3) { // This is for customer
-        $this->load->view('element/customer_left_sidebar');
-    } else { // Corporate Super Admin 2
-        $this->load->view('element/corporate_super_admin_left_sidebar');
+    } elseif ($this->session->userdata['userData']['session_role_id'] == 2) { // This is for manager
+        $this->load->view('element/manager_left_sidebar');
+    } else { // For staff
+        $this->load->view('element/staff_left_sidebar');
     }
     ?>
     <div class="content-page">

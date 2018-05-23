@@ -3,19 +3,6 @@
         <?php $active_menu = $this->session->userdata['active_menu']; ?>
         <!-- User -->
         <div class="user-box">
-            <!--<div class="user-img">
-                <?php
-/*                $profile_img_path = '';
-                if (!empty($this->session->userdata['userData']['session_profile_image'])) {
-                    $profile_img_path .= base_url() . 'uploads/userprofiles/' . $this->session->userdata['userData']['session_profile_image'];
-                } else {
-                    $profile_img_path .= base_url() . 'assets/images/users/avatar-1.jpg';
-                }
-                */?>
-                <img src="<?php /*echo $profile_img_path; */?>" alt="user-img" class="img-circle img-thumbnail img-responsive"
-                     width="72" height="72">
-                <div class="user-status offline"><i class="zmdi zmdi-dot-circle"></i></div>
-            </div>-->
             <h5 id='company_logo_left'><span
                      class="user_name" ><?php echo $this->session->userdata['userData']['session_user_full_name'];?> </span><br>
                 <span class="role_type">(&nbsp;<?php echo $this->session->userdata['userData']['session_role_name']; ?>&nbsp;)</span>
@@ -154,9 +141,6 @@
                         <li>
                             <a href="<?php echo base_url() ?>reports/income" <?php if ($active_menu == 'income') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Income</a>
                         </li>
-                        <li>
-                            <a href="<?php echo base_url() ?>reports/profit" <?php if ($active_menu == 'profit') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Profit</a>
-                        </li>
                     </ul>
                 </li>
                 
@@ -167,18 +151,14 @@
                         <li>
                             <a href="<?php echo base_url() ?>settings/companysettings" <?php if ($active_menu == 'settings') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Company Setting</a>
                         </li>
-                        <li>
-                            <a href="<?php echo base_url() ?>accounts/index" <?php if ($active_menu == 'parentaccounts') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Parent Accounts</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url() ?>accounts/child_accounts" <?php if ($active_menu == 'childaccounts') { ?> class="active"<?php } ?>><i class="fa fa-angle-double-right" aria-hidden="true"></i>Child Accounts</a>
-                        </li>
                     </ul>
                 </li>
-                <?php
-                //print_r($data);
-                ?>
             </ul>
         </div>
     </div>
 </div>
+<style type="text/css">
+    .navbar-default {
+        background-color: #c51a69;
+    }
+</style>
