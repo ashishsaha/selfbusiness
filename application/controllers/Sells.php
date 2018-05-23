@@ -111,7 +111,7 @@ class Sells extends CI_Controller
 										});
 									</script>';
 
-        if (isset($_POST['OkSaveData'])) {
+        if (isset($_POST['OkSaveData'])) { //echo '<pre>'; print_r($_POST);die();
             
             $this->form_validation->set_rules('data[customer_id]', 'Customer Name', 'trim|required');
             $this->form_validation->set_rules('product_id[]', 'Product ID', 'trim|required');
@@ -160,7 +160,7 @@ class Sells extends CI_Controller
                 }
                 
                 // Transaction
-                if($_POST['paid_amount']){
+                if($_POST['paid_amount'] != "0.00"){
                     $transaction_data['trans_type'] = 0;
                     $transaction_data['ref_invoice_no'] = $last_insert_id;
                     $transaction_data['child_account_id'] = 6;
@@ -377,7 +377,7 @@ class Sells extends CI_Controller
                 }
                 
                 // Transaction
-                if($_POST['paid_amount']){
+                if($_POST['paid_amount'] != "0.00"){
                     $transaction_id = $_POST['transaction_id'];
                     
                     $transaction_data['payment_from_or_to'] = $_POST['data']['customer_id'];

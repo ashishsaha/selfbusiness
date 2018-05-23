@@ -159,7 +159,7 @@ class Buys extends CI_Controller
                     }
                 }
                 // Transaction
-                if($_POST['paid_amount']){
+                if($_POST['paid_amount'] != "0.00"){
                     $transaction_data['trans_type'] = 0;
                     $transaction_data['ref_invoice_no'] = $last_insert_id;
                     $transaction_data['child_account_id'] = 3;
@@ -320,7 +320,7 @@ class Buys extends CI_Controller
                 }
                 
                 // Transaction
-                if($_POST['paid_amount']){
+                if($_POST['paid_amount'] != "0.00"){
                     $transaction_id = $_POST['transaction_id'];
                     
                     $transaction_data['payment_from_or_to'] = $_POST['data']['customer_id'];

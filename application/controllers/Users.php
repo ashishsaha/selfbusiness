@@ -554,7 +554,6 @@ class Users extends CI_Controller
         // Get user role id
         $role_data = $this->user_mod->get_role_id_by_user_id($user_id);
         $role_id = $role_data->role_id;
-        //$account_list = $this->corporate_account_mod->get_all_corporate_account();
 
         if (isset($_POST['OkSaveData'])) {
 
