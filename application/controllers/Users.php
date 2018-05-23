@@ -454,8 +454,13 @@ class Users extends CI_Controller
                         $_POST['data']['profile_image'] = $upload_data['file_name'];
                     }
                 }
+                // Check Unique email
+                $user = $this->user_mod->is_unique_username($_POST['data']['username'], null);
+                if($user){
+                    $data['validation_error'] = "This email already exist!";
+                }
 
-                if ($upload_validation_error == '') {
+                if ($upload_validation_error == '' && empty($user)) {
 
                     $data_user = array(
                         'salutation' => $_POST['data']['salutation'],
@@ -584,8 +589,14 @@ class Users extends CI_Controller
                         $profile_image_check = $user_data->profile_image;
                     }
                 }
+                
+                // Check Unique email
+                $user = $this->user_mod->is_unique_username($_POST['data']['username'], $user_id);
+                if($user){
+                    $data['validation_error'] = "This email already exist!";
+                }
 
-                if ($upload_validation_error == '') {
+                if ($upload_validation_error == '' && empty($user)) {
 
                     $data_user = array(
                         'salutation' => $_POST['data']['salutation'],

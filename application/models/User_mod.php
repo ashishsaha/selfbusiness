@@ -9,6 +9,31 @@ class User_mod extends CI_Model
         $this->load->database();
     }
 
+    /**
+     *
+     * Check Unique Username(Email)
+     *  
+    */
+    function is_unique_username($username, $user_id){
+        $where = '(username="' . $username . '")';
+        $this->db->select("username");
+        $this->db->from("users");
+        if($user_id){
+            $this->db->where('id !=', $user_id);
+        }
+        $this->db->where($where);
+        $query = $this->db->get();
+        $num_rows = $query->num_rows();
+
+        if ($num_rows === 1) {
+            $row = $query->row();
+            // Return the user id.
+            return $row;
+        } else {
+            return false;
+        }
+    }              
+    
     /* Check is any corporate super admin exist */
     function is_corporate_super_admin_exist($corporate_account_id){
         $query = $this->db->query("SELECT ur.role_id, u.id
