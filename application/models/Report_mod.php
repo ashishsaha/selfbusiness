@@ -216,8 +216,11 @@ class Report_mod extends CI_Model
                 
             }
             
-            
-            $data[$val->product_id]['product_rowspan'] = $i;
+            if(($product == $val->product_id) && ($brand_id != $val->brand_id || $bosta_per_kg != $val->bosta_per_kg)){
+                $data[$val->product_id]['product_rowspan'] = $i;
+                //echo 'product: '.$val->product_id. '; brand: '.$val->brand_id.'; bosta_per_kg: '.$val->bosta_per_kg.'; qty: '.$val->total_qty.'<br>'; 
+                $i++;
+            }
             $data[$val->product_id]['product_name'] = $val->product_name;
             $data[$val->product_id]['brands'][$val->brand_id]['brand_name'] = $val->name;
             $data[$val->product_id]['brands'][$val->brand_id]['bosta'][$val->bosta_per_kg]['bosta_per_kg'] = $val->bosta_per_kg;
@@ -226,9 +229,7 @@ class Report_mod extends CI_Model
             }else{
                 $data[$val->product_id]['brands'][$val->brand_id]['bosta'][$val->bosta_per_kg]['total_purchased'] = $val->total_qty;
             }
-            if(($product == $val->product_id) && ($brand_id != $val->brand_id || $bosta_per_kg != $val->bosta_per_kg)){
-                $i++;
-            }
+            
             if($brand_id != $val->brand_id){
                 $brand_id = $val->brand_id;
                 $bosta_per_kg = '';

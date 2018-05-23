@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            <?php if(count($brands) > 0){ ?>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
                                     <div class="form-group">
@@ -69,6 +69,7 @@
                                 </div>
                                 
                             </div>
+                            <?php } ?>
                             <div class="row">
                                 <div class="col-md-12 col-sm-6" style="text-align: right">
                                     <div class="form-group">

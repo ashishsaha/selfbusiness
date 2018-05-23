@@ -152,9 +152,12 @@
                                     $i++;
                                 }
                                 
+                                $total_purchased = 0;
+                                $total_sold = 0;
                                 if(isset($row['total_purchased'])){
                                     $total_purchased = $row['total_purchased'];
                                 }
+                                
                                 if(isset($row['total_sold'])){
                                     $total_sold = $row['total_sold'];
                                 }
