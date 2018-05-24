@@ -457,7 +457,7 @@ class Users extends CI_Controller
                 // Check Unique email
                 $user = $this->user_mod->is_unique_username($_POST['data']['username'], null);
                 if($user){
-                    $data['validation_error'] = "This email already exist!";
+                    $data['validation_error'] = "Sorry! The username(email) is already exist. Please try by other one.";
                 }
 
                 if ($upload_validation_error == '' && empty($user)) {
