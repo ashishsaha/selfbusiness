@@ -1018,7 +1018,7 @@ class Transaction extends CI_Controller
         $this->session->set_userdata('active_menu', 'pay');
 
         // SELECT ALL home cost transaction info
-        $condition  = array("child_account_id"=>2);
+        $condition  = array("child_account_id"=>4);
         $home_cost_transaction_data = $this->transaction_mod->get_all_transaction_for_employee($condition);
 
         // Define Data array
@@ -1073,7 +1073,7 @@ class Transaction extends CI_Controller
             } else {
                 //echo '<pre>';print_r($_POST['data']); exit;
                 $_POST['data']['status'] = 1;
-                $_POST['data']['child_account_id'] = 2;
+                $_POST['data']['child_account_id'] = 4;
                 $_POST['data']['trans_date'] = date("Y-m-d", strtotime($_POST['data']['trans_date']));
                 $_POST['data']['created'] =  date("Y-m-d H:i:s");
                 $_POST['data']['created_by'] = $this->session->userdata['userData']['session_user_id'];
