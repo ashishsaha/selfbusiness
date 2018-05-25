@@ -227,4 +227,26 @@ class Invoice_mod extends CI_Model
         return  $query->result();
     }
 
+    function today_total_invoice($invoice_type){
+
+        $where = '(status="1" OR status="0")';
+        $this->db->select("SUM(total_cost) as total_cost");
+        $this->db->from("invoices");
+        $this->db->where($where);
+        $this->db->where("invoice_type", $invoice_type);
+        $this->db->where("created", $invoice_type);
+        $query = $this->db->get();
+        return $query->result();
+
+
+
+        $this->db->select('YEAR(created) AS calender_year, SUM(amount) AS raised_amount');
+        $this->db->from('campaign_donate');
+        $this->db->group_by('YEAR(created)');
+        $query=$this->db->get();
+        return $query->result();
+
+
+    }
+
 }
