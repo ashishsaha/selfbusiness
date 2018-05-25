@@ -127,12 +127,12 @@
                         // Supplier - employee and both
                         if($employees->employee_type == 0){
                             $employee_type = '<span class="label label-success">Supplier/Customer</span>';
-                        }else if($employees->employee_type == 1){
-                            $employee_type = '<span class="label label-default">Casual Labor</span>';
                         }else if($employees->employee_type == 2){
                             $employee_type = '<span class="label label-default">Labor</span>';
-                        }else{
+                        }else if($employees->employee_type == 3){
                             $employee_type = '<span class="label label-info">Employee</span>';
+                        }else{
+                            $employee_type = '';
                         }
                         ?>
                         <tr id="employee_<?php echo $employees->id; ?>">
