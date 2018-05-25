@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Trans Type</label>
                                         <div class="col-md-9">
-                                            <select class="form-control required" name="data[trans_type]" id="trans_type" onchange="select_trans_type()"  data-parsley-id="6" disabled>
+                                            <select class="form-control required" name="data[trans_type]" id="trans_type" <?php /* onchange="select_trans_type()" */?>  data-parsley-id="6" disabled>
                                                 <option value="0">Hand Cash</option>
                                                 <option value="1">Bank Transaction</option>
                                                 <option value="2">Cheque</option>
