@@ -32,7 +32,7 @@ class Transaction extends CI_Controller
 
     public function pay(){
 
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id']) {
             redirect('users/login');
         }
 
@@ -77,7 +77,7 @@ class Transaction extends CI_Controller
 
     public function receive(){
 
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id']) {
             redirect('users/login');
         }
 
@@ -154,7 +154,7 @@ class Transaction extends CI_Controller
      * Delete Product
      * */
     public function delete(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $transaction_for = $this->uri->segment(3);
@@ -218,7 +218,7 @@ class Transaction extends CI_Controller
     /****************Home COST**************/
     public function home_cost()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -304,7 +304,7 @@ class Transaction extends CI_Controller
     public function edit()
     {
 
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -387,7 +387,7 @@ class Transaction extends CI_Controller
     /****************MILL COST**************/
     public function mill_cost()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -473,7 +473,7 @@ class Transaction extends CI_Controller
     public function editmillcost()
     {
 
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -556,7 +556,7 @@ class Transaction extends CI_Controller
     /****************MILL COST**************/
     public function daily_cost()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -642,7 +642,7 @@ class Transaction extends CI_Controller
     public function editdailycost()
     {
 
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -726,7 +726,7 @@ class Transaction extends CI_Controller
     /***********PAY TO SUPPLIER************/
     public function pay_to_supplier()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -912,7 +912,7 @@ class Transaction extends CI_Controller
     /***********PAY TO Employee************/
     public function pay_to_employee()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -1011,7 +1011,7 @@ class Transaction extends CI_Controller
     /****************MILL COST**************/
     public function labor_cost()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -1102,7 +1102,7 @@ class Transaction extends CI_Controller
     public function editlaborcost()
     {
 
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -1184,7 +1184,7 @@ class Transaction extends CI_Controller
     /*************Receive from Customer *******/
     public function receive_from_customer()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');

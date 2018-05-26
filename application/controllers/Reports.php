@@ -38,7 +38,7 @@ class Reports extends CI_Controller
      *
      **/
     public function customer_wise_sales(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -127,7 +127,7 @@ class Reports extends CI_Controller
      *
      **/
     public function supplier_wise_purchase(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -216,7 +216,7 @@ class Reports extends CI_Controller
      *
      **/
     public function sale_transaction(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -305,7 +305,7 @@ class Reports extends CI_Controller
      *
      **/
     public function purchase_transaction(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -394,7 +394,7 @@ class Reports extends CI_Controller
      *
      **/
     public function product_wise_purchase(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -482,7 +482,7 @@ class Reports extends CI_Controller
      *
      **/
     public function product_wise_sale(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -569,7 +569,7 @@ class Reports extends CI_Controller
      *
      **/
     public function expense(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -668,7 +668,7 @@ class Reports extends CI_Controller
      *
      **/
     public function income(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -766,7 +766,7 @@ class Reports extends CI_Controller
      *
      **/
     public function customer_collection(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -856,7 +856,7 @@ class Reports extends CI_Controller
      *
      **/
     public function supplier_payment(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -945,7 +945,7 @@ class Reports extends CI_Controller
      *
      **/
     public function profit(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 

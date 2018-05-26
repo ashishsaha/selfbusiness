@@ -49,7 +49,7 @@ class Settings extends CI_Controller
     /* Update */
     function companysettings()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id']) {
             redirect('users/login');
         }
 

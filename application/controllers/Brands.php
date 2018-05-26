@@ -29,7 +29,7 @@ class Brands extends CI_Controller
 
     public function index()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -111,7 +111,7 @@ class Brands extends CI_Controller
     /* Brand Status*/
     public function status()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -150,7 +150,7 @@ class Brands extends CI_Controller
      * Delete Brand
      * */
     public function delete(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id']) {
             redirect('users/login');
         }
         $brand_id = $this->uri->segment(3);

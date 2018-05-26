@@ -29,7 +29,7 @@ class Customers extends CI_Controller
 
     public function index()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -79,7 +79,7 @@ class Customers extends CI_Controller
     /* ADD customer */
     public function add()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -164,7 +164,7 @@ class Customers extends CI_Controller
     /* Customer Status*/
     public function status()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
 
@@ -202,7 +202,7 @@ class Customers extends CI_Controller
     /* Edit Customer */
     public function edit()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -297,7 +297,7 @@ class Customers extends CI_Controller
      * Delete customer info
      * */
     public function delete(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $customer_id = $this->uri->segment(3);

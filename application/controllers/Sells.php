@@ -34,7 +34,7 @@ class Sells extends CI_Controller
 
     public function index()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id'] ) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -83,7 +83,7 @@ class Sells extends CI_Controller
     /* ADD Sell Info */
     public function add()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id']) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -253,7 +253,7 @@ class Sells extends CI_Controller
     /* Product Status*/
     public function status()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id']) {
             redirect('users/login');
         }
 
@@ -291,7 +291,7 @@ class Sells extends CI_Controller
     /* Edit Sell */
     public function edit()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id']) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -426,7 +426,7 @@ class Sells extends CI_Controller
     /* Sell Details */
     public function details()
     {
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id']) {
             redirect('users/login');
         }
         $this->session->unset_userdata('active_menu');
@@ -499,7 +499,7 @@ class Sells extends CI_Controller
      * Delete Invoice
      * */
     public function delete(){
-        if (!$this->session->userdata['userData']['session_user_id'] || $this->session->userdata['userData']['session_user_id'] != 1) {
+        if (!$this->session->userdata['userData']['session_user_id']) {
             redirect('users/login');
         }
         $invoice_id = $this->uri->segment(3);
