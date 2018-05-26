@@ -229,24 +229,31 @@ class Invoice_mod extends CI_Model
 
     function today_total_invoice($invoice_type){
 
+        $date = new DateTime("now");
+        $curr_date = $date->format('Y-m-d ');
+
         $where = '(status="1" OR status="0")';
         $this->db->select("SUM(total_cost) as total_cost");
         $this->db->from("invoices");
         $this->db->where($where);
         $this->db->where("invoice_type", $invoice_type);
-        $this->db->where("created", $invoice_type);
+        $this->db->where("DATE(created)", $curr_date);
         $query = $this->db->get();
         return $query->result();
+    }
 
 
 
-        $this->db->select('YEAR(created) AS calender_year, SUM(amount) AS raised_amount');
-        $this->db->from('campaign_donate');
-        $this->db->group_by('YEAR(created)');
+    /*total donate according to campaign */
+    public function raised_amount_info($invoice_type){
+
+        $where = '(status="1" OR status="0")';
+        $this->db->select('MONTH(created) AS calender_month, SUM(total_cost) AS raised_purchase_cost');
+        $this->db->from('invoices');
+        $this->db->where("invoice_type", $invoice_type);
+        $this->db->group_by('MONTH(created)');
         $query=$this->db->get();
         return $query->result();
-
-
     }
 
 }

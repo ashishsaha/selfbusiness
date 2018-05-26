@@ -93,4 +93,25 @@ class Transaction_mod extends CI_Model
         $this->db->where('id',$transaction_id);
         $this->db->update('transaction',$data);
     }
+
+
+
+    /*
+     * Get all sell or purchase invoice by product id
+     * */
+    function get_all_type_of_expense(){
+        $date = new DateTime("now");
+        $curr_date = $date->format('Y-m-d ');
+
+        $this->db->select("SUM(t.amount) as total_cost, ca.name");
+        $this->db->from("transaction as t");
+        $this->db->join('child_accounts as ca', 'ca.id = t.child_account_id', 'left');
+        $this->db->where("DATE(t.created)", $curr_date);
+        $this->db->where("t.status",1);
+        $this->db->group_by('t.child_account_id');
+        $this->db->order_by('ca.id', 'desc');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }
